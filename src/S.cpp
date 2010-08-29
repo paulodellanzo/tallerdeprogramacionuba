@@ -1,10 +1,3 @@
-/*
- * S.cpp
- *
- *  Created on: 28/08/2010
- *      Author: gaston
- */
-
 #include "S.h"
 
 S::S() {

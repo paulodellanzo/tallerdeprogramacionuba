@@ -1,12 +1,6 @@
-/*
- * D.h
- *
- *  Created on: 28/08/2010
- *      Author: gaston
- */
-
 #ifndef D_H_
 #define D_H_
+
 #include <string>
 
 class D : public Operacion{

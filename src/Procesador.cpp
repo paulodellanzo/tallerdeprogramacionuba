@@ -1,10 +1,3 @@
-/*
- * Procesador.cpp
- *
- *  Created on: 28/08/2010
- *      Author: gaston
- */
-
 #include "Procesador.h"
 
 Procesador::Procesador() {

@@ -1,10 +1,3 @@
-/*
- * ParserCliente.cpp
- *
- *  Created on: 28/08/2010
- *      Author: gaston
- */
-
 #include "ParserCliente.h"
 
 ParserCliente::ParserCliente() {

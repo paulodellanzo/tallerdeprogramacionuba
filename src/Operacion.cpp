@@ -1,10 +1,3 @@
-/*
- * Operacion.cpp
- *
- *  Created on: 28/08/2010
- *      Author: gaston
- */
-
 #include "Operacion.h"
 
 Operacion::Operacion() {

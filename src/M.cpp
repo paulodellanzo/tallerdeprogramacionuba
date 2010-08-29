@@ -1,10 +1,3 @@
-/*
- * M.cpp
- *
- *  Created on: 28/08/2010
- *      Author: gaston
- */
-
 #include "M.h"
 
 M::M() {
