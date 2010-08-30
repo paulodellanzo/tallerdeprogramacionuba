@@ -1,0 +1,30 @@
+Utilizamos la librería solarsockets.
+
+Cliente: hereda de ssppClient, debe redefinir los métodos on_connect  on_data_arrival. Para enviar la informacion se utiliza el método send que recibe un string.
+
+ParserCliente: esta clase se incializa con el nombre de un archivo, lo recibe y lo abre. Cada vez que el cliente le pida la siguiente operación de ese archivo, llamará a un método propio y le pasará el operaciónID y una lista de strings, siendo cada uno un parámetro. Ese método le devolverá el xml de la operación y se lo pasará al cliente.
+
+El cliente también podrá llamar a ese método en caso de que se le pida una operación específica por consola.
+
+El parser cada vez que se le pide una operación del archivo analiza el xml para extraer la operaciónID y los parámetros, en caso de haber un error armará un xml y se lo pasará a la clase ParserResultadoCliente.
+
+El cliente envía el xml correspondiente que recibe de ParserCliente y recibe otro xml que le pasa a ParserResultadoCliente, el cual devolverá un string con lo que el cliente debe imprimir por pantalla, y en caso de que el resultado sea un error lo guardará en un archivo errores.err
+
+Ahora que estoy viendo mejor no hacer el PaserResultadoCliente y que esos métodos lo tenga Cliente, así se adapta mejor al cambio y a la posibilidad de una clase que herede de cliente.
+
+
+Servidor: hereda de ssPPServer y cada vez que se conecta un cliente crea una clase del tipo ssPPServerClient.
+
+ServidorCliente: hereda de  ssPPServerClient y es creado por el Servidor
+
+*Cuando pasamos los parámetros para una operación pasamos un lista de strings, dos strings por cada uno, para el nombre y el valor.
+
+No se porque hay un Procesador y un ParserServidor, que hace el Procesador? Quedamos en que el ParserServidor hacía un switch para saber a que clase llamar?
+
+Me parecería mejor lo siguiente: que el servidorcliente tenga un ParserServidor y un Procesador. Le manda el xml directamente al ParserServidor, este le pasa al procesador una operacionID y una lista de parámetros.
+
+Procesador: tiene una lista de operaciones, su posición en la lista es la operacionID.
+
+Hay que ver como las operaciones informan el resultado o el error, ver si lo informan directamente en formato XML, capaz en este caso si es mejor un ParserResultadoServidor.
+
+PD: no puedo reflejar os cambios que dije en el diagrama UML porque se trabó el umbrello cuando los estaba por terminar.
