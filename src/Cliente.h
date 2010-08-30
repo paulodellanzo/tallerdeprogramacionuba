@@ -3,7 +3,6 @@
 
 #include <SolarSockets/SolarSockets++.h>
 #include <string>
-//probando
 
 class Cliente : public ssPPClient
 {
