@@ -5,7 +5,7 @@ Procesador::Procesador() {
 
 }
 
-string Procesador::trabajarXml(string Xml){
+string Procesador::getResultado(string operacion, string* operandos){
 
 }
 

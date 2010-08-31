@@ -5,6 +5,10 @@ ParserCliente::ParserCliente() {
 
 }
 
+ParserCliente::ParserCliente(string xml){
+
+}
+
 ParserCliente::~ParserCliente() {
 	// TODO Auto-generated destructor stub
 }

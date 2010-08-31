@@ -7,6 +7,7 @@ using namespace std;
 class ParserCliente {
 public:
 	ParserCliente();
+	ParserCliente(string Xml);
 	virtual ~ParserCliente();
 };
 

@@ -7,7 +7,7 @@ using namespace std;
 class Procesador {
 public:
 	Procesador();
-	string trabajarXml(string Xml);
+	string getResultado(string operacion, string* operandos);
 	virtual ~Procesador();
 };
 
