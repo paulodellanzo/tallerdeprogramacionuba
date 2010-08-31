@@ -3,11 +3,12 @@
 
 using namespace std;
 #include <string>
+#include <list>
 
 class Operacion {
 public:
 	Operacion();
-	virtual string realizarOpearacion(string* vector)=0;
+	virtual string realizarOpearacion(list<string>* operandos)=0;
 	virtual ~Operacion();
 };
 

@@ -4,11 +4,12 @@
 using namespace std;
 #include <string>
 #include "Operacion.h"
+#include <list>
 
 class R : Operacion {
 public:
 	R();
-	virtual string realizarOpearacion(string* vector);
+	virtual string realizarOpearacion(list<string>* operandos);
 	virtual ~R();
 };
 

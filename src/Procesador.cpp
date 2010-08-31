@@ -5,8 +5,8 @@ Procesador::Procesador() {
 
 }
 
-string Procesador::getResultado(string operacion, string* operandos){
-
+string Procesador::getResultado(string operacion, list<string>* operandos){
+	return "";
 }
 
 Procesador::~Procesador() {

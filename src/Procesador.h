@@ -3,11 +3,16 @@
 
 using namespace std;
 #include <string>
+#include "Operacion.h"
+#include <map>
+#include <list>
 
 class Procesador {
+private:
+	map<string,Operacion>* operaciones;
 public:
 	Procesador();
-	string getResultado(string operacion, string* operandos);
+	string getResultado(string operacion, list<string>* operandos);
 	virtual ~Procesador();
 };
 

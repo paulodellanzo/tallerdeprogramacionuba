@@ -4,8 +4,11 @@
 #include <SolarSockets/SolarSockets++.h>
 using namespace std;
 #include <string>
+#include "ParserServidor.h"
 
 class ServidorCliente : public ssPPServerClient{
+private:
+	ParserServidor* parser;
 public:
 	ServidorCliente();
 	virtual void onConnect();
