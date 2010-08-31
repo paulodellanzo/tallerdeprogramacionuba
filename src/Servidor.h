@@ -2,6 +2,7 @@
 #define SERVIDOR_H_
 
 #include <SolarSockets/SolarSockets++.h>
+using namespace std;
 #include <string>
 
 

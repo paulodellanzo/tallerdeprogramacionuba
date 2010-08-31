@@ -1,6 +1,7 @@
 #ifndef PARSERSERVIDOR_H_
 #define PARSERSERVIDOR_H_
 
+using namespace std;
 #include <string>
 
 class ParserServidor {

@@ -1,6 +1,7 @@
 #ifndef OPERACION_H_
 #define OPERACION_H_
 
+using namespace std;
 #include <string>
 
 class Operacion {

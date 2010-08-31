@@ -1,6 +1,7 @@
 #ifndef PARSERCLIENTE_H_
 #define PARSERCLIENTE_H_
 
+using namespace std;
 #include <string>
 
 class ParserCliente {

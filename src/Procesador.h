@@ -1,6 +1,7 @@
 #ifndef PROCESADOR_H_
 #define PROCESADOR_H_
 
+using namespace std;
 #include <string>
 
 class Procesador {

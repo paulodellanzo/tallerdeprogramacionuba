@@ -1,6 +1,7 @@
 #ifndef CLIENTE_H_
 #define CLIENTE_H_
 
+using namespace std;
 #include <SolarSockets/SolarSockets++.h>
 #include <string>
 
