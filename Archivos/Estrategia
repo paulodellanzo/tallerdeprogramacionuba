@@ -1,19 +1,21 @@
 Utilizamos la librería solarsockets.
 
-Cliente: hereda de ssppClient, debe redefinir los métodos on_connect on_data_arrival. Para enviar la informacion se utiliza el método send que recibe un string (lo que seria el xml).
+Cliente: hereda de ssppClient, debe redefinir los métodos on_connect on_data_arrival. Para enviar la informacion se utiliza el método send que recibe un string (lo que seria el xml). Tiene un ParserCliente para cuando el usuario solicita poner él la operación, le pida el xml de dicha operación.
 
-ParserCliente: esta clase se incializa con el nombre de un xml. Cada vez que el cliente le pida la siguiente operación de ese archivo le devolverá el xml de la operación y asi el cliente se lo pasará al servidor.
+ParserCliente: esta clase se incializa con el nombre de un direccion de un archivo. Cada vez que el cliente le pida la siguiente operación de ese archivo le devolverá el xml de la operación y asi el cliente se lo pasará al servidor.
 
 El parser cada vez que se le pide una operación del xml lo analiza, en caso de haber un error armará un xml y lo reportara en consola y lo graba en el archivo error.err.
+
+Tambien permite la opcion de generar un xml a partir de un id de operacion y operandos.
 
 ParserClienteResultado: dada la respuesta del servidor, se encarga de informar la respuesta, sea error o resultado.
 
 Servidor: hereda de ssPPServer y cada vez que se conecta un cliente crea una clase del tipo ssPPServerClient.
 
-ServidorCliente: hereda de ssPPServerClient y es creado por el Servidor, respondiendo a un cliente, habiendo uno por cliente conectado.
+ServidorCliente: hereda de ssPPServerClient y es creado por el Servidor, respondiendo a un cliente, habiendo uno por cliente conectado. Tiene un ParserServidor para saber la respuesta al xml.
 
-ParserServidor: es el que decodifica el xml, para asi generar un xml de respuesta, para ello conoce a la clase Procesador (se encarga de dar el resultado). No puede haber error ya que de corregirlo se encarga el ParserCliente, por lo que llegaria bien escrito el xml. Luego de realizada la operacion devuelve el xml de respuesta.
+ParserServidor: es el que decodifica el xml, para asi generar un xml de respuesta, para ello conoce a la clase Procesador (se encarga de dar el resultado). No puede haber error ya que de corregirlo se encarga el ParserCliente, por lo que llegaria bien escrito el xml. Luego de realizada la operacion devuelve el xml de respuesta. Para encontrar la respuesta a la operacion luego de obtenida el id de la misma y los operandos se la solicita a Procesador.
 
 Procesador: es el encargado de realizar la operación, para ello posee un mapa hash, donde la clave es el id de la operacion y posee una instancia de Operacion correspondiente, de la cual se obtiene el resultado deseado.
 
-Operacion: clase abstracta de la heredan las operaciones de donde se obtiene un resultado a partir de los operandos correspondientes.
+Operacion: clase abstracta de la que heredan las operaciones de donde se obtiene un resultado a partir de los operandos correspondientes.
