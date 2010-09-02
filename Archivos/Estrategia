@@ -19,3 +19,29 @@ ParserServidor: es el que decodifica el xml, para asi generar un xml de respuest
 Procesador: es el encargado de realizar la operación, para ello posee un mapa hash, donde la clave es el id de la operacion y posee una instancia de Operacion correspondiente, de la cual se obtiene el resultado deseado.
 
 Operacion: clase abstracta de la que heredan las operaciones de donde se obtiene un resultado a partir de los operandos correspondientes.
+
+-------
+
+1/09/2010
+
+Lo que hablamos en clase:
+	Forma de recepcion de las cosas las operaciones:
+		Lo reciben en una lista la idea es que el primer nodo sea el nombre del operando y el segundo el valor, si son mas de un operando siguen en la lista 			en el mismo orden, primero nombre y despues numero.
+
+	Devolucion de las operaciones:
+		La idea es que las operaciones devuelvan una lista de strings, en la misma el primer nodo debe ser:
+														Correcto
+														Error
+		Si es error:
+				Segundo Nodo --> tipo de error
+				Tercer Nodo --> Descripcion
+				Si hay mas de un error se repite esto ultimo en el 4to y 5to nodo y sucesivamente
+		Si es Correcto:
+				Segundo Nodo --> nombre (suma, resta, cociente, resto, etc)
+				Tercer Nodo --> valor
+
+	Como se tratan los errores de los parser:
+		La misma idea que con las operaciones un lista de strings, donde el primero nodo seria:
+													Correcto
+													Error
+		y el segundo seria en caso de Correcto el xml con los tags correspondientes, llegando al cliente el xml entero para mandar al servidor.

@@ -9,7 +9,7 @@ ParserCliente::ParserCliente(string xml){
 
 }
 
-string ParserCliente::getXmlDeOperacion(string idOperacion, string* operandos){
+strings ParserCliente::getXmlDeOperacion(string idOperacion, string* operandos){
 	return "";
 }
 

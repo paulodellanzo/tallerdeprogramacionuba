@@ -5,7 +5,7 @@ R::R() {
 
 }
 
-string R::realizarOpearacion(list<string>* operandos){
+list<string> R::realizarOpearacion(list<string>* operandos){
 
 }
 
