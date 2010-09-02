@@ -8,7 +8,7 @@ using namespace std;
 class M : public Operacion{
 public:
 	M();
-	virtual list<string> realizarOpearacion(list<string>* operandos);
+	virtual list<string>* realizarOpearacion(list<string>* operandos);
 	virtual ~M();
 };
 

@@ -9,7 +9,7 @@ using namespace std;
 class S : public Operacion{
 public:
 	S();
-	virtual list<string> realizarOpearacion(list<string>* operandos);
+	virtual list<string>* realizarOpearacion(list<string>* operandos);
 	virtual ~S();
 };
 

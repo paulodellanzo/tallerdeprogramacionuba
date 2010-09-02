@@ -5,8 +5,9 @@ S::S() {
 
 }
 
-list<string> S::realizarOpearacion(list<string>* operandos){
-
+list<string>* S::realizarOpearacion(list<string>* operandos){
+	list<string>* xml=new list<string>();
+	return xml;
 }
 
 S::~S() {
