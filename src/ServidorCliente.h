@@ -1,12 +1,11 @@
 #ifndef SERVIDORCLIENTE_H_
 #define SERVIDORCLIENTE_H_
 
-#include <SolarSockets/SolarSockets++.h>
 using namespace std;
 #include <string>
 #include "ParserServidor.h"
 
-class ServidorCliente : public ssPPServerClient{
+class ServidorCliente{
 private:
 	ParserServidor* parser;
 public:
