@@ -13,6 +13,10 @@ using namespace std;
 #include <netdb.h>
 #include <unistd.h>
 
+struct paraThreadsRecibidos{
+	sockaddr_in clientAdress;
+	int valorAcept;
+};
 
 class Servidor{
 private:
@@ -22,7 +26,7 @@ public:
 	Servidor();
 	void escuchar();
 	void aceptar();
-	void recibir();
+//	static void recibi(paraThreadsRecibidos obj);
 	virtual ~Servidor();
 };
 

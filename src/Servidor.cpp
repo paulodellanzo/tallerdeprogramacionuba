@@ -1,4 +1,19 @@
 #include "Servidor.h"
+#include <pthread.h>
+
+void* recibir(void* structThreads){
+	paraThreadsRecibidos* threads=(paraThreadsRecibidos*)structThreads;
+	char data[MAXBYTES];
+	socklen_t leng=sizeof(data);
+	socklen_t leng2=sizeof(sockaddr);
+	ssize_t valorRecive=recvfrom(threads->valorAcept,&data,leng,0,(struct sockaddr*)&(threads->clientAdress),&leng2);
+	if(valorRecive==-1){
+		cout<<"Mal recibido"<<endl;
+	}else{
+		data[valorRecive]='\0';
+		cout<<data<<endl;
+	}
+}
 
 Servidor::Servidor() {
 	//creamos el socket
@@ -39,30 +54,36 @@ void Servidor::escuchar(){
 	}
 
 }
-
 void Servidor::aceptar(){
 	//Para el accept
-	socklen_t length=sizeof(sockaddr);
-	valorAccept=accept(descriptorSocket,(struct sockaddr*)&clienteAdress,&length);
-	if(valorAccept==-1){
-		cout<<"Mal accpet"<<endl;
-	}else{
-		cout<<"Bien accept"<<endl;
+	while(true){
+		socklen_t length=sizeof(sockaddr);
+		valorAccept=accept(descriptorSocket,(struct sockaddr*)&clienteAdress,&length);
+		if(valorAccept==-1){
+			cout<<"Mal accpet"<<endl;
+		}else{
+			cout<<"Bien accept"<<endl;
+		}
+		paraThreadsRecibidos threads;
+		threads.clientAdress=clienteAdress;
+		threads.valorAcept=valorAccept;
+		pthread_t thread;
+		int creado=pthread_create(&thread,NULL,recibir,(void*)&threads);
+		if(creado==0) cout<<"bien creado"<<endl;
 	}
 }
 
-void Servidor::recibir(){
-	char data[MAXBYTES];
-	socklen_t leng=sizeof(data);
-	socklen_t leng2=sizeof(sockaddr);
-	ssize_t valorRecive=recvfrom(valorAccept,&data,leng,0,(struct sockaddr*)&clienteAdress,&leng2);
-	if(valorRecive==-1){
-		cout<<"Mal recibido"<<endl;
-	}else{
-		data[valorRecive]='\0';
-		cout<<data<<endl;
-	}
-}
+//static void Servidor::recibi(paraThreadsRecibidos obj){
+//	char data[MAXBYTES];
+//	socklen_t leng=sizeof(data);
+//	socklen_t leng2=sizeof(sockaddr);
+//	ssize_t valorRecive=recvfrom(obj.valorAcept,&data,leng,0,(struct sockaddr*)&(obj.clientAdress),&leng2);
+//	if(valorRecive==-1){
+//		cout<<"Mal recibido"<<endl;
+//	}else{
+//		data[valorRecive]='\0';
+//		cout<<data<<endl;
+//	}
+//}
 Servidor::~Servidor() {
-	close(descriptorSocket);
-}
+	close(descriptorSocket);}
