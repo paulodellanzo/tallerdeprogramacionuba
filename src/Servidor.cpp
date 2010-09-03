@@ -13,6 +13,10 @@ void* recibir(void* structThreads){
 		data[valorRecive]='\0';
 		cout<<data<<endl;
 	}
+	cout<<"fin del thread"<<endl;
+	void* arg;
+	pthread_exit(arg);
+	return arg;
 }
 
 Servidor::Servidor() {
