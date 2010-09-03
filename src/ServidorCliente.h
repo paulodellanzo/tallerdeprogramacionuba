@@ -10,8 +10,6 @@ private:
 	ParserServidor* parser;
 public:
 	ServidorCliente();
-	virtual void onConnect();
-	virtual void onDataArrival(string Data);
 	virtual ~ServidorCliente();
 };
 

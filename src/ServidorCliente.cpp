@@ -5,14 +5,6 @@ ServidorCliente::ServidorCliente() {
 
 }
 
-void ServidorCliente::onConnect(){
-
-}
-
-void ServidorCliente::onDataArrival(string Data){
-
-}
-
 ServidorCliente::~ServidorCliente() {
 	// TODO Auto-generated destructor stub
 }

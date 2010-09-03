@@ -1,6 +1,7 @@
 #ifndef SERVIDOR_H_
 #define SERVIDOR_H_
-
+#define PORT 5434
+#define MAXBYTES 3000000
 using namespace std;
 #include <string>
 #include <iostream>

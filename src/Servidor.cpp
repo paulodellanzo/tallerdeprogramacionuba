@@ -12,7 +12,7 @@ Servidor::Servidor() {
 
 	//para llamar al bind()
 	this->estructurDeDirecciones.sin_family=AF_INET;//para lo de family QUE SEA LOCAL
-	this->estructurDeDirecciones.sin_port=htons(5444);
+	this->estructurDeDirecciones.sin_port=htons(PORT);
 	this->estructurDeDirecciones.sin_addr.s_addr=htonl(INADDR_ANY);//INADDR_ANY coloca nuestra direccion IP automaticamente
 
 	for(int i=0;i<8;i++){
@@ -52,9 +52,10 @@ void Servidor::aceptar(){
 }
 
 void Servidor::recibir(){
-	char data[30000];
+	char data[MAXBYTES];
 	socklen_t leng=sizeof(data);
-	ssize_t valorRecive=recvfrom(valorAccept,&data,leng,0,(struct sockaddr*)&clienteAdress,&leng);
+	socklen_t leng2=sizeof(sockaddr);
+	ssize_t valorRecive=recvfrom(valorAccept,&data,leng,0,(struct sockaddr*)&clienteAdress,&leng2);
 	if(valorRecive==-1){
 		cout<<"Mal recibido"<<endl;
 	}else{
