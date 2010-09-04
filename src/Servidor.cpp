@@ -5,9 +5,10 @@ void* recibir(void* structThreads){
 	paraThreadsRecibidos* threads=(paraThreadsRecibidos*)structThreads;
 	ServidorCliente* servCliente=new ServidorCliente(threads);
 	servCliente->recibirDeCliente();
-	cout<<"fin del thread"<<endl;
 	servCliente->enviarACliente();
+	servCliente->recibirDeCliente();
 	void* arg;
+	cout<<"fin del thread"<<endl;
 	close(threads->valorAcept);
 	pthread_exit(arg);
 	return arg;
