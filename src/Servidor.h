@@ -15,7 +15,7 @@ using namespace std;
 
 struct paraThreadsRecibidos{
 	sockaddr_in clientAdress;
-	int valorAcept;
+	int valorAcept,descriptorSocket;
 };
 
 class Servidor{
@@ -26,7 +26,6 @@ public:
 	Servidor();
 	void escuchar();
 	void aceptar();
-//	static void recibi(paraThreadsRecibidos obj);
 	virtual ~Servidor();
 };
 
