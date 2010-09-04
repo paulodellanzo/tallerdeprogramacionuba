@@ -25,7 +25,6 @@ struct paraThreadsRecibidos{
 class ServidorCliente{
 private:
 	ParserServidor* parser;
-	int descriptorSocket;
 	paraThreadsRecibidos* cliente;
 public:
 	ServidorCliente(paraThreadsRecibidos* cliente);

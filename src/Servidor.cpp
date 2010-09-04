@@ -4,6 +4,7 @@
 void* recibir(void* structThreads){
 	paraThreadsRecibidos* threads=(paraThreadsRecibidos*)structThreads;
 	ServidorCliente* servCliente=new ServidorCliente(threads);
+	cout<<"Se conecto Cliente: "<<threads->valorAcept<<endl;
 	int paraVerSiCortoComunicacion;
 	bool seguir=true;
 	//las corroboraciones son para ver si devuelve 0 es porq se desconecto el cliente
@@ -20,7 +21,7 @@ void* recibir(void* structThreads){
 		}
 	}
 	void* arg;
-	cout<<"fin del thread"<<endl;
+	cout<<"Se finalizó la coneccion con Cliente: "<<threads->valorAcept<<endl;
 	close(threads->valorAcept);
 	pthread_exit(arg);
 	return arg;
@@ -30,10 +31,7 @@ Servidor::Servidor() {
 	//creamos el socket
 	this->descriptorSocket=socket(AF_INET,SOCK_STREAM,0);
 	if(this->descriptorSocket==-1){
-		cout<<"Mal creado socket"<<endl;
-	}
-	else{
-		cout<<"Socket bien creado"<<endl;
+		cout<<"Mal creado socket del servidor"<<endl;
 	}
 
 	//para llamar al bind()
@@ -48,22 +46,17 @@ Servidor::Servidor() {
 
 	int valorBind=bind(this->descriptorSocket,(struct sockaddr*)&(this->estructurDeDirecciones),length);
 	if(valorBind==-1){
-		cout<<"Fallo en Bind"<<endl;
-	}else{
-		cout<<"Bind correcto"<<endl;
+		cout<<"Fallo en Bind del servidor"<<endl;
 	}
-
 }
 void Servidor::escuchar(){
 	//para el listen
 	int valorListen=listen(descriptorSocket,10);
-
 	if(valorListen==-1){
-		cout<<"Mal listen"<<endl;
+		cout<<"Mal listen del servidor"<<endl;
 	}else{
-		cout<<"Bien listen"<<endl;
+		cout<<"Escuchando..."<<endl;
 	}
-
 }
 void Servidor::aceptar(){
 	//Para el accept
@@ -71,17 +64,17 @@ void Servidor::aceptar(){
 		socklen_t length=sizeof(sockaddr);
 		valorAccept=accept(descriptorSocket,(struct sockaddr*)&clienteAdress,&length);
 		if(valorAccept==-1){
-			cout<<"Mal accpet"<<endl;
-		}else{
-			cout<<"Bien accept"<<endl;
+			cout<<"Mal accept del servidor"<<endl;
 		}
+
 		paraThreadsRecibidos* threads=new paraThreadsRecibidos;
 		threads->clientAdress=clienteAdress;
 		threads->valorAcept=valorAccept;
 		threads->descriptorSocket=this->descriptorSocket;
+
 		pthread_t thread;
 		int creado=pthread_create(&thread,NULL,recibir,(void*)threads);
-		if(creado==0) cout<<"bien creado"<<endl;
+		if(creado!=0) cout<<"mal creado el thread"<<endl;
 	}
 }
 

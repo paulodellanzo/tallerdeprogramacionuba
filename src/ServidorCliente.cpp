@@ -8,10 +8,7 @@ int ServidorCliente::recibirDeCliente(){
 	char data[MAXBYTES];
 	socklen_t leng=sizeof(data);
 	ssize_t valorRecive=recv(cliente->valorAcept,&data,leng,0);
-	cout<<valorRecive<<endl;
-	if(valorRecive==-1){
-		cout<<"Mal recibido"<<endl;
-	}else{
+	if(valorRecive!=-1){
 		data[valorRecive]='\0';
 		cout<<data<<endl;
 	}
@@ -22,11 +19,6 @@ int ServidorCliente::enviarACliente(){
 	char data[MAXBYTES]="A ver si llega";
 	socklen_t leng=sizeof(data);
 	int valorSend=send(cliente->valorAcept,&data,leng,0);
-	if(valorSend==-1){
-		cout<<"Mal enviado"<<endl;
-	}else{
-		cout<<"Se envio info"<<endl;
-	}
 	return valorSend;
 }
 
