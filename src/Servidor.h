@@ -1,7 +1,6 @@
 #ifndef SERVIDOR_H_
 #define SERVIDOR_H_
-#define PORT 5434
-#define MAXBYTES 3000000
+
 using namespace std;
 #include <string>
 #include <iostream>
@@ -12,11 +11,8 @@ using namespace std;
 #include <netinet/in.h>
 #include <netdb.h>
 #include <unistd.h>
+#include "ServidorCliente.h"
 
-struct paraThreadsRecibidos{
-	sockaddr_in clientAdress;
-	int valorAcept,descriptorSocket;
-};
 
 class Servidor{
 private:

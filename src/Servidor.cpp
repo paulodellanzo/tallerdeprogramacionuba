@@ -3,18 +3,9 @@
 
 void* recibir(void* structThreads){
 	paraThreadsRecibidos* threads=(paraThreadsRecibidos*)structThreads;
-	char data[MAXBYTES];
-	socklen_t leng=sizeof(data);
-	socklen_t leng2=sizeof(sockaddr);
-	ssize_t valorRecive=recv(threads->valorAcept,&data,leng,0);
-	if(valorRecive==-1){
-		cout<<"Mal recibido"<<endl;
-	}else{
-		data[valorRecive]='\0';
-		cout<<data<<endl;
-	}
-//	int valorSend=send(threads->descriptorSocket,&data,leng,0);
-//	cout<<"fin del thread"<<endl;
+	ServidorCliente* servCliente=new ServidorCliente(threads);
+	servCliente->interactuarConCliente();
+	cout<<"fin del thread"<<endl;
 	void* arg;
 	close(threads->valorAcept);
 	pthread_exit(arg);
@@ -70,12 +61,12 @@ void Servidor::aceptar(){
 		}else{
 			cout<<"Bien accept"<<endl;
 		}
-		paraThreadsRecibidos threads;
-		threads.clientAdress=clienteAdress;
-		threads.valorAcept=valorAccept;
-		threads.descriptorSocket=this->descriptorSocket;
+		paraThreadsRecibidos* threads=new paraThreadsRecibidos;
+		threads->clientAdress=clienteAdress;
+		threads->valorAcept=valorAccept;
+		threads->descriptorSocket=this->descriptorSocket;
 		pthread_t thread;
-		int creado=pthread_create(&thread,NULL,recibir,(void*)&threads);
+		int creado=pthread_create(&thread,NULL,recibir,(void*)threads);
 		if(creado==0) cout<<"bien creado"<<endl;
 	}
 }
