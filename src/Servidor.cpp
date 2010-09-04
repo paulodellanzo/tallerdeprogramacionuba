@@ -4,9 +4,20 @@
 void* recibir(void* structThreads){
 	paraThreadsRecibidos* threads=(paraThreadsRecibidos*)structThreads;
 	ServidorCliente* servCliente=new ServidorCliente(threads);
-	servCliente->recibirDeCliente();
-	servCliente->enviarACliente();
-	servCliente->recibirDeCliente();
+	int paraVerSiCortoComunicacion;
+	bool seguir=true;
+	while(seguir){
+		paraVerSiCortoComunicacion=servCliente->recibirDeCliente();
+		seguir=(paraVerSiCortoComunicacion!=0);
+		if(seguir){
+			paraVerSiCortoComunicacion=servCliente->enviarACliente();
+			seguir=(paraVerSiCortoComunicacion!=0);
+			if(seguir){
+				paraVerSiCortoComunicacion=servCliente->recibirDeCliente();
+				seguir=(paraVerSiCortoComunicacion!=0);
+			}
+		}
+	}
 	void* arg;
 	cout<<"fin del thread"<<endl;
 	close(threads->valorAcept);

@@ -29,8 +29,8 @@ private:
 	paraThreadsRecibidos* cliente;
 public:
 	ServidorCliente(paraThreadsRecibidos* cliente);
-	void recibirDeCliente();
-	void enviarACliente();
+	int recibirDeCliente();
+	int enviarACliente();
 	virtual ~ServidorCliente();
 };
 
