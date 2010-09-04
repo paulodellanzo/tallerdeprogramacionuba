@@ -2,7 +2,6 @@
 
 ServidorCliente::ServidorCliente(paraThreadsRecibidos* cliente) {
 	this->cliente=cliente;
-
 }
 
 void ServidorCliente::recibirDeCliente(){
@@ -18,7 +17,6 @@ void ServidorCliente::recibirDeCliente(){
 }
 
 void ServidorCliente::enviarACliente(){
-	cout<<"Llama al enviar"<<endl;
 	char data[MAXBYTES]="A ver si llega";
 	socklen_t leng=sizeof(data);
 	int valorSend=send(cliente->valorAcept,&data,leng,0);
