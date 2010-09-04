@@ -1,19 +1,11 @@
 #include "ServidorCliente.h"
 
 ServidorCliente::ServidorCliente(paraThreadsRecibidos* cliente) {
-	//creamos el socket
-	this->descriptorSocket=socket(AF_INET,SOCK_STREAM,0);
-	if(this->descriptorSocket==-1){
-		cout<<"Mal creado socket"<<endl;
-	}
-	else{
-		cout<<"Socket bien creado"<<endl;
-	}
 	this->cliente=cliente;
 
 }
 
-void ServidorCliente::interactuarConCliente(){
+void ServidorCliente::recibirDeCliente(){
 	char data[MAXBYTES];
 	socklen_t leng=sizeof(data);
 	ssize_t valorRecive=recv(cliente->valorAcept,&data,leng,0);
@@ -23,7 +15,18 @@ void ServidorCliente::interactuarConCliente(){
 		data[valorRecive]='\0';
 		cout<<data<<endl;
 	}
+}
 
+void ServidorCliente::enviarACliente(){
+	cout<<"Llama al enviar"<<endl;
+	char data[MAXBYTES]="A ver si llega";
+	socklen_t leng=sizeof(data);
+	int valorSend=send(cliente->valorAcept,&data,leng,0);
+	if(valorSend==-1){
+		cout<<"Mal enviado"<<endl;
+	}else{
+		cout<<"Se envio info"<<endl;
+	}
 }
 
 ServidorCliente::~ServidorCliente() {

@@ -15,6 +15,7 @@ using namespace std;
 #include <netinet/in.h>
 #include <netdb.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 struct paraThreadsRecibidos{
 	sockaddr_in clientAdress;
@@ -28,7 +29,8 @@ private:
 	paraThreadsRecibidos* cliente;
 public:
 	ServidorCliente(paraThreadsRecibidos* cliente);
-	void interactuarConCliente();
+	void recibirDeCliente();
+	void enviarACliente();
 	virtual ~ServidorCliente();
 };
 

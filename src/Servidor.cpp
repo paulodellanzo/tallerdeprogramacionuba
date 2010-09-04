@@ -4,8 +4,9 @@
 void* recibir(void* structThreads){
 	paraThreadsRecibidos* threads=(paraThreadsRecibidos*)structThreads;
 	ServidorCliente* servCliente=new ServidorCliente(threads);
-	servCliente->interactuarConCliente();
+	servCliente->recibirDeCliente();
 	cout<<"fin del thread"<<endl;
+	servCliente->enviarACliente();
 	void* arg;
 	close(threads->valorAcept);
 	pthread_exit(arg);
