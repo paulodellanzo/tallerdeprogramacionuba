@@ -6,6 +6,7 @@ void* recibir(void* structThreads){
 	ServidorCliente* servCliente=new ServidorCliente(threads);
 	int paraVerSiCortoComunicacion;
 	bool seguir=true;
+	//las corroboraciones son para ver si devuelve 0 es porq se desconecto el cliente
 	while(seguir){
 		paraVerSiCortoComunicacion=servCliente->recibirDeCliente();
 		seguir=(paraVerSiCortoComunicacion!=0);
