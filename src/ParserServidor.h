@@ -3,11 +3,13 @@
 
 using namespace std;
 #include <string>
+#include <string.h>
+#include <stdio.h>
 
 class ParserServidor {
 public:
 	ParserServidor();
-	string getRespuesta(string Xml);
+	void getRespuesta(char* Xml,char* resultado);
 	virtual ~ParserServidor();
 };
 
