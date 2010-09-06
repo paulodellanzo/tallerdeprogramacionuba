@@ -4,8 +4,8 @@ D::D() {
 	// TODO Auto-generated constructor stub
 
 }
-list<string>* D::realizarOpearacion(list<string>* operandos){
-	list<string>* xml = new list<string>();
+list<char*>* D::realizarOpearacion(list<char*>* operandos){
+	list<char*>* xml = new list<char*>();
 	return xml;
 }
 

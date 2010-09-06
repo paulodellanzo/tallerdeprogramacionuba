@@ -4,8 +4,8 @@ M::M() {
 	// TODO Auto-generated constructor stub
 
 }
-list<string>* M::realizarOpearacion(list<string>* operandos){
-	list<string>* xml=new list<string>();
+list<char*>* M::realizarOpearacion(list<char*>* operandos){
+	list<char*>* xml=new list<char*>();
 	return xml;
 }
 

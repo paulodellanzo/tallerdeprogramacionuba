@@ -5,7 +5,7 @@ Procesador::Procesador() {
 
 }
 
-string Procesador::getResultado(string operacion, list<string>* operandos){
+char* Procesador::getResultado(char* operacion, list<char*>* operandos){
 	return "";
 }
 

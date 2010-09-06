@@ -12,7 +12,7 @@ private:
 	map<string,Operacion>* operaciones;
 public:
 	Procesador();
-	string getResultado(string operacion, list<string>* operandos);
+	char* getResultado(char* operacion, list<char*>* operandos);
 	virtual ~Procesador();
 };
 
