@@ -5,8 +5,68 @@ D::D() {
 
 }
 list<char*>* D::realizarOpearacion(list<char*>* operandos){
-	list<char*>* xml = new list<char*>();
-	return xml;
+	list<char*>* respuesta = new list<char*>();
+	list<char*>::iterator it=operandos->begin();
+	char* dividendoChar;
+	char* divisorChar;
+	if(operandos->front()=="dividendo"){// para saber si el primero es divisor o dividendo
+		operandos->pop_front();
+		dividendoChar=operandos->front();
+		operandos->pop_front();
+		divisorChar=operandos->front();
+	}else{
+		operandos->pop_front();
+		divisorChar=operandos->front();
+		operandos->pop_front();
+		dividendoChar=operandos->front();
+	}
+	double dividendoDouble=atof(dividendoChar);
+	double divisorDouble=atof(divisorChar);
+
+//	veamos si en realidad es un entero, lo que es pedido
+	int dividendoInt=(int)dividendoDouble;
+	int divisorInt=(int)divisorDouble;
+	if(((dividendoDouble - dividendoInt)!=0.0)or(divisorDouble - divisorInt)!=0.0){
+		it=respuesta->begin();
+		respuesta->insert(it,"Error");
+		it++;
+		respuesta->insert(it,"El divisor/dividendo debe ser un numero entero");
+		return respuesta;
+	}
+	if(divisorInt==0){
+		it=respuesta->begin();
+		respuesta->insert(it,"Error");
+		it++;
+		respuesta->insert(it,"El divisor no puede ser 0");
+		return respuesta;
+	}
+	if((!esUnNumero(dividendoChar))or(!esUnNumero(divisorChar))){//Corroborar que no hayan puesto por ej 4.3.2
+		it=respuesta->begin();
+		respuesta->insert(it,"Error");
+		it++;
+		respuesta->insert(it,"No se ingreso un numero");
+		return respuesta;
+	}
+	it=respuesta->begin();
+	respuesta->insert(it,"Correcto");
+
+	it++;
+	int cociente=(int)(dividendoInt/divisorInt);
+	char* cocienteChar= new char[50];
+	sprintf(cocienteChar,"%d",cociente);
+	respuesta->insert(it,"Cociente");
+	it++;
+	respuesta->insert(it,cocienteChar);
+
+	it++;
+	int resto=(dividendoInt%divisorInt);
+	char* restoChar=new char[50];
+	sprintf(restoChar,"%d",resto);
+	respuesta->insert(it,"Resto");
+	it++;
+	respuesta->insert(it,restoChar);
+
+	return respuesta;
 }
 
 D::~D() {
