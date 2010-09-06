@@ -7,8 +7,10 @@ ParserServidor::ParserServidor() {
 void ParserServidor::getRespuesta(char* Xml,char* resultado){
 
 		char strOperacion[255];
+		char cadenaAuxiliar[255];
+		char operandos[255][255];
 		int i=0;
-		while(Xml[i]==' ') //Elimino los espacios en blanco iniciales de la cadena
+		while(Xml[0]==' ') //Elimino los espacios en blanco iniciales de la cadena
 			Xml=Xml+1;
 
 		Xml=strtok(Xml,"<"); //El primer caracter debería ser "<", strtok elimina el caracter
@@ -31,7 +33,8 @@ void ParserServidor::getRespuesta(char* Xml,char* resultado){
 	    	return;
 	    }
 
-	    if(sscanf(Xml,"operacion id=\"%[^\"]",strOperacion)==0)
+	    if(sscanf(Xml,"operacion id=\"%[^\"] %[^>]",strOperacion,cadenaAuxiliar)==0 ||
+	    		strcmp(cadenaAuxiliar,"\"/")!=0)
 	    {
 	    	printf("Error - El tag de operación no tiene el formato esperado"); //TODO Cambiar
 	    	return;
@@ -51,7 +54,43 @@ void ParserServidor::getRespuesta(char* Xml,char* resultado){
 	    	return;
 	    }
 
-	return;
+
+	    Xml=strtok(NULL,"<");
+
+	    while (Xml!=NULL)
+	    {
+
+	    	if(sscanf(Xml,"parametro nombre=\"%[^\"]\">%[^<]]",operandos[2*i],operandos[2*i+1])
+	   			!=2)
+	    	{
+	    		printf("Error - formato de parametro incorrecto");
+	    		return;
+	    	}
+
+	    	i=i+1;
+		    Xml=strtok(NULL,"<");
+		    if (Xml==NULL)
+		    {
+		       	printf("Error - Archivo incompleto 4"); //TODO Cambiar
+		      	return;
+		    }
+		    sscanf(Xml,"%[^>]",cadenaAuxiliar);
+		    if (strcmp(cadenaAuxiliar,"/parametro")!=0)
+		    {
+		    	printf("Error - formato de parametro incorrecto");
+		    	return;
+		    }
+		    Xml=strtok(NULL,"<");
+	    }
+
+	    if (i<2)
+	    {
+	    	printf("No se puede operar con menos de dos parámetros");
+	    	return;
+	    }
+
+	    printf("fin");
+	   	return;
 }
 
 ParserServidor::~ParserServidor() {

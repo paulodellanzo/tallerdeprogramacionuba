@@ -5,6 +5,7 @@ using namespace std;
 #include <string>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 class ParserServidor {
 public:
