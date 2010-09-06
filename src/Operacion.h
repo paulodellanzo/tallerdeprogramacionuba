@@ -7,6 +7,7 @@ using namespace std;
 #include <cstdlib>
 #include <stdlib.h>
 #include <stdio.h>
+#define TAMANOVECTOROPERANDOS 20 //Para cuando haya que pasar la lista de char,el tamaño de los char
 class Operacion {
 public:
 	Operacion();

@@ -6,6 +6,7 @@ using namespace std;
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#define TAMANOVECTOROPERANDOS 20 //Para cuando haya que pasar la lista de char,el tamaño de los char
 
 class ParserServidor {
 public:
