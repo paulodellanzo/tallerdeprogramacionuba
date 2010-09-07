@@ -26,6 +26,12 @@ list<char*>* S::realizarOpearacion(list<char*>* operandos){
 			}
 			sumandoDouble=atof(sumandoChar);
 			suma+=sumandoDouble;
+		}else{
+			it=respuesta->begin();
+			respuesta->insert(it,"Error");
+			it++;
+			respuesta->insert(it,"No se pasaron sumandos como operandos");
+			return respuesta;
 		}
 	}
 	sprintf(sumaChar,"%d",suma);

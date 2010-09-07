@@ -9,16 +9,31 @@ list<char*>* D::realizarOpearacion(list<char*>* operandos){
 	list<char*>::iterator it=operandos->begin();
 	char* dividendoChar;
 	char* divisorChar;
+	if(operandos->size()>4){
+		it=respuesta->begin();
+		respuesta->insert(it,"Error");
+		it++;
+		respuesta->insert(it,"La division solo acepta dos operandos");
+		return respuesta;
+	}
 	if(operandos->front()=="dividendo"){// para saber si el primero es divisor o dividendo
 		operandos->pop_front();
 		dividendoChar=operandos->front();
 		operandos->pop_front();
 		divisorChar=operandos->front();
 	}else{
-		operandos->pop_front();
-		divisorChar=operandos->front();
-		operandos->pop_front();
-		dividendoChar=operandos->front();
+		if(operandos->front()=="divisor"){
+			operandos->pop_front();
+			divisorChar=operandos->front();
+			operandos->pop_front();
+			dividendoChar=operandos->front();
+		}else{
+			it=respuesta->begin();
+			respuesta->insert(it,"Error");
+			it++;
+			respuesta->insert(it,"No se paso como operando un divisor o dividendo");
+			return respuesta;
+		}
 	}
 	double dividendoDouble=atof(dividendoChar);
 	double divisorDouble=atof(divisorChar);

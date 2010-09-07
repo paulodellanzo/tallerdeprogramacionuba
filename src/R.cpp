@@ -13,7 +13,7 @@ list<char*>* R::realizarOpearacion(list<char*>* operandos){
 	char* restandoChar;
 	double restandoDouble;
 	while(operandos->size()>0){
-		if(operandos->front()=="sumando"){
+		if(operandos->front()=="restando"){
 			operandos->pop_front();
 			restandoChar=operandos->front();
 			operandos->pop_front();
@@ -26,6 +26,12 @@ list<char*>* R::realizarOpearacion(list<char*>* operandos){
 			}
 			restandoDouble=atof(restandoChar);
 			resta-=restandoDouble;
+		}else{
+			it=respuesta->begin();
+			respuesta->insert(it,"Error");
+			it++;
+			respuesta->insert(it,"No se pasaron restandos como operandos");
+			return respuesta;
 		}
 	}
 	sprintf(restaChar,"%d",resta);

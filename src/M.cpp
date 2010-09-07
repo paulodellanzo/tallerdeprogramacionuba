@@ -12,7 +12,7 @@ list<char*>* M::realizarOpearacion(list<char*>* operandos){
 	char* multiplicandoChar;
 	double multiplicandoDouble;
 	while(operandos->size()>0){
-		if(operandos->front()=="sumando"){
+		if(operandos->front()=="multiplicando"){
 			operandos->pop_front();
 			multiplicandoChar=operandos->front();
 			operandos->pop_front();
@@ -25,6 +25,12 @@ list<char*>* M::realizarOpearacion(list<char*>* operandos){
 			}
 			multiplicandoDouble=atof(multiplicandoChar);
 			multiplicacion=multiplicandoDouble * multiplicacion;
+		}else{
+			it=respuesta->begin();
+			respuesta->insert(it,"Error");
+			it++;
+			respuesta->insert(it,"No se pasaron multiplicandos como operandos");
+			return respuesta;
 		}
 	}
 	sprintf(multiplicacionChar,"%d",multiplicacion);
