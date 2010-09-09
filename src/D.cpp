@@ -22,12 +22,33 @@ list<char*>* D::realizarOpearacion(list<char*>* operandos){
 		operandos->pop_front();
 		dividendoChar=operandos->front();
 		operandos->pop_front();
-		divisorChar=operandos->front();
+		if(operandos->front()=="divisor"){
+			divisorChar=operandos->front();
+		}else{
+			it=respuesta->begin();
+			respuesta->insert(it,"Error");
+			it++;
+			respuesta->insert(it,"V");
+			it++;
+			respuesta->insert(it,"No se paso como operando un divisor");
+			return respuesta;
+		}
 	}else{
 		if(operandos->front()=="divisor"){
 			operandos->pop_front();
 			divisorChar=operandos->front();
 			operandos->pop_front();
+			if(operandos->front()=="divisor"){
+				dividendoChar=operandos->front();
+			}else{
+				it=respuesta->begin();
+				respuesta->insert(it,"Error");
+				it++;
+				respuesta->insert(it,"V");
+				it++;
+				respuesta->insert(it,"No se paso como operando un dividendo");
+				return respuesta;
+			}
 			dividendoChar=operandos->front();
 		}else{
 			it=respuesta->begin();
@@ -39,10 +60,19 @@ list<char*>* D::realizarOpearacion(list<char*>* operandos){
 			return respuesta;
 		}
 	}
+
+	if((!esUnNumero(dividendoChar))or(!esUnNumero(divisorChar))){//Corroborar que no hayan puesto por ej 4.3.2
+		it=respuesta->begin();
+		respuesta->insert(it,"Error");
+		it++;
+		respuesta->insert(it,"V");
+		it++;
+		respuesta->insert(it,"No se ingreso un numero en el divisor o dividendo");
+		return respuesta;
+	}
+	//	veamos si en realidad es un entero, lo que es pedido
 	double dividendoDouble=atof(dividendoChar);
 	double divisorDouble=atof(divisorChar);
-
-//	veamos si en realidad es un entero, lo que es pedido
 	int dividendoInt=(int)dividendoDouble;
 	int divisorInt=(int)divisorDouble;
 	if(((dividendoDouble - dividendoInt)!=0.0)or(divisorDouble - divisorInt)!=0.0){
@@ -61,15 +91,6 @@ list<char*>* D::realizarOpearacion(list<char*>* operandos){
 		respuesta->insert(it,"V");
 		it++;
 		respuesta->insert(it,"El divisor no puede ser 0");
-		return respuesta;
-	}
-	if((!esUnNumero(dividendoChar))or(!esUnNumero(divisorChar))){//Corroborar que no hayan puesto por ej 4.3.2
-		it=respuesta->begin();
-		respuesta->insert(it,"Error");
-		it++;
-		respuesta->insert(it,"V");
-		it++;
-		respuesta->insert(it,"No se ingreso un numero");
 		return respuesta;
 	}
 	it=respuesta->begin();

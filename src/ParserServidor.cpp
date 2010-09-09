@@ -94,7 +94,7 @@ void ParserServidor::getRespuesta(char* Xml,char* resultado){
 }
 
 list<char*>* ParserServidor::getOperandos(char* xml){
-//	COmo sabe que esta bien busca los operandos directamente
+//	COmo sabe que esta bien busca los operandos directamente acordarse la estructura de la lista
 
 }
 
@@ -102,8 +102,24 @@ char ParserServidor::getOperacionId(char* xml){
 //como sabe que esta bien busca la operacion id directamente
 }
 
-char* ParserServidor::getXml(list<char*>* base){
+char* ParserServidor::getXml(list<char*>* base, char idOperacion){
 //	Arma el xml se fija si el primer nodo de la lista es CORRECTO o ERROR
+	list<char*>::iterator it=base->begin();
+	if(base->front()=="Error"){
+		base->pop_front();
+		return (this->armarXmlDeErrores(base,idOperacion));
+	}else{
+		base->pop_front();
+		return (this->armarXmlDeResultado(base,idOperacion));
+	}
+}
+
+char* ParserServidor::armarXmlDeErrores(list<char*>* base,char idOperacion){
+
+}
+
+char* ParserServidor::armarXmlDeResultado(list<char*>* base, char idOperacion){
+
 
 }
 

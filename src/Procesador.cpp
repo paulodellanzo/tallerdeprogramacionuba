@@ -19,7 +19,7 @@ char* Procesador::getRespuesta(char* xml){
 	list<char*>* operandos=this->parser->getOperandos(xml);
 	Operacion operacion=this->operaciones->operator [](idOperacion);
 	list<char*>* respuestaDeOperacion=operacion.realizarOpearacion(operandos);
-	char* respuesta=this->parser->getXml(respuestaDeOperacion);
+	char* respuesta=this->parser->getXml(respuestaDeOperacion,idOperacion);
 	return respuesta;
 }
 
