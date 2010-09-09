@@ -23,10 +23,12 @@ class ServidorCliente{
 private:
 	paraThreadsRecibidos* cliente;
 	Procesador* procesador;
+
 public:
 	ServidorCliente(paraThreadsRecibidos* cliente);
-	int recibirDeCliente();
-	int enviarACliente();
+	void interactuarConCliente();
+	char* recibirDeCliente();
+	int enviarACliente(char* data);
 	virtual ~ServidorCliente();
 };
 

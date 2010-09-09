@@ -1,25 +1,13 @@
 #include "Servidor.h"
 #include <pthread.h>
 
-void* recibir(void* structThreads){
+void* interactuar(void* structThreads){
 	paraThreadsRecibidos* threads=(paraThreadsRecibidos*)structThreads;
 	ServidorCliente* servCliente=new ServidorCliente(threads);
 	cout<<"Se conecto Cliente: "<<threads->valorAcept<<endl;
 	int paraVerSiCortoComunicacion;
 	bool seguir=true;
-	//las corroboraciones son para ver si devuelve 0 es porq se desconecto el cliente
-	while(seguir){
-		paraVerSiCortoComunicacion=servCliente->recibirDeCliente();
-		seguir=(paraVerSiCortoComunicacion!=0);
-		if(seguir){
-			paraVerSiCortoComunicacion=servCliente->enviarACliente();
-			seguir=(paraVerSiCortoComunicacion!=0);
-			if(seguir){
-				paraVerSiCortoComunicacion=servCliente->recibirDeCliente();
-				seguir=(paraVerSiCortoComunicacion!=0);
-			}
-		}
-	}
+	servCliente->interactuarConCliente();
 	void* arg;
 	cout<<"Se finalizó la coneccion con Cliente: "<<threads->valorAcept<<endl;
 	close(threads->valorAcept);
@@ -73,7 +61,7 @@ void Servidor::aceptar(){
 		threads->descriptorSocket=this->descriptorSocket;
 
 		pthread_t thread;
-		int creado=pthread_create(&thread,NULL,recibir,(void*)threads);
+		int creado=pthread_create(&thread,NULL,interactuar,(void*)threads);
 		if(creado!=0) cout<<"mal creado el thread"<<endl;
 	}
 }
