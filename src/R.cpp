@@ -13,7 +13,7 @@ list<char*>* R::realizarOpearacion(list<char*>* operandos){
 	char* restandoChar;
 	double restandoDouble;
 	while(operandos->size()>0){
-		if(operandos->front()=="restando"){
+		if(operandos->front()=="res"){
 			operandos->pop_front();
 			restandoChar=operandos->front();
 			operandos->pop_front();
@@ -41,6 +41,8 @@ list<char*>* R::realizarOpearacion(list<char*>* operandos){
 	sprintf(restaChar,"%d",resta);
 	it=respuesta->begin();
 	respuesta->insert(it,"Correcto");
+	it++;
+	respuesta->insert(it,"res");
 	it++;
 	respuesta->insert(it,restandoChar);
 	return respuesta;;

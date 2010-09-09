@@ -13,7 +13,7 @@ list<char*>* S::realizarOpearacion(list<char*>* operandos){
 	char* sumandoChar;
 	double sumandoDouble;
 	while(operandos->size()>0){
-		if(operandos->front()=="sumando"){
+		if(operandos->front()=="sum"){
 			operandos->pop_front();
 			sumandoChar=operandos->front();
 			operandos->pop_front();
@@ -41,6 +41,8 @@ list<char*>* S::realizarOpearacion(list<char*>* operandos){
 	sprintf(sumaChar,"%d",suma);
 	it=respuesta->begin();
 	respuesta->insert(it,"Correcto");
+	it++;
+	respuesta->insert(it,"sum");
 	it++;
 	respuesta->insert(it,sumandoChar);
 	return respuesta;

@@ -14,12 +14,15 @@ Procesador::Procesador() {
 
 }
 
-char* Procesador::getRespuesta(char* xml){
-	char idOperacion=this->parser->getOperacionId(xml);
+const char* Procesador::getRespuesta(char* xml){
+	char idOperacionChar=this->parser->getOperacionId(xml);
+	ostringstream sstream;
+	sstream << idOperacionChar;
+	string idOperacionString= sstream.str();
 	list<char*>* operandos=this->parser->getOperandos(xml);
-	Operacion operacion=this->operaciones->operator [](idOperacion);
-	list<char*>* respuestaDeOperacion=operacion.realizarOpearacion(operandos);
-	char* respuesta=this->parser->getXml(respuestaDeOperacion,idOperacion);
+	Operacion operacion=this->operaciones->operator [](idOperacionChar);
+	list<string>* respuestaDeOperacion=operacion.realizarOpearacion(operandos);
+	const char* respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 	return respuesta;
 }
 

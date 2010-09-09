@@ -12,14 +12,14 @@ using namespace std;
 
 class ParserServidor {
 	private:
-		char* armarXmlDeErrores(list<char*>* base,char idOperacion);
-		char* armarXmlDeResultado(list<char*>* base,char idOperacion);
+		const char* armarXmlDeErrores(list<string>* base,string idOperacion);
+		const char* armarXmlDeResultado(list<string>* base,string idOperacion);
 	public:
 		ParserServidor();
 		void getRespuesta(char* Xml,char* resultado);
 		char getOperacionId(char *xml);
 		list<char*>* getOperandos(char* xml);
-		char* getXml(list<char*>* base,char idOperacion);
+		const char* getXml(list<string>* base,string idOperacion);
 		virtual ~ParserServidor();
 };
 

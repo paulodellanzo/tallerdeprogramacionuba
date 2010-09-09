@@ -4,44 +4,47 @@ M::M() {
 	// TODO Auto-generated constructor stub
 
 }
-list<char*>* M::realizarOpearacion(list<char*>* operandos){
-	list<char*>* respuesta = new list<char*>();
-	list<char*>::iterator it=operandos->begin();
+list<string>* M::realizarOpearacion(list<char*>* operandos){
+	list<string>* respuesta = new list<string>();
+	list<string>::iterator itres=respuesta->begin();
 	double multiplicacion=1;
-	char* multiplicacionChar=new char[100];
 	char* multiplicandoChar;
 	double multiplicandoDouble;
 	while(operandos->size()>0){
-		if(operandos->front()=="multiplicando"){
+		if(operandos->front()=="mul"){
 			operandos->pop_front();
 			multiplicandoChar=operandos->front();
 			operandos->pop_front();
 			if((!esUnNumero(multiplicandoChar))){//Corroborar que no hayan puesto por ej 4.3.2
-				it=respuesta->begin();
-				respuesta->insert(it,"Error");
-				it++;
-				respuesta->insert(it,"V");
-				it++;
-				respuesta->insert(it,"Alguno de los operandos de la multiplicacion no es un número");
+				itres=respuesta->begin();
+				respuesta->insert(itres,"Error");
+				itres++;
+				respuesta->insert(itres,"V");
+				itres++;
+				respuesta->insert(itres,"Alguno de los operandos de la multiplicacion no es un número");
 				return respuesta;
 			}
 			multiplicandoDouble=atof(multiplicandoChar);
 			multiplicacion=multiplicandoDouble * multiplicacion;
 		}else{
-			it=respuesta->begin();
-			respuesta->insert(it,"Error");
-			it++;
-			respuesta->insert(it,"V");
-			it++;
-			respuesta->insert(it,"No se pasaron multiplicandos como operandos");
+			itres=respuesta->begin();
+			respuesta->insert(itres,"Error");
+			itres++;
+			respuesta->insert(itres,"V");
+			itres++;
+			respuesta->insert(itres,"No se pasaron multiplicandos como operandos");
 			return respuesta;
 		}
 	}
-	sprintf(multiplicacionChar,"%d",multiplicacion);
-	it=respuesta->begin();
-	respuesta->insert(it,"Correcto");
-	it++;
-	respuesta->insert(it,multiplicacionChar);
+	ostringstream sstream;
+	sstream << multiplicacion;
+	string multiplicacionString = sstream.str();
+	itres=respuesta->begin();
+	respuesta->insert(itres,"Correcto");
+	itres++;
+	respuesta->insert(itres,"mul");
+	itres++;
+	respuesta->insert(itres,multiplicacionString);
 	return respuesta;
 }
 

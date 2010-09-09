@@ -26,8 +26,8 @@ bool Operacion::esUnNumero(char* numero){
 	return true;
 }
 
-list<char*>* Operacion::realizarOpearacion(list<char*>* operandos){
-	return new list<char*>();
+list<string>* Operacion::realizarOpearacion(list<char*>* operandos){
+	return new list<string>();
 }
 
 Operacion::~Operacion() {

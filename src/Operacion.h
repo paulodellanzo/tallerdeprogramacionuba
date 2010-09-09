@@ -7,11 +7,12 @@ using namespace std;
 #include <cstdlib>
 #include <stdlib.h>
 #include <stdio.h>
+#include <sstream>
 #define TAMANOVECTOROPERANDOS 20 //Para cuando haya que pasar la lista de char,el tamaño de los char
 class Operacion {
 public:
 	Operacion();
-	virtual list<char*>* realizarOpearacion(list<char*>* operandos);
+	virtual list<string>* realizarOpearacion(list<char*>* operandos);
 	bool esUnNumero(char* numero);
 	virtual ~Operacion();
 };
