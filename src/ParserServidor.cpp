@@ -115,9 +115,13 @@ const char* ParserServidor::getXml(list<string>* base, string idOperacion){
 }
 
 const char* ParserServidor::armarXmlDeErrores(list<string>* base,string idOperacion){
+
+
+}
+
+const char* ParserServidor::armarXmlDeResultado(list<string>* base, string idOperacion){
 	string* aEnviar = new string;
-	string idOperacionaux=idOperacion;
-	(*aEnviar)="<respuesta>\n	</operacion id=\""+idOperacionaux+"\"/>\n	<resultados>\n";
+	(*aEnviar)="<respuesta>\n	</operacion id=\""+idOperacion+"\"/>\n	<resultados>\n";
 	list<string>::const_iterator iterador;
 	iterador=base->begin();
 	while(iterador!=base->end()){
@@ -128,12 +132,6 @@ const char* ParserServidor::armarXmlDeErrores(list<string>* base,string idOperac
 	}
 	(*aEnviar)+="	</resultados>\n</respuesta>";
 	return (aEnviar->c_str());
-
-}
-
-const char* ParserServidor::armarXmlDeResultado(list<string>* base, string idOperacion){
-
-
 }
 
 ParserServidor::~ParserServidor() {
