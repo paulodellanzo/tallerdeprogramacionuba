@@ -93,6 +93,20 @@ void ParserServidor::getRespuesta(char* Xml,char* resultado){
 	   	return;
 }
 
+list<char*>* ParserServidor::getOperandos(char* xml){
+//	COmo sabe que esta bien busca los operandos directamente
+
+}
+
+char ParserServidor::getOperacionId(char* xml){
+//como sabe que esta bien busca la operacion id directamente
+}
+
+char* ParserServidor::getXml(list<char*>* base){
+//	Arma el xml se fija si el primer nodo de la lista es CORRECTO o ERROR
+
+}
+
 ParserServidor::~ParserServidor() {
 	// TODO Auto-generated destructor stub
 }

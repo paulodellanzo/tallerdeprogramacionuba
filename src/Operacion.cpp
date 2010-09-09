@@ -23,6 +23,11 @@ bool Operacion::esUnNumero(char* numero){
 		}
 
 	}
+	return true;
+}
+
+list<char*>* Operacion::realizarOpearacion(list<char*>* operandos){
+	return new list<char*>();
 }
 
 Operacion::~Operacion() {

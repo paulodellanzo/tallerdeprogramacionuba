@@ -11,7 +11,7 @@ using namespace std;
 class Operacion {
 public:
 	Operacion();
-	virtual list<char*>* realizarOpearacion(list<char*>* operandos)=0;
+	virtual list<char*>* realizarOpearacion(list<char*>* operandos);
 	bool esUnNumero(char* numero);
 	virtual ~Operacion();
 };

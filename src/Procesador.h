@@ -1,18 +1,27 @@
 #ifndef PROCESADOR_H_
 #define PROCESADOR_H_
 
+#define PORT 5434
+#define MAXBYTES 300
+
 using namespace std;
 #include <string>
 #include "Operacion.h"
+#include "ParserServidor.h"
+#include "S.h"
+#include "D.h"
+#include "R.h"
+#include "M.h"
 #include <map>
 #include <list>
 
 class Procesador {
 private:
-	map<string,Operacion>* operaciones;
+	map<char,Operacion>* operaciones;
+	ParserServidor* parser;
 public:
 	Procesador();
-	char* getResultado(char* operacion, list<char*>* operandos);
+	char* getRespuesta(char* xml);
 	virtual ~Procesador();
 };
 

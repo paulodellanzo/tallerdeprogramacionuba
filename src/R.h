@@ -6,7 +6,7 @@ using namespace std;
 #include "Operacion.h"
 #include <list>
 
-class R : Operacion {
+class R : public Operacion {
 public:
 	R();
 	virtual list<char*>* realizarOpearacion(list<char*>* operandos);
