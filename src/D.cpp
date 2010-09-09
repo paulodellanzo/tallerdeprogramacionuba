@@ -13,6 +13,8 @@ list<char*>* D::realizarOpearacion(list<char*>* operandos){
 		it=respuesta->begin();
 		respuesta->insert(it,"Error");
 		it++;
+		respuesta->insert(it,"V");
+		it++;
 		respuesta->insert(it,"La division solo acepta dos operandos");
 		return respuesta;
 	}
@@ -31,6 +33,8 @@ list<char*>* D::realizarOpearacion(list<char*>* operandos){
 			it=respuesta->begin();
 			respuesta->insert(it,"Error");
 			it++;
+			respuesta->insert(it,"V");
+			it++;
 			respuesta->insert(it,"No se paso como operando un divisor o dividendo");
 			return respuesta;
 		}
@@ -45,6 +49,8 @@ list<char*>* D::realizarOpearacion(list<char*>* operandos){
 		it=respuesta->begin();
 		respuesta->insert(it,"Error");
 		it++;
+		respuesta->insert(it,"V");
+		it++;
 		respuesta->insert(it,"El divisor/dividendo debe ser un numero entero");
 		return respuesta;
 	}
@@ -52,12 +58,16 @@ list<char*>* D::realizarOpearacion(list<char*>* operandos){
 		it=respuesta->begin();
 		respuesta->insert(it,"Error");
 		it++;
+		respuesta->insert(it,"V");
+		it++;
 		respuesta->insert(it,"El divisor no puede ser 0");
 		return respuesta;
 	}
 	if((!esUnNumero(dividendoChar))or(!esUnNumero(divisorChar))){//Corroborar que no hayan puesto por ej 4.3.2
 		it=respuesta->begin();
 		respuesta->insert(it,"Error");
+		it++;
+		respuesta->insert(it,"V");
 		it++;
 		respuesta->insert(it,"No se ingreso un numero");
 		return respuesta;

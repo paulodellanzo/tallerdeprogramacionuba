@@ -21,6 +21,8 @@ list<char*>* S::realizarOpearacion(list<char*>* operandos){
 				it=respuesta->begin();
 				respuesta->insert(it,"Error");
 				it++;
+				respuesta->insert(it,"V");
+				it++;
 				respuesta->insert(it,"Alguno de los operandos de la suma no es un número");
 				return respuesta;
 			}
@@ -29,6 +31,8 @@ list<char*>* S::realizarOpearacion(list<char*>* operandos){
 		}else{
 			it=respuesta->begin();
 			respuesta->insert(it,"Error");
+			it++;
+			respuesta->insert(it,"V");
 			it++;
 			respuesta->insert(it,"No se pasaron sumandos como operandos");
 			return respuesta;
