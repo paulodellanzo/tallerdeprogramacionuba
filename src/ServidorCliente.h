@@ -28,7 +28,7 @@ public:
 	ServidorCliente(paraThreadsRecibidos* cliente);
 	void interactuarConCliente();
 	char* recibirDeCliente();
-	int enviarACliente(char* data);
+	int enviarACliente(const char* data);
 	virtual ~ServidorCliente();
 };
 

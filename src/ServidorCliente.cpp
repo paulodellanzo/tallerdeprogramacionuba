@@ -17,7 +17,7 @@ char* ServidorCliente::recibirDeCliente(){
 	return data;
 }
 
-int ServidorCliente::enviarACliente(char* data){
+int ServidorCliente::enviarACliente(const char* data){
 	socklen_t leng=sizeof(char[MAXBYTES]);
 	int valorSend=send(cliente->valorAcept,data,leng,0);
 	return valorSend;
@@ -31,7 +31,7 @@ void ServidorCliente::interactuarConCliente(){
 		xml=this->recibirDeCliente();
 		seguir=((xml)!=" ");
 		if(seguir){
-			char* data=new char[MAXBYTES];
+			const char* data;
 			data=this->procesador->getRespuesta(xml);
 			paraVerSiCortoComunicacion=this->enviarACliente(data);
 			//la corroboracion es para ver si devuelve 0 es porq se desconecto el cliente

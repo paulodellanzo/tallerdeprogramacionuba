@@ -5,11 +5,10 @@ S::S() {
 
 }
 
-list<char*>* S::realizarOpearacion(list<char*>* operandos){
-	list<char*>* respuesta = new list<char*>();
-	list<char*>::iterator it=operandos->begin();
+list<string>* S::realizarOpearacion(list<char*>* operandos){
+	list<string>* respuesta = new list<string>();
+	list<string>::iterator it=respuesta->begin();
 	double suma=0;
-	char* sumaChar=new char[100];
 	char* sumandoChar;
 	double sumandoDouble;
 	while(operandos->size()>0){
@@ -38,13 +37,15 @@ list<char*>* S::realizarOpearacion(list<char*>* operandos){
 			return respuesta;
 		}
 	}
-	sprintf(sumaChar,"%d",suma);
+	ostringstream sstream;
+	sstream << suma;
+	string sumaString = sstream.str();
 	it=respuesta->begin();
 	respuesta->insert(it,"Correcto");
 	it++;
 	respuesta->insert(it,"sum");
 	it++;
-	respuesta->insert(it,sumandoChar);
+	respuesta->insert(it,sumaString);
 	return respuesta;
 }
 

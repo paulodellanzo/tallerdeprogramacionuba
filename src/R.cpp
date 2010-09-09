@@ -5,11 +5,10 @@ R::R() {
 
 }
 
-list<char*>* R::realizarOpearacion(list<char*>* operandos){
-	list<char*>* respuesta = new list<char*>();
-	list<char*>::iterator it=operandos->begin();
+list<string>* R::realizarOpearacion(list<char*>* operandos){
+	list<string>* respuesta = new list<string>();
+	list<string>::iterator it=respuesta->begin();
 	double resta=0;
-	char* restaChar=new char[100];
 	char* restandoChar;
 	double restandoDouble;
 	while(operandos->size()>0){
@@ -38,13 +37,15 @@ list<char*>* R::realizarOpearacion(list<char*>* operandos){
 			return respuesta;
 		}
 	}
-	sprintf(restaChar,"%d",resta);
+	ostringstream sstream;
+	sstream << resta;
+	string restaString = sstream.str();
 	it=respuesta->begin();
 	respuesta->insert(it,"Correcto");
 	it++;
 	respuesta->insert(it,"res");
 	it++;
-	respuesta->insert(it,restandoChar);
+	respuesta->insert(it,restaString);
 	return respuesta;;
 }
 
