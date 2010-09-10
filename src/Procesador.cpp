@@ -15,7 +15,12 @@ Procesador::Procesador() {
 }
 
 const char* Procesador::getRespuesta(char* xml){
-	string idOperacionString= this->parser->getOperacionId(xml);
+	printf(xml);
+	printf("\n");
+	printf("\n");
+	char* xmlAux=new char[MAXBYTES];
+	*xmlAux=*xml;
+	string idOperacionString= this->parser->getOperacionId(xmlAux);
 	const char* respuesta;
 	string res;
 	list<char*>* operandos=this->parser->getOperandos(xml);
@@ -40,6 +45,7 @@ const char* Procesador::getRespuesta(char* xml){
 	}
 	if(res=="S"){
 			Operacion operacion=this->operaciones->operator [](idOperacionChar);
+			printf("Hola4 \n");
 			list<string>* respuestaDeOperacion=operacion.realizarOpearacion(operandos);
 			respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 			return respuesta;

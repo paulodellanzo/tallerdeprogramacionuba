@@ -1,5 +1,6 @@
 #include "Servidor.h"
 void* cortarConexion(void* seguir){
+	sleep(10);
 	system("clear");
 	string respuesta="";
 	while((respuesta!="D")and(respuesta!="d")){

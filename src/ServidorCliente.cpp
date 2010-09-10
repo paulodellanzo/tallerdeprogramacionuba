@@ -31,8 +31,10 @@ void ServidorCliente::interactuarConCliente(){
 		xml=this->recibirDeCliente();
 		seguir=((xml)!=" ");
 		if(seguir){
-			const char* data="Holaaaaaa";
+			const char* data;
 			data=this->procesador->getRespuesta(xml);
+			printf(data);
+			printf("\n");
 			paraVerSiCortoComunicacion=this->enviarACliente(data);
 			//la corroboracion es para ver si devuelve 0 es porq se desconecto el cliente
 			seguir=(paraVerSiCortoComunicacion!=0);

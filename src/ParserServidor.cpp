@@ -121,13 +121,14 @@ string ParserServidor::getOperacionId(char* xml){
 		if(strcmp(buff,"id")==0){
 			buff=strtok(NULL,"=\"");
 			encontrado=true;
+			printf(buff);
 			string aDevolver=buff;
 			return(aDevolver);
 		}else{
 			buff=strtok(NULL," <>=");
 		}
 	}
-	return "";
+	return "no encontro id";
 }
 
 const char* ParserServidor::getXml(list<string>* base, string idOperacion){
