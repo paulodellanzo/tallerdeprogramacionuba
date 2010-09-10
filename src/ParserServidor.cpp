@@ -95,11 +95,39 @@ void ParserServidor::getRespuesta(char* Xml,char* resultado){
 
 list<char*>* ParserServidor::getOperandos(char* xml){
 //	COmo sabe que esta bien busca los operandos directamente acordarse la estructura de la lista
-
+	list<char*>* aEnviar=new list<char*>();
+	list<char*>::iterator it=aEnviar->begin();
+	char* buff=strtok(xml," <>=");
+	while(strcmp(buff,"/parametros")){
+		if(strcmp(buff,"nombre")==0){
+			buff=strtok(NULL,"\n\t=\"");
+			it=aEnviar->insert(it,buff);
+			it++;
+			buff=strtok(NULL,"<> \t\n");
+			it=aEnviar->insert(it,buff);
+			it++;
+		}else{
+			buff=strtok(NULL," <>=");
+		}
+	}
+	return aEnviar;
 }
 
-char ParserServidor::getOperacionId(char* xml){
+string ParserServidor::getOperacionId(char* xml){
 //como sabe que esta bien busca la operacion id directamente
+	bool encontrado=false;
+	char* buff=strtok(xml," <>=");
+	while((!encontrado)and(buff!=NULL)){
+		if(strcmp(buff,"id")==0){
+			buff=strtok(NULL,"=\"");
+			encontrado=true;
+			string aDevolver=buff;
+			return(aDevolver);
+		}else{
+			buff=strtok(NULL," <>=");
+		}
+	}
+	return "";
 }
 
 const char* ParserServidor::getXml(list<string>* base, string idOperacion){

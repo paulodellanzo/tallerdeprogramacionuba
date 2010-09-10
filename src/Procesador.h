@@ -1,8 +1,8 @@
 #ifndef PROCESADOR_H_
 #define PROCESADOR_H_
 
-#define PORT 5434
-#define MAXBYTES 300
+#define PORT 54340
+#define MAXBYTES 300000
 
 using namespace std;
 #include <string>
@@ -14,6 +14,7 @@ using namespace std;
 #include "M.h"
 #include <map>
 #include <list>
+#include <ctype.h>
 
 class Procesador {
 private:
