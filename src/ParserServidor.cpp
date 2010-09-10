@@ -115,7 +115,18 @@ const char* ParserServidor::getXml(list<string>* base, string idOperacion){
 }
 
 const char* ParserServidor::armarXmlDeErrores(list<string>* base,string idOperacion){
-
+	string* aEnviar = new string;
+	(*aEnviar)="<respuesta>\n	</operacion id=\""+idOperacion+"\"/>\n	<errores>\n";
+	list<string>::const_iterator iterador;
+	iterador=base->begin();
+	while(iterador!=base->end()){
+		(*aEnviar)+="		<error tipo=\""+(*iterador)+"\">\n";
+		iterador++;
+		(*aEnviar)+="		"+(*iterador)+"\n		</error>\n";
+		iterador++;
+	}
+	(*aEnviar)+="	</errores>\n</respuesta>";
+	return (aEnviar->c_str());
 
 }
 

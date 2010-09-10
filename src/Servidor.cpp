@@ -1,5 +1,4 @@
 #include "Servidor.h"
-#include <pthread.h>
 
 void* interactuar(void* structThreads){
 	paraThreadsRecibidos* threads=(paraThreadsRecibidos*)structThreads;

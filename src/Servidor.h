@@ -11,6 +11,7 @@ using namespace std;
 #include <netinet/in.h>
 #include <netdb.h>
 #include <unistd.h>
+#include <pthread.h>
 #include "ServidorCliente.h"
 
 

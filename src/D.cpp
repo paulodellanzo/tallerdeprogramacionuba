@@ -7,16 +7,15 @@ D::D() {
 list<string>* D::realizarOpearacion(list<char*>* operandos){
 	list<string>* respuesta = new list<string>();
 	list<string>::iterator itres;
-	list<char*>::iterator it=operandos->begin();
 	char* dividendoChar;
 	char* divisorChar;
 	if(operandos->size()>4){
 		itres=respuesta->begin();
-		respuesta->insert(itres,"Error");
+		itres=respuesta->insert(itres,"Error");
 		itres++;
-		respuesta->insert(itres,"V");
+		itres=respuesta->insert(itres,"V");
 		itres++;
-		respuesta->insert(itres,"La division solo acepta dos operandos");
+		itres=respuesta->insert(itres,"La division solo acepta dos operandos");
 		return respuesta;
 	}
 	if(operandos->front()=="dividendo"){// para saber si el primero es divisor o dividendo
@@ -27,11 +26,11 @@ list<string>* D::realizarOpearacion(list<char*>* operandos){
 			divisorChar=operandos->front();
 		}else{
 			itres=respuesta->begin();
-			respuesta->insert(itres,"Error");
+			itres=respuesta->insert(itres,"Error");
 			itres++;
-			respuesta->insert(itres,"V");
+			itres=respuesta->insert(itres,"V");
 			itres++;
-			respuesta->insert(itres,"No se paso como operando un divisor");
+			itres=respuesta->insert(itres,"No se paso como operando un divisor");
 			return respuesta;
 		}
 	}else{
@@ -43,32 +42,32 @@ list<string>* D::realizarOpearacion(list<char*>* operandos){
 				dividendoChar=operandos->front();
 			}else{
 				itres=respuesta->begin();
-				respuesta->insert(itres,"Error");
+				itres=respuesta->insert(itres,"Error");
 				itres++;
-				respuesta->insert(itres,"V");
+				itres=respuesta->insert(itres,"V");
 				itres++;
-				respuesta->insert(itres,"No se paso como operando un dividendo");
+				itres=respuesta->insert(itres,"No se paso como operando un dividendo");
 				return respuesta;
 			}
 			dividendoChar=operandos->front();
 		}else{
 			itres=respuesta->begin();
-			respuesta->insert(itres,"Error");
+			itres=respuesta->insert(itres,"Error");
 			itres++;
-			respuesta->insert(itres,"V");
+			itres=respuesta->insert(itres,"V");
 			itres++;
-			respuesta->insert(itres,"No se paso como operando un divisor o dividendo");
+			itres=respuesta->insert(itres,"No se paso como operando un divisor o dividendo");
 			return respuesta;
 		}
 	}
 
 	if((!esUnNumero(dividendoChar))or(!esUnNumero(divisorChar))){//Corroborar que no hayan puesto por ej 4.3.2
 		itres=respuesta->begin();
-		respuesta->insert(itres,"Error");
+		itres=respuesta->insert(itres,"Error");
 		itres++;
-		respuesta->insert(itres,"V");
+		itres=respuesta->insert(itres,"V");
 		itres++;
-		respuesta->insert(itres,"No se ingreso un numero en el divisor o dividendo");
+		itres=respuesta->insert(itres,"No se ingreso un numero en el divisor o dividendo");
 		return respuesta;
 	}
 	//	veamos si en realidad es un entero, lo que es pedido
@@ -78,41 +77,40 @@ list<string>* D::realizarOpearacion(list<char*>* operandos){
 	int divisorInt=(int)divisorDouble;
 	if(((dividendoDouble - dividendoInt)!=0.0)or(divisorDouble - divisorInt)!=0.0){
 		itres=respuesta->begin();
-		respuesta->insert(itres,"Error");
+		itres=respuesta->insert(itres,"Error");
 		itres++;
-		respuesta->insert(itres,"V");
+		itres=respuesta->insert(itres,"V");
 		itres++;
-		respuesta->insert(itres,"El divisor/dividendo debe ser un numero entero");
+		itres=respuesta->insert(itres,"El divisor/dividendo debe ser un numero entero");
 		return respuesta;
 	}
 	if(divisorInt==0){
 		itres=respuesta->begin();
-		respuesta->insert(itres,"Error");
+		itres=respuesta->insert(itres,"Error");
 		itres++;
-		respuesta->insert(itres,"V");
+		itres=respuesta->insert(itres,"V");
 		itres++;
-		respuesta->insert(itres,"El divisor no puede ser 0");
+		itres=respuesta->insert(itres,"El divisor no puede ser 0");
 		return respuesta;
 	}
 	itres=respuesta->begin();
-	respuesta->insert(itres,"Correcto");
+	itres=respuesta->insert(itres,"Correcto");
 
 	itres++;
 	int cociente=(int)(dividendoInt/divisorInt);
 	ostringstream sstream;
 	sstream << cociente;
 	string cocienteString = sstream.str();
-	respuesta->insert(itres,"coc");
+	itres=respuesta->insert(itres,"coc");
 	itres++;
-	respuesta->insert(itres,cocienteString);
-
-	it++;
+	itres=respuesta->insert(itres,cocienteString);
+	itres++;
 	int resto=(dividendoInt%divisorInt);
 	ostringstream sstream2;
 	sstream2 << resto;
 	string restoString = sstream.str();
 	respuesta->insert(itres,"res");
-	it++;
+	itres++;
 	respuesta->insert(itres,restoString);
 
 	return respuesta;
