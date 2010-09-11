@@ -12,7 +12,7 @@ list<string>* R::realizarOpearacion(list<char*>* operandos){
 	char* restandoChar;
 	double restandoDouble;
 	while(operandos->size()>0){
-		if(operandos->front()=="res"){
+		if(strcmp(operandos->front(),"res")==0){
 			operandos->pop_front();
 			restandoChar=operandos->front();
 			operandos->pop_front();

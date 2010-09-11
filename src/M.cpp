@@ -11,7 +11,7 @@ list<string>* M::realizarOpearacion(list<char*>* operandos){
 	char* multiplicandoChar;
 	double multiplicandoDouble;
 	while(operandos->size()>0){
-		if(operandos->front()=="mul"){
+		if(strcmp(operandos->front(),"mul")==0){
 			operandos->pop_front();
 			multiplicandoChar=operandos->front();
 			operandos->pop_front();

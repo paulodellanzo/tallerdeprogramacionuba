@@ -18,11 +18,11 @@ list<string>* D::realizarOpearacion(list<char*>* operandos){
 		itres=respuesta->insert(itres,"La division solo acepta dos operandos");
 		return respuesta;
 	}
-	if(operandos->front()=="dividendo"){// para saber si el primero es divisor o dividendo
+	if(strcmp(operandos->front(),"dividendo")==0){// para saber si el primero es divisor o dividendo
 		operandos->pop_front();
 		dividendoChar=operandos->front();
 		operandos->pop_front();
-		if(operandos->front()=="divisor"){
+		if(strcmp(operandos->front(),"divisor")==0){
 			divisorChar=operandos->front();
 		}else{
 			itres=respuesta->begin();
@@ -34,11 +34,11 @@ list<string>* D::realizarOpearacion(list<char*>* operandos){
 			return respuesta;
 		}
 	}else{
-		if(operandos->front()=="divisor"){
+		if(strcmp(operandos->front(),"divisor")==0){
 			operandos->pop_front();
 			divisorChar=operandos->front();
 			operandos->pop_front();
-			if(operandos->front()=="divisor"){
+			if(strcmp(operandos->front(),"dividendo")==0){
 				dividendoChar=operandos->front();
 			}else{
 				itres=respuesta->begin();

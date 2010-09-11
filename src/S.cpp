@@ -14,7 +14,7 @@ list<string>* S::realizarOpearacion(list<char*>* operandos){
 	while(operandos->size()>0){
 		printf(operandos->front());
 		printf("\n");
-		if(strcmp(operandos->front(),"sum")){
+		if(strcmp(operandos->front(),"sum")==0){
 			operandos->pop_front();
 			sumandoChar=operandos->front();
 			operandos->pop_front();
