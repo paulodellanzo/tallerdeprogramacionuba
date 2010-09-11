@@ -18,6 +18,7 @@ list<string>* D::realizarOpearacion(list<char*>* operandos){
 		itres=respuesta->insert(itres,"La division solo acepta dos operandos");
 		return respuesta;
 	}
+	printf(operandos->front());
 	if(strcmp(operandos->front(),"dividendo")==0){// para saber si el primero es divisor o dividendo
 		operandos->pop_front();
 		dividendoChar=operandos->front();
