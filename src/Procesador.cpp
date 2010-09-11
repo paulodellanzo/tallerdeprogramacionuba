@@ -18,7 +18,6 @@ const char* Procesador::getRespuesta(char* xml){
 	string res;
 	char xmlAux2[MAXBYTES];
 	for(int i=0;i<MAXBYTES;i++){xmlAux2[i]=xml[i];}
-	cout<<xmlAux2<<endl;
 	list<char*>* operandos=this->parser->getOperandos(xmlAux2);
 	idOperacionString=toupper(idOperacionString[0]);
 	char idOperacionChar=idOperacionString[0];

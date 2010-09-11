@@ -16,7 +16,6 @@ class ParserServidor {
 		const char* armarXmlDeResultado(list<string>* base,string idOperacion);
 	public:
 		ParserServidor();
-		void getRespuesta(char* Xml,char* resultado);
 		string getOperacionId(char xml[]);
 		list<char*>* getOperandos(char xml[]);
 		const char* getXml(list<string>* base,string idOperacion);
