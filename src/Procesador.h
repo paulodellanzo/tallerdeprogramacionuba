@@ -18,7 +18,6 @@ using namespace std;
 
 class Procesador {
 private:
-	map<char,Operacion>* operaciones;
 	ParserServidor* parser;
 public:
 	Procesador();

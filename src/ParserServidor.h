@@ -17,8 +17,8 @@ class ParserServidor {
 	public:
 		ParserServidor();
 		void getRespuesta(char* Xml,char* resultado);
-		string getOperacionId(char *xml);
-		list<char*>* getOperandos(char* xml);
+		string getOperacionId(char xml[]);
+		list<char*>* getOperandos(char xml[]);
 		const char* getXml(list<string>* base,string idOperacion);
 		virtual ~ParserServidor();
 };

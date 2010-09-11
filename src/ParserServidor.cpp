@@ -1,4 +1,8 @@
 #include "ParserServidor.h"
+using namespace std;
+#include <stdlib.h>
+#include <iostream>
+#include <stdio.h>
 
 ParserServidor::ParserServidor() {
 	// TODO Auto-generated constructor stub
@@ -93,7 +97,7 @@ void ParserServidor::getRespuesta(char* Xml,char* resultado){
 	   	return;
 }
 
-list<char*>* ParserServidor::getOperandos(char* xml){
+list<char*>* ParserServidor::getOperandos(char xml[]){
 //	COmo sabe que esta bien busca los operandos directamente acordarse la estructura de la lista
 	list<char*>* aEnviar=new list<char*>();
 	list<char*>::iterator it=aEnviar->begin();
@@ -121,7 +125,6 @@ string ParserServidor::getOperacionId(char xml[]){
 		if(strcmp(buff,"id")==0){
 			buff=strtok(NULL,"\n\t=\"");
 			encontrado=true;
-			printf(buff);
 			string aDevolver=buff;
 			return(aDevolver);
 		}else{
@@ -133,7 +136,6 @@ string ParserServidor::getOperacionId(char xml[]){
 
 const char* ParserServidor::getXml(list<string>* base, string idOperacion){
 //	Arma el xml se fija si el primer nodo de la lista es CORRECTO o ERROR
-	list<string>::iterator it=base->begin();
 	if(base->front()=="Error"){
 		base->pop_front();
 		return (this->armarXmlDeErrores(base,idOperacion));
@@ -160,6 +162,7 @@ const char* ParserServidor::armarXmlDeErrores(list<string>* base,string idOperac
 }
 
 const char* ParserServidor::armarXmlDeResultado(list<string>* base, string idOperacion){
+	cout<<"Get xml2"<<endl;
 	string* aEnviar = new string;
 	(*aEnviar)="<respuesta>\n	</operacion id=\""+idOperacion+"\"/>\n	<resultados>\n";
 	list<string>::const_iterator iterador;

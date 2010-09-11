@@ -1,36 +1,33 @@
 #include "Procesador.h"
+using namespace std;
+#include <stdlib.h>
+#include <iostream>
+#include <stdio.h>
 
 Procesador::Procesador() {
-	this->operaciones=new map<char,Operacion>();
-	std::pair<char,S>* nodoS=new std::pair<char,S>('S',S());
-	this->operaciones->insert(*nodoS);
-	std::pair<char,D>* nodoD=new std::pair<char,D>('D',D());
-	this->operaciones->insert(*nodoD);
-	std::pair<char,R>* nodoR=new std::pair<char,R>('R',R());
-	this->operaciones->insert(*nodoR);
-	std::pair<char,M>* nodoM=new std::pair<char,M>('M',M());
-	this->operaciones->insert(*nodoM);
 	this->parser=new ParserServidor();
 
 }
 
 const char* Procesador::getRespuesta(char* xml){
-	printf(xml);
-	printf("\n");
-	printf("\n");
-	char* xmlAux=new char[MAXBYTES];
-	*xmlAux=*xml;
+	char xmlAux[MAXBYTES];
+	for(int i=0;i<MAXBYTES;i++){xmlAux[i]=xml[i];}
+	cout<<xmlAux<<endl;
 	string idOperacionString= this->parser->getOperacionId(xmlAux);
 	const char* respuesta;
 	string res;
-	list<char*>* operandos=this->parser->getOperandos(xml);
+	char xmlAux2[MAXBYTES];
+	for(int i=0;i<MAXBYTES;i++){xmlAux2[i]=xml[i];}
+	cout<<xmlAux2<<endl;
+	list<char*>* operandos=this->parser->getOperandos(xmlAux2);
 	idOperacionString=toupper(idOperacionString[0]);
 	char idOperacionChar=idOperacionString[0];
+	Operacion* operacion;
 	switch(idOperacionChar){
-		case('S'):{res="S";break;}
-		case('D'):{res="S";break;}
-		case('M'):{res="S";break;}
-		case('R'):{res="S";break;}
+		case('S'):{res="S";operacion=new S();break;}
+		case('D'):{res="S";operacion=new D();break;}
+		case('M'):{res="S";operacion=new M();break;}
+		case('R'):{res="S";operacion=new R();break;}
 		default:{
 			list<string>* conError=new list<string>();
 			list<string>::iterator it=conError->begin();
@@ -44,9 +41,7 @@ const char* Procesador::getRespuesta(char* xml){
 		}
 	}
 	if(res=="S"){
-			Operacion operacion=this->operaciones->operator [](idOperacionChar);
-			printf("Hola4 \n");
-			list<string>* respuestaDeOperacion=operacion.realizarOpearacion(operandos);
+			list<string>* respuestaDeOperacion=operacion->realizarOpearacion(operandos);
 			respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 			return respuesta;
 	}
@@ -55,5 +50,4 @@ const char* Procesador::getRespuesta(char* xml){
 }
 
 Procesador::~Procesador() {
-	delete this->operaciones;
 }

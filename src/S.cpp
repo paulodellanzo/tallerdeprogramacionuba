@@ -12,7 +12,9 @@ list<string>* S::realizarOpearacion(list<char*>* operandos){
 	char* sumandoChar;
 	double sumandoDouble;
 	while(operandos->size()>0){
-		if(operandos->front()=="sum"){
+		printf(operandos->front());
+		printf("\n");
+		if(strcmp(operandos->front(),"sum")){
 			operandos->pop_front();
 			sumandoChar=operandos->front();
 			operandos->pop_front();
@@ -40,12 +42,9 @@ list<string>* S::realizarOpearacion(list<char*>* operandos){
 	ostringstream sstream;
 	sstream << suma;
 	string sumaString = sstream.str();
-	it=respuesta->begin();
-	it=respuesta->insert(it,"Correcto");
-	it++;
-	it=respuesta->insert(it,"sum");
-	it++;
-	it=respuesta->insert(it,sumaString);
+	respuesta->push_back("Correcto");
+	respuesta->push_back("sum");
+	respuesta->push_back(sumaString);
 	return respuesta;
 }
 
