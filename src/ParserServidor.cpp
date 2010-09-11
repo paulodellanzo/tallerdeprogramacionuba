@@ -113,7 +113,7 @@ list<char*>* ParserServidor::getOperandos(char* xml){
 	return aEnviar;
 }
 
-string ParserServidor::getOperacionId(char* xml){
+string ParserServidor::getOperacionId(char xml[]){
 //como sabe que esta bien busca la operacion id directamente
 	bool encontrado=false;
 	char* buff=strtok(xml," <>=");
