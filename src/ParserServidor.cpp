@@ -119,7 +119,7 @@ string ParserServidor::getOperacionId(char* xml){
 	char* buff=strtok(xml," <>=");
 	while((!encontrado)and(buff!=NULL)){
 		if(strcmp(buff,"id")==0){
-			buff=strtok(NULL,"=\"");
+			buff=strtok(NULL,"\n\t=\"");
 			encontrado=true;
 			printf(buff);
 			string aDevolver=buff;
