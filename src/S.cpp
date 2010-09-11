@@ -11,6 +11,15 @@ list<string>* S::realizarOpearacion(list<char*>* operandos){
 	double suma=0;
 	char* sumandoChar;
 	double sumandoDouble;
+	if(operandos->size()<4){
+		it=respuesta->begin();
+		it=respuesta->insert(it,"Error");
+		it++;
+		it=respuesta->insert(it,"V");
+		it++;
+		it=respuesta->insert(it,"Para la suma debe haber como mínimo dos operandos");
+		return respuesta;
+	}
 	while(operandos->size()>0){
 		if(strcmp(operandos->front(),"sum")==0){
 			operandos->pop_front();

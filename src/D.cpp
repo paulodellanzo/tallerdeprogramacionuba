@@ -18,12 +18,12 @@ list<string>* D::realizarOpearacion(list<char*>* operandos){
 		itres=respuesta->insert(itres,"La division solo acepta dos operandos");
 		return respuesta;
 	}
-	printf(operandos->front());
 	if(strcmp(operandos->front(),"dividendo")==0){// para saber si el primero es divisor o dividendo
 		operandos->pop_front();
 		dividendoChar=operandos->front();
 		operandos->pop_front();
 		if(strcmp(operandos->front(),"divisor")==0){
+			operandos->pop_front();
 			divisorChar=operandos->front();
 		}else{
 			itres=respuesta->begin();
@@ -76,7 +76,7 @@ list<string>* D::realizarOpearacion(list<char*>* operandos){
 	double divisorDouble=atof(divisorChar);
 	int dividendoInt=(int)dividendoDouble;
 	int divisorInt=(int)divisorDouble;
-	if(((dividendoDouble - dividendoInt)!=0.0)or(divisorDouble - divisorInt)!=0.0){
+	if(((dividendoDouble - dividendoInt)!=0)or(divisorDouble - divisorInt)!=0){
 		itres=respuesta->begin();
 		itres=respuesta->insert(itres,"Error");
 		itres++;
@@ -106,11 +106,11 @@ list<string>* D::realizarOpearacion(list<char*>* operandos){
 	itres++;
 	itres=respuesta->insert(itres,cocienteString);
 	itres++;
-	int resto=(dividendoInt%divisorInt);
+	int resto=(int)(dividendoInt%divisorInt);
 	ostringstream sstream2;
 	sstream2 << resto;
 	string restoString = sstream.str();
-	respuesta->insert(itres,"res");
+	itres=respuesta->insert(itres,"res");
 	itres++;
 	respuesta->insert(itres,restoString);
 

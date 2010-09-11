@@ -19,6 +19,7 @@ Servidor::Servidor() {
 	this->descriptorSocket=socket(AF_INET,SOCK_STREAM,0);
 	if(this->descriptorSocket==-1){
 		cout<<"Mal creado socket del servidor"<<endl;
+		exit(0);
 	}
 
 	//para llamar al bind()
@@ -34,6 +35,7 @@ Servidor::Servidor() {
 	int valorBind=bind(this->descriptorSocket,(struct sockaddr*)&(this->estructurDeDirecciones),length);
 	if(valorBind==-1){
 		cout<<"Fallo en Bind del servidor"<<endl;
+		exit(0);
 	}
 }
 void Servidor::escuchar(){
@@ -41,6 +43,7 @@ void Servidor::escuchar(){
 	int valorListen=listen(descriptorSocket,10);
 	if(valorListen==-1){
 		cout<<"Mal listen del servidor"<<endl;
+		exit(0);
 	}else{
 		cout<<"Escuchando..."<<endl;
 	}
@@ -52,16 +55,14 @@ void Servidor::aceptar(){
 		valorAccept=accept(descriptorSocket,(struct sockaddr*)&clienteAdress,&length);
 		if(valorAccept==-1){
 			cout<<"Mal accept del servidor"<<endl;
-		}
-
-		paraThreadsRecibidos* threads=new paraThreadsRecibidos;
-		threads->clientAdress=clienteAdress;
-		threads->valorAcept=valorAccept;
-		threads->descriptorSocket=this->descriptorSocket;
-
-		pthread_t thread;
-		int creado=pthread_create(&thread,NULL,interactuar,(void*)threads);
-		if(creado!=0) cout<<"mal creado el thread"<<endl;
+		}else{
+			paraThreadsRecibidos* threads=new paraThreadsRecibidos;
+			threads->clientAdress=clienteAdress;
+			threads->valorAcept=valorAccept;
+			threads->descriptorSocket=this->descriptorSocket;
+			pthread_t thread;
+			int creado=pthread_create(&thread,NULL,interactuar,(void*)threads);
+			if(creado!=0) cout<<"mal creado el thread"<<endl;}
 	}
 }
 

@@ -10,6 +10,15 @@ list<string>* M::realizarOpearacion(list<char*>* operandos){
 	double multiplicacion=1;
 	char* multiplicandoChar;
 	double multiplicandoDouble;
+	if(operandos->size()<4){
+		itres=respuesta->begin();
+		itres=respuesta->insert(itres,"Error");
+		itres++;
+		itres=respuesta->insert(itres,"V");
+		itres++;
+		itres=respuesta->insert(itres,"Para la multiplicacion debe haber como mínimo dos operandos");
+		return respuesta;
+	}
 	while(operandos->size()>0){
 		if(strcmp(operandos->front(),"mul")==0){
 			operandos->pop_front();
