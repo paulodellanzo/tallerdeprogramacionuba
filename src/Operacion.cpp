@@ -23,6 +23,11 @@ bool Operacion::esUnNumero(char* numero){
 //		}
 //
 //	}
+//	bool esUnNumero=true;
+//	int i=0;
+//	while((esUnNumero)and(i<TAMANOVECTOROPERANDOS)){
+//		esUnNumero=((numero[i]>9)and(numero[i]=='.'));
+//	}
 	return true;
 }
 
