@@ -12,7 +12,6 @@ Procesador::Procesador() {
 const char* Procesador::getRespuesta(char* xml){
 	char xmlAux[MAXBYTES];
 	for(int i=0;i<MAXBYTES;i++){xmlAux[i]=xml[i];}
-	cout<<xmlAux<<endl;
 	string idOperacionString= this->parser->getOperacionId(xmlAux);
 	const char* respuesta;
 	string res;

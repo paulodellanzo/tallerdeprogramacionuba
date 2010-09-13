@@ -20,8 +20,6 @@ char* ServidorCliente::recibirDeCliente(){
 int ServidorCliente::enviarACliente(const char* data){
 	socklen_t leng=sizeof(char[MAXBYTES]);
 	int valorSend=send(cliente->valorAcept,data,leng,0);
-	printf(data);
-	printf("\n");
 	return valorSend;
 }
 
