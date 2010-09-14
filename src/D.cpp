@@ -109,7 +109,7 @@ list<string>* D::realizarOpearacion(list<char*>* operandos){
 	int resto=(int)(dividendoInt%divisorInt);
 	ostringstream sstream2;
 	sstream2 << resto;
-	string restoString = sstream.str();
+	string restoString = sstream2.str();
 	itres=respuesta->insert(itres,"res");
 	itres++;
 	respuesta->insert(itres,restoString);
