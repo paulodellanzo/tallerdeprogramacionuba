@@ -2,7 +2,7 @@
 #define PROCESADOR_H_
 
 #define PORT 54340
-#define MAXBYTES 3000
+#define MAXBYTES 30000
 
 using namespace std;
 #include <string>
