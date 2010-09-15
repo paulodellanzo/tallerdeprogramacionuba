@@ -40,5 +40,5 @@ void ServidorCliente::interactuarConCliente(){
 	}
 }
 ServidorCliente::~ServidorCliente() {
-	// TODO Auto-generated destructor stub
+	delete this->procesador;
 }

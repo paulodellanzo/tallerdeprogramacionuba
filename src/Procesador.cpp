@@ -35,12 +35,16 @@ const char* Procesador::getRespuesta(char* xml){
 			it++;
 			it=conError->insert(it,"Mal id de operacion");
 			respuesta=this->parser->getXml(conError,"");
+			delete conError;
+			delete operandos;
 			return respuesta;
 		}
 	}
 	if(res=="S"){
 			list<string>* respuestaDeOperacion=operacion->realizarOpearacion(operandos);
 			respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+			delete respuestaDeOperacion;
+			delete operandos;
 			return respuesta;
 	}
 	return"";
