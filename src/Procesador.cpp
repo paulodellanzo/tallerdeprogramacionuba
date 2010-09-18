@@ -10,13 +10,15 @@ Procesador::Procesador() {
 }
 
 const char* Procesador::getRespuesta(char* xml){
-	char xmlAux[MAXBYTES];
-	for(int i=0;i<MAXBYTES;i++){xmlAux[i]=xml[i];}
+	ostringstream sstream;
+	sstream << xml;
+	string paraVerCuantoPesa = sstream.str();
+	char xmlAux[paraVerCuantoPesa.size()];
+	char xmlAux2[paraVerCuantoPesa.size()];
+	for(unsigned int i=0;i<paraVerCuantoPesa.size();i++){xmlAux[i]=xml[i];xmlAux2[i]=xml[i];}
 	string idOperacionString= this->parser->getOperacionId(xmlAux);
 	const char* respuesta;
 	string res;
-	char xmlAux2[MAXBYTES];
-	for(int i=0;i<MAXBYTES;i++){xmlAux2[i]=xml[i];}
 	list<char*>* operandos=this->parser->getOperandos(xmlAux2);
 	idOperacionString=toupper(idOperacionString[0]);
 	char idOperacionChar=idOperacionString[0];

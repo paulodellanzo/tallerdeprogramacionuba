@@ -57,34 +57,38 @@ const char* ParserServidor::getXml(list<string>* base, string idOperacion){
 }
 
 const char* ParserServidor::armarXmlDeErrores(list<string>* base,string idOperacion){
-	string* aEnviar = new string;
-	(*aEnviar)="<respuesta>\n	</operacion id=\""+idOperacion+"\"/>\n	<errores>\n";
+	string aEnviar;
+	(aEnviar)="<respuesta>\n	</operacion id=\""+idOperacion+"\"/>\n	<errores>\n";
 	list<string>::const_iterator iterador;
 	iterador=base->begin();
 	while(iterador!=base->end()){
-		(*aEnviar)+="		<error tipo=\""+(*iterador)+"\">\n";
+		(aEnviar)+="		<error tipo=\""+(*iterador)+"\">\n";
 		iterador++;
-		(*aEnviar)+="		"+(*iterador)+"\n		</error>\n";
+		(aEnviar)+="		"+(*iterador)+"\n		</error>\n";
 		iterador++;
 	}
-	(*aEnviar)+="	</errores>\n</respuesta>";
-	return (aEnviar->c_str());
+	(aEnviar)+="	</errores>\n</respuesta>";
+	char* data=new char[aEnviar.size()];
+	for(unsigned int i=0;i<aEnviar.size();i++){data[i]=aEnviar[i];}
+	return (data);
 
 }
 
 const char* ParserServidor::armarXmlDeResultado(list<string>* base, string idOperacion){
-	string* aEnviar = new string;
-	(*aEnviar)="<respuesta>\n	</operacion id=\""+idOperacion+"\"/>\n	<resultados>\n";
+	string aEnviar;
+	(aEnviar)="<respuesta>\n	</operacion id=\""+idOperacion+"\"/>\n	<resultados>\n";
 	list<string>::const_iterator iterador;
 	iterador=base->begin();
 	while(iterador!=base->end()){
-		(*aEnviar)+="		<resultado nombre=\""+(*iterador)+"\">\n";
+		(aEnviar)+="		<resultado nombre=\""+(*iterador)+"\">\n";
 		iterador++;
-		(*aEnviar)+="		"+(*iterador)+"\n		</parametro>\n";
+		(aEnviar)+="		"+(*iterador)+"\n		</resultado>\n";
 		iterador++;
 	}
-	(*aEnviar)+="	</resultados>\n</respuesta>";
-	return (aEnviar->c_str());
+	(aEnviar)+="	</resultados>\n</respuesta>";
+	char* data=new char[aEnviar.size()];
+	for(unsigned int i=0;i<aEnviar.size();i++){data[i]=aEnviar[i];}
+	return (data);
 }
 
 ParserServidor::~ParserServidor() {

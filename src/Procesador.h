@@ -3,6 +3,7 @@
 
 #define PORT 54340
 #define MAXBYTES 60000
+#define MAXBYTESRECIBIDOS 60000
 
 using namespace std;
 #include <string>
