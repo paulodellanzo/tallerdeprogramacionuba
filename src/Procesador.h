@@ -22,7 +22,7 @@ private:
 	ParserServidor* parser;
 public:
 	Procesador();
-	const char* getRespuesta(char* xml);
+	char* getRespuesta(char* xml);
 	virtual ~Procesador();
 };
 

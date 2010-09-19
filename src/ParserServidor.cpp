@@ -45,7 +45,7 @@ string ParserServidor::getOperacionId(char xml[]){
 	return "no encontro id";
 }
 
-const char* ParserServidor::getXml(list<string>* base, string idOperacion){
+char* ParserServidor::getXml(list<string>* base, string idOperacion){
 //	Arma el xml se fija si el primer nodo de la lista es CORRECTO o ERROR
 	if(base->front()=="Error"){
 		base->pop_front();
@@ -56,7 +56,7 @@ const char* ParserServidor::getXml(list<string>* base, string idOperacion){
 	}
 }
 
-const char* ParserServidor::armarXmlDeErrores(list<string>* base,string idOperacion){
+char* ParserServidor::armarXmlDeErrores(list<string>* base,string idOperacion){
 	string aEnviar;
 	(aEnviar)="<respuesta>\n	</operacion id=\""+idOperacion+"\"/>\n	<errores>\n";
 	list<string>::const_iterator iterador;
@@ -69,12 +69,13 @@ const char* ParserServidor::armarXmlDeErrores(list<string>* base,string idOperac
 	}
 	(aEnviar)+="	</errores>\n</respuesta>";
 	char* data=new char[aEnviar.size()];
+	memset((void*)data,'\0',aEnviar.size());
 	for(unsigned int i=0;i<aEnviar.size();i++){data[i]=aEnviar[i];}
 	return (data);
 
 }
 
-const char* ParserServidor::armarXmlDeResultado(list<string>* base, string idOperacion){
+char* ParserServidor::armarXmlDeResultado(list<string>* base, string idOperacion){
 	string aEnviar;
 	(aEnviar)="<respuesta>\n	</operacion id=\""+idOperacion+"\"/>\n	<resultados>\n";
 	list<string>::const_iterator iterador;
@@ -87,6 +88,7 @@ const char* ParserServidor::armarXmlDeResultado(list<string>* base, string idOpe
 	}
 	(aEnviar)+="	</resultados>\n</respuesta>";
 	char* data=new char[aEnviar.size()];
+	memset((void*)data,'\0',aEnviar.size());
 	for(unsigned int i=0;i<aEnviar.size();i++){data[i]=aEnviar[i];}
 	return (data);
 }
