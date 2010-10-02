@@ -3,7 +3,7 @@
 #include <fstream>
 ServidorCliente::ServidorCliente(paraThreadsRecibidos* cliente) {
 	this->cliente=cliente;
-	this->procesador=new Procesador();
+	this->procesador=Procesador::instancia();
 }
 
 char* ServidorCliente::recibirDeCliente(){

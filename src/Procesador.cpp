@@ -4,7 +4,7 @@ using namespace std;
 #include <iostream>
 #include <stdio.h>
 
-Procesador::Procesador() {
+Procesador::Procesador(int i) {
 	this->parser=new ParserServidor();
 
 }
@@ -51,6 +51,13 @@ char* Procesador::getRespuesta(char* xml){
 	}
 	return"";
 
+}
+
+Procesador * Procesador::instanciaUnica;
+Procesador *Procesador::instancia(){
+		    if (!instanciaUnica)
+		    	instanciaUnica =new Procesador(1);
+		    return instanciaUnica;
 }
 
 Procesador::~Procesador() {

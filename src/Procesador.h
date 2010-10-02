@@ -18,10 +18,13 @@ using namespace std;
 #include <ctype.h>
 
 class Procesador {
+protected:
+	Procesador(int i);
 private:
 	ParserServidor* parser;
+	static Procesador* instanciaUnica;
 public:
-	Procesador();
+	static Procesador* instancia();
 	char* getRespuesta(char* xml);
 	virtual ~Procesador();
 };
