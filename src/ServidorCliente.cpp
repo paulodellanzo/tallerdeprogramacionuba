@@ -71,8 +71,10 @@ int ServidorCliente::enviarACliente(char* data){
 	ostringstream sstream;
 	sstream << data;
 	string paraVerCuantoPesa = sstream.str();
+	cout<<paraVerCuantoPesa.size()<<endl;
     unsigned int valorSend;
     valorSend = send(cliente->valorAcept, data, paraVerCuantoPesa.size(), 0);
+    cout<<valorSend<<endl;
     if (valorSend == -1) {cout<<"Mal enviado a cliente nº: "<<cliente->valorAcept<<endl; }
 	delete data;
 	char* data2=new char[3];
@@ -81,6 +83,7 @@ int ServidorCliente::enviarACliente(char* data){
 	data2[1]='o';
 	data2[2]='f';
 	valorSend=send(cliente->valorAcept,data2,3,0);
+	cout<<valorSend<<endl;
 	delete data2;
 	return valorSend;
 }
