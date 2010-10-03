@@ -88,6 +88,41 @@ int ServidorCliente::enviarACliente(char* data){
 	return valorSend;
 }
 
+int ServidorCliente::enviarArchivo(string path){
+    // referencia al archivo
+    fstream  archivo;
+    //intenta abrir el archivo en modo lectura y binario
+    archivo.open(path.c_str(), fstream::in | fstream::binary );
+    char * data;
+    archivo.read(data,2);
+    int tamano;
+    archivo.read((char*)&tamano,4);
+    archivo.close();
+    archivo.open(path.c_str(), fstream::in | fstream::binary );
+	unsigned int valorSend;
+	streamsize extraidos,acumulados;
+	acumulados=0;
+	data=new char[tamano];
+	while(acumulados<tamano){
+		extraidos=archivo.readsome(data,tamano);
+		acumulados+=extraidos;
+		valorSend = send(cliente->valorAcept, data, extraidos, 0);
+		if (valorSend == -1) {cout<<"Mal enviado a cliente nº: "<<cliente->valorAcept<<endl; }
+	}
+	delete data;
+	char* data2=new char[3];
+	memset((void*)data2,'\0',3);
+	data2[0]='e';
+	data2[1]='o';
+	data2[2]='f';
+	valorSend=send(cliente->valorAcept,data2,3,0);
+	delete data2;
+	archivo.close();
+	cout<<"hio"<<endl;
+	return valorSend;
+
+}
+
 void ServidorCliente::interactuarConCliente(){
 	bool seguir=true;
 	int paraVerSiCortoComunicacion=0;
@@ -97,8 +132,16 @@ void ServidorCliente::interactuarConCliente(){
 		seguir=((xml)!=" ");
 		if(seguir){
 			char* data;
-			data=this->procesador->getRespuesta(xml);
-			paraVerSiCortoComunicacion=this->enviarACliente(data);
+			if(this->procesador->enviarArchivo(xml)){
+				cout<<"entro"<<endl;
+				string path=this->procesador->getPathArchivo();
+				cout<<"asd"<<endl;
+				paraVerSiCortoComunicacion=this->enviarArchivo(path);
+				cout<<"adsadsa"<<endl;
+			}else{
+				data=this->procesador->getRespuesta(xml);
+				paraVerSiCortoComunicacion=this->enviarACliente(data);
+			}
 			//la corroboracion es para ver si devuelve 0 es porq se desconecto el cliente
 			seguir=(paraVerSiCortoComunicacion!=0);
 		}

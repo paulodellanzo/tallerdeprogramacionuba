@@ -20,7 +20,7 @@ char* Procesador::getRespuesta(char* xml){
 	char xmlAux2[paraVerCuantoPesa.size()];
 	for(unsigned int i=0;i<paraVerCuantoPesa.size();i++){xmlAux[i]=xml[i];xmlAux2[i]=xml[i];}
 	string idOperacionString= this->parser->getOperacionId(xmlAux);
-	char* respuesta;
+	char* respuesta=" ";
 	string res;
 	list<char*>* operandos=this->parser->getOperandos(xmlAux2);
 	idOperacionString=toupper(idOperacionString[0]);
@@ -31,28 +31,6 @@ char* Procesador::getRespuesta(char* xml){
 		case('D'):{res="S";operacion=new D();break;}
 		case('M'):{res="S";operacion=new M();break;}
 		case('R'):{res="S";operacion=new R();break;}
-		case('B'):{res="N";
-				// referencia al archivo
-				fstream  archivo;
-
-				//intenta abrir el archivo en modo lectura y binario
-				archivo.open("/home/gaston/workspace/TpTallerDeProgramacionI/quilmes.bmp", fstream::in | fstream::binary );
-				if(archivo.good()) cout<<"se abrio bien"<<endl;
-				unsigned int* tamano=new unsigned int;
-				char bm[2];
-				archivo.read((char*)bm,2);
-				archivo.read((char*)(tamano),sizeof(int));
-				archivo.close();
-				archivo.open("/home/gaston/workspace/TpTallerDeProgramacionI/quilmes.bmp", fstream::in | fstream::binary );
-				cout<<*tamano<<endl;
-				archivo.read((char*)respuesta,*tamano);
-				archivo.close();
-				delete tamano;
-				ostringstream sstream2;
-				sstream2 << respuesta;
-				string paraVerCuantoPesa2 = sstream.str();
-				return respuesta;
-				}//se requiere el bitmap
 		default:{
 			list<string>* conError=new list<string>();
 			list<string>::iterator it=conError->begin();
@@ -84,6 +62,23 @@ Procesador *Procesador::instancia(){
 		    if (!instanciaUnica)
 		    	instanciaUnica =new Procesador(1);
 		    return instanciaUnica;
+}
+
+string Procesador::getPathArchivo(){
+	return "/home/gaston/workspace/TpTallerDeProgramacionI/quilmes.bmp";
+}
+
+bool Procesador::enviarArchivo(char * xml){
+	ostringstream sstream;
+	sstream << xml;
+	string paraVerCuantoPesa = sstream.str();
+	char xmlAux[paraVerCuantoPesa.size()];
+	for(unsigned int i=0;i<paraVerCuantoPesa.size();i++){xmlAux[i]=xml[i];}
+	string idOperacionString= this->parser->getOperacionId(xmlAux);
+	idOperacionString=toupper(idOperacionString[0]);
+	char idOperacionChar=idOperacionString[0];
+	return true;
+	return (idOperacionChar=='N');
 }
 
 Procesador::~Procesador() {

@@ -25,6 +25,8 @@ private:
 	static Procesador* instanciaUnica;
 public:
 	static Procesador* instancia();
+	string getPathArchivo();
+	bool enviarArchivo(char*xml);
 	char* getRespuesta(char* xml);
 	virtual ~Procesador();
 };
