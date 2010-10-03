@@ -4,6 +4,7 @@
 #define PORT 54340
 #define MAXBYTES 60000
 #define MAXBYTESRECIBIDOS 60000
+#define PATH "/home/gaston/workspace/TpTallerDeProgramacionI/quilmes.bmp"
 
 using namespace std;
 #include <string>

@@ -65,7 +65,7 @@ Procesador *Procesador::instancia(){
 }
 
 string Procesador::getPathArchivo(){
-	return "/home/gaston/workspace/TpTallerDeProgramacionI/quilmes.bmp";
+	return PATH;
 }
 
 bool Procesador::enviarArchivo(char * xml){
