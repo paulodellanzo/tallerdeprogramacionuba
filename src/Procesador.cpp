@@ -77,8 +77,7 @@ bool Procesador::enviarArchivo(char * xml){
 	string idOperacionString= this->parser->getOperacionId(xmlAux);
 	idOperacionString=toupper(idOperacionString[0]);
 	char idOperacionChar=idOperacionString[0];
-	return true;
-	return (idOperacionChar=='N');
+	return (idOperacionChar=='B');
 }
 
 Procesador::~Procesador() {
