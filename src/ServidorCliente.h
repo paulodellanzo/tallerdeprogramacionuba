@@ -29,7 +29,7 @@ public:
 	void interactuarConCliente();
 	char* recibirDeCliente();
 	int enviarACliente(char* data);
-	int enviarArchivo(string path);
+	int enviarArchivoBMP(string path);
 	virtual ~ServidorCliente();
 };
 

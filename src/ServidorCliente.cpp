@@ -85,7 +85,7 @@ int ServidorCliente::enviarACliente(char* data){
 	return valorSend;
 }
 
-int ServidorCliente::enviarArchivo(string path){
+int ServidorCliente::enviarArchivoBMP(string path){
     // referencia al archivo
     fstream  archivo;
     //intenta abrir el archivo en modo lectura y binario
@@ -106,17 +106,17 @@ int ServidorCliente::enviarArchivo(string path){
 		valorSend = send(cliente->valorAcept, data, extraidos, 0);
 		if (valorSend == -1) {cout<<"Mal enviado a cliente nº: "<<cliente->valorAcept<<endl; }
 	}
+	archivo.close();
 	delete data;
 	char* data2=new char[3];
 	memset((void*)data2,'\0',3);
 	data2[0]='e';
 	data2[1]='o';
 	data2[2]='f';
-	valorSend=send(cliente->valorAcept,data2,3,0);
+	int auxValorSend;
+	auxValorSend=send(cliente->valorAcept,data2,3,0);
 	delete data2;
-	archivo.close();
-	cout<<"hio"<<endl;
-	return valorSend;
+	return (int)auxValorSend;
 
 }
 
@@ -131,8 +131,7 @@ void ServidorCliente::interactuarConCliente(){
 			char* data;
 			if(this->procesador->enviarArchivo(xml)){
 				string path=this->procesador->getPathArchivo();
-				paraVerSiCortoComunicacion=(int)this->enviarArchivo(path);
-				cout<<"adsadsa"<<endl;
+				paraVerSiCortoComunicacion=this->enviarArchivoBMP(path);
 			}else{
 				data=this->procesador->getRespuesta(xml);
 				paraVerSiCortoComunicacion=this->enviarACliente(data);
