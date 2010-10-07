@@ -10,8 +10,6 @@ Procesador::Procesador(int i) {
 
 }
 
-
-
 char* Procesador::getRespuesta(char* xml){
 	ostringstream sstream;
 	sstream << xml;
