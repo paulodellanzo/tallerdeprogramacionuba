@@ -38,6 +38,7 @@ public:
 	bool agregarJugador(Jugador* jugadorNuevo); //FALTA IMPLEMENTAR LA IDEA ES QUE SE FIJE SI TIENE LA CANT DE JUGADORES SINO QUE NO LO AGREGUE Y DEVUELVA FALSE
 	bool enviarArchivo(char*xml); //FALTA VER LO DE SI ES UNA IMAGEN DE UN JUGADOR
 	char* getRespuesta(char* xml);
+	bool esMiTurno(Jugador * jugador); //Dandole un jugador dice si es su turno
 	virtual ~Procesador();
 };
 

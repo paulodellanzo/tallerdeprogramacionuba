@@ -31,6 +31,10 @@ char* Procesador::getRespuesta(char* xml){
 		case('D'):{res="S";operacion=new D();break;}
 		case('M'):{res="S";operacion=new M();break;}
 		case('R'):{res="S";operacion=new R();break;}
+		case('P'):{/*Devuelvo el POSO ACUMULADO en un xml*/}
+		case('J'):{/*Devuelvo todos los jugadores en un xml*/}
+		case('C'):{/*Devuelvo las cartas que salieron en un xml*/}
+		}
 		default:{
 			list<string>* conError=new list<string>();
 			list<string>::iterator it=conError->begin();
@@ -79,9 +83,9 @@ bool Procesador::enviarArchivo(char * xml){
 	char idOperacionChar=idOperacionString[0];
 	switch(idOperacionChar){
 		case('B'):{this->path=PATH; return true;}
-		case('I'):{this->path="/home/gaston/workspace/TpTallerDeProgramacionI/" + this->parser->getNombreJugadorYConstrasena(xml)[0] + ".bmp";}
+		case('I'):{this->path="/home/gaston/workspace/TpTallerDeProgramacionI/" + this->parser->getNombreJugadorYConstrasena(xml)[0] + ".bmp"; return true;}
 	}
-	return (idOperacionChar=='B');
+	return (false);
 }
 
 Procesador::~Procesador() {
