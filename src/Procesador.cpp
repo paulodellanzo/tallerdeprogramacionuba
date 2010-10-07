@@ -65,7 +65,7 @@ Procesador *Procesador::instancia(){
 }
 
 string Procesador::getPathArchivo(){
-	return PATH;
+	return this->path;
 }
 
 bool Procesador::enviarArchivo(char * xml){
@@ -77,6 +77,10 @@ bool Procesador::enviarArchivo(char * xml){
 	string idOperacionString= this->parser->getOperacionId(xmlAux);
 	idOperacionString=toupper(idOperacionString[0]);
 	char idOperacionChar=idOperacionString[0];
+	switch(idOperacionChar){
+		case('B'):{this->path=PATH; return true;}
+		case('I'):{this->path="/home/gaston/workspace/TpTallerDeProgramacionI/" + this->parser->getNombreJugadorYConstrasena(xml)[0] + ".bmp";}
+	}
 	return (idOperacionChar=='B');
 }
 

@@ -93,6 +93,10 @@ char* ParserServidor::armarXmlDeResultado(list<string>* base, string idOperacion
 	return (data);
 }
 
+string* ParserServidor::getNombreJugadorYConstrasena(char xml[]){
+	string * jugadorYconstrasena;
+	return jugadorYconstrasena;
+}
 ParserServidor::~ParserServidor() {
 	// TODO Auto-generated destructor stub
 }

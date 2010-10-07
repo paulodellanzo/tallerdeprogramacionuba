@@ -8,7 +8,6 @@ using namespace std;
 #include <stdlib.h>
 #include <list>
 #include <cstdlib>
-#define TAMANOVECTOROPERANDOS 20 //Para cuando haya que pasar la lista de char,el tamaño de los char
 
 class ParserServidor {
 	private:
@@ -18,6 +17,7 @@ class ParserServidor {
 		ParserServidor();
 		string getOperacionId(char xml[]);
 		list<char*>* getOperandos(char xml[]);
+		string* getNombreJugadorYConstrasena(char xml[]);
 		char* getXml(list<string>* base,string idOperacion);
 		virtual ~ParserServidor();
 };

@@ -13,7 +13,7 @@ private:
 public:
 	Jugador();
 	bool setNombre(string nombre, string password); //QUE DE EL NOMBRE DEL USUARIO Y LA PASSWORD Y LA CORROBORE Y LEVANTE LA PLATA
-	bool jugando();
+	bool participando();
 	virtual ~Jugador();
 };
 
