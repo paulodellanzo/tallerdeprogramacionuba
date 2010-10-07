@@ -90,8 +90,8 @@ int ServidorCliente::enviarArchivoBMP(string path){
     fstream  archivo;
     //intenta abrir el archivo en modo lectura y binario
     archivo.open(path.c_str(), fstream::in | fstream::binary );
-    char * data;
-    archivo.read(data,2);
+    char * data=new char[2];
+    archivo.read((char*)data,2);
     int tamano;
     archivo.read((char*)&tamano,4);
     archivo.close();

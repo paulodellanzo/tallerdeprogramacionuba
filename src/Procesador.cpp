@@ -34,7 +34,6 @@ char* Procesador::getRespuesta(char* xml){
 		case('P'):{/*Devuelvo el POSO ACUMULADO en un xml*/}
 		case('J'):{/*Devuelvo todos los jugadores en un xml*/}
 		case('C'):{/*Devuelvo las cartas que salieron en un xml*/}
-		}
 		default:{
 			list<string>* conError=new list<string>();
 			list<string>::iterator it=conError->begin();
@@ -82,7 +81,7 @@ bool Procesador::enviarArchivo(char * xml){
 	idOperacionString=toupper(idOperacionString[0]);
 	char idOperacionChar=idOperacionString[0];
 	switch(idOperacionChar){
-		case('B'):{this->path=PATH; return true;}
+		case('E'):{this->path=PATH;return true;}
 		case('I'):{this->path="/home/gaston/workspace/TpTallerDeProgramacionI/" + this->parser->getNombreJugadorYConstrasena(xml)[0] + ".bmp"; return true;}
 	}
 	return (false);
