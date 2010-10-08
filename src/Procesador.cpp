@@ -86,4 +86,5 @@ bool Procesador::enviarArchivo(char * xml){
 }
 
 Procesador::~Procesador() {
+	delete this->parser;
 }

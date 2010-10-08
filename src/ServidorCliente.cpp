@@ -16,7 +16,7 @@ char* ServidorCliente::recibirDeCliente(){
 	while(seguir){
 		valorRecive=recv(cliente->valorAcept,data,leng,0);
 		if(valorRecive==0){
-			delete data;
+			delete []data;
 			return " ";
 		}
 		if(valorRecive==-1){
@@ -43,13 +43,13 @@ char* ServidorCliente::recibirDeCliente(){
 				sstream << data;
 				string lineaActual = sstream.str();
 				*archivoResultado<<lineaActual;
-				delete data;
+				delete []data;
 				data=new char[MAXBYTESRECIBIDOS];
 				memset((void*)data,'\0',MAXBYTESRECIBIDOS);
 			}
 		}
 	}
-	delete data;
+	delete []data;
 	archivoResultado->close();
 	delete archivoResultado;
 	string recibido;
@@ -74,14 +74,14 @@ int ServidorCliente::enviarACliente(char* data){
     unsigned int valorSend;
     valorSend = send(cliente->valorAcept, data, paraVerCuantoPesa.size(), 0);
     if (valorSend == -1) {cout<<"Mal enviado a cliente nº: "<<cliente->valorAcept<<endl; }
-	delete data;
+	delete []data;
 	char* data2=new char[3];
 	memset((void*)data2,'\0',3);
 	data2[0]='e';
 	data2[1]='o';
 	data2[2]='f';
 	valorSend=send(cliente->valorAcept,data2,3,0);
-	delete data2;
+	delete []data2;
 	return valorSend;
 }
 
@@ -99,6 +99,7 @@ int ServidorCliente::enviarArchivoBMP(string path){
 	unsigned int valorSend;
 	streamsize extraidos,acumulados;
 	acumulados=0;
+	delete []data;
 	data=new char[tamano];
 	while(acumulados<tamano){
 		extraidos=archivo.readsome(data,tamano);
@@ -107,7 +108,7 @@ int ServidorCliente::enviarArchivoBMP(string path){
 		if (valorSend == -1) {cout<<"Mal enviado a cliente nº: "<<cliente->valorAcept<<endl; }
 	}
 	archivo.close();
-	delete data;
+	delete []data;
 	char* data2=new char[3];
 	memset((void*)data2,'\0',3);
 	data2[0]='e';
@@ -115,7 +116,7 @@ int ServidorCliente::enviarArchivoBMP(string path){
 	data2[2]='f';
 	int auxValorSend;
 	auxValorSend=send(cliente->valorAcept,data2,3,0);
-	delete data2;
+	delete []data2;
 	return (int)auxValorSend;
 
 }

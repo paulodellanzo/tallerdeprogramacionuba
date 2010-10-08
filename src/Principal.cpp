@@ -21,6 +21,6 @@ int main(){
 	int creado=pthread_create(&thread,NULL,cortarConexion,(void*)seguir);
 	if(creado!=0) cout<<"mal creado el thread"<<endl;
 	servidor->aceptar();
-	servidor->~Servidor();
+	delete servidor;
 	return 0;
 }

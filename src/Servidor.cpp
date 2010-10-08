@@ -9,6 +9,8 @@ void* interactuar(void* structThreads){
 	cout<<"Se finalizó la coneccion con Cliente: "<<threads->valorAcept<<endl;
 	close(threads->valorAcept);
 	pthread_exit(arg);
+	delete threads;
+	delete servCliente;
 	return arg;
 }
 
