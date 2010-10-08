@@ -5,7 +5,7 @@
 #define MAXBYTES 60000
 #define MAXBYTESRECIBIDOS 60000
 #define MAXIMODEJUGADORES 6
-#define PATH "quilmes.bmp"
+#define PATH "tablero.bmp"
 
 using namespace std;
 #include <string>
