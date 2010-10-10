@@ -139,7 +139,7 @@ bool Procesador::enviarArchivo(char * xml){
 	char idOperacionChar=idOperacionString[0];
 	switch(idOperacionChar){
 		case('E'):{this->path=PATH;return true;}
-		case('I'):{this->path="/home/paulo/workspace/TpTallerDeProgramacionI/" + this->parser->getNombreJugadorYConstrasena(xml)[0] + ".bmp"; return true;}
+		case('I'):{this->path="/home/gaston/workspace/TpTallerDeProgramacionI/" + this->parser->getNombreJugadorYConstrasena(xml)[0] + ".bmp"; return true;}
 	}
 	return (false);
 }

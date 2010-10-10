@@ -96,7 +96,8 @@ char* ParserServidor::armarXmlDeResultado(list<string>* base, string idOperacion
 }
 
 string* ParserServidor::getNombreJugadorYConstrasena(char xml[]){
-	string * jugadorYconstrasena;
+	string * jugadorYconstrasena=new string[2];
+	jugadorYconstrasena[0]="jugador2";
 	return jugadorYconstrasena;
 }
 ParserServidor::~ParserServidor() {
