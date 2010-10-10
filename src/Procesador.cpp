@@ -18,35 +18,19 @@ void Procesador::setMesa(){
 			break;
 	}
 
-	Carta* carta1 = new Carta("corazon", "10");
+	Carta* carta1 = new Carta("corazon", "1");
 	cartas->push_front(carta1);
 	Carta* carta2 = new Carta("pica", "2");
 	cartas->push_front(carta2);
 	Carta* carta3 = new Carta("trebol", "5");
-//	cartas->push_front(carta3);
-//	Carta* carta4 = new Carta("corazon", "7");
-//	cartas->push_front(carta4);
-//	Carta* carta5 = new Carta("pica", "4");
-//	cartas->push_front(carta5);
-//	Carta* carta6 = new Carta("rombo", "11");
-//	cartas->push_front(carta6);
-//	Carta* carta7 = new Carta("corazon", "8");
-//	cartas->push_front(carta7);
-//	Carta* carta8 = new Carta("pica", "13");
-//	cartas->push_front(carta8);
-//	Carta* carta9 = new Carta("trebol", "1");
-//	cartas->push_front(carta9);
-//	Carta* carta10 = new Carta("rombo", "12");
-//	cartas->push_front(carta10);
-//	Carta* carta11 = new Carta("pica", "6");
-//	cartas->push_front(carta11);
+	cartas->push_front(carta3);
 }
 
 Procesador::Procesador(int i) {
 	this->parser=new ParserServidor();
 	this->cartas = new list<Carta*>;
 	this->jugadores = new list<Jugador*>;
-	this->bote = 0;
+	this->bote = 500;
 	this->apuestaMayorEnRonda = 0;
 	this->setMesa();
 }
@@ -96,14 +80,14 @@ char* Procesador::getRespuesta(char* xml){
 			delete operandos;
 			return respuesta;
 	}
-	if(res=="P"){
+	else if(res=="P"){
 		ostringstream sstream;
 		sstream << this->bote;
 		string boteString = sstream.str();
 		list<string>* respuestaDeOperacion = new list<string>();
 		list<string>::iterator it;
 		it = respuestaDeOperacion->begin();
-		it=respuestaDeOperacion->insert(it,"Correcto");
+		it = respuestaDeOperacion->insert(it, "Correcto");
 		it++;
 		it = respuestaDeOperacion->insert(it, "bote");
 		it++;
@@ -114,22 +98,16 @@ char* Procesador::getRespuesta(char* xml){
 		return respuesta;
 
 	}
-	if(res=="J"){
-		cout<<"holaaaa"<<endl;
+	else if(res=="J"){
 		list<string>* respuestaDeOperacion = operadorJ->realizarOperacion(this->jugadores);
-		cout<<"hola111"<<endl;
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
-		cout<<"chauuuu"<<endl;
 		delete operandos;
 		return respuesta;
 
 	}
-	if(res=="C"){
-		cout<<"C"<<endl;
+	else if(res=="C"){
 		list<string>* respuestaDeOperacion = operadorC->realizarOperacion(this->cartas);
-		cout<<"asldnas"<<endl;
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
-		cout<<"asldnd"<<endl;
 		delete operandos;
 		return respuesta;
 

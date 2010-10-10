@@ -16,16 +16,12 @@ list<string>* C::realizarOperacion(list<Carta*>* cartas){
 		it=respuesta->insert(it,"Cantidad de Cartas invalida");
 		return respuesta;
 	}
-	it = respuesta->begin();
-	it = respuesta->insert(it, "Correcto");
-	it++;
+	respuesta->push_back("Correcto");
 	list<Carta*>::iterator it2;
 	it2 = cartas->begin();
-	while (cartas->size() > 0) {
-		it = respuesta->insert(it, cartas->front()->getPalo());
-		it++;
-		it = respuesta->insert(it, cartas->front()->getNumero());
-		it++;
+	for (unsigned int i = 0; i < cartas->size(); i++) {
+		respuesta->push_back((*it2)->getPalo());
+		respuesta->push_back((*it2)->getNumero());
 		it2++;
 	}
 	return respuesta;

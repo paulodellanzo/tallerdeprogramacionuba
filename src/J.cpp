@@ -16,20 +16,15 @@ list<string>* J::realizarOperacion(list<Jugador*>* jugadores){
 		it=respuesta->insert(it,"Cantidad de Jugadores invalida");
 		return respuesta;
 	}
-	it = respuesta->begin();
-	it = respuesta->insert(it, "Correcto");
-	it++;
 	list<Jugador*>::iterator it2;
 	it2 = jugadores->begin();
 	ostringstream sstream;
-	while (jugadores->size() > 0) {
+	for (unsigned int i = 0; i <jugadores->size(); i++) {
 		if (jugadores->front()->getNombre() != "") {
-			it = respuesta->insert(it, jugadores->front()->getNombre());
-			it++;
-			sstream << jugadores->front()->plataRestante();
+			respuesta->push_back((*it2)->getNombre());
+			sstream << (*it2)->plataRestante();
 			string plataRestante = sstream.str();
-			it = respuesta->insert(it, plataRestante);
-			it++;
+			respuesta->push_back(plataRestante);
 			it2++;
 		} else {
 			it = respuesta->begin();
@@ -41,6 +36,7 @@ list<string>* J::realizarOperacion(list<Jugador*>* jugadores){
 			return respuesta;
 		}
 	}
+	respuesta->push_front("Correcto");
 	return respuesta;
 
 }
