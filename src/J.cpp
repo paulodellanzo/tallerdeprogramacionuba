@@ -17,6 +17,8 @@ list<string>* J::realizarOperacion(list<Jugador*>* jugadores){
 		return respuesta;
 	}
 	it = respuesta->begin();
+	it = respuesta->insert(it, "Correcto");
+	it++;
 	list<Jugador*>::iterator it2;
 	it2 = jugadores->begin();
 	ostringstream sstream;
@@ -39,9 +41,6 @@ list<string>* J::realizarOperacion(list<Jugador*>* jugadores){
 			return respuesta;
 		}
 	}
-	it = respuesta->begin();
-	it = respuesta->insert(it, "Correcto");
-	it++;
 	return respuesta;
 
 }

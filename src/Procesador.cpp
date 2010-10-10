@@ -18,28 +18,28 @@ void Procesador::setMesa(){
 			break;
 	}
 
-	Carta* carta1 = new Carta("corazon", "1");
+	Carta* carta1 = new Carta("corazon", "10");
 	cartas->push_front(carta1);
 	Carta* carta2 = new Carta("pica", "2");
 	cartas->push_front(carta2);
 	Carta* carta3 = new Carta("trebol", "5");
-	cartas->push_front(carta3);
-	Carta* carta4 = new Carta("corazon", "7");
-	cartas->push_front(carta4);
-	Carta* carta5 = new Carta("pica", "4");
-	cartas->push_front(carta5);
-	Carta* carta6 = new Carta("rombo", "11");
-	cartas->push_front(carta6);
-	Carta* carta7 = new Carta("corazon", "8");
-	cartas->push_front(carta7);
-	Carta* carta8 = new Carta("pica", "13");
-	cartas->push_front(carta8);
-	Carta* carta9 = new Carta("trebol", "1");
-	cartas->push_front(carta9);
-	Carta* carta10 = new Carta("rombo", "12");
-	cartas->push_front(carta10);
-	Carta* carta11 = new Carta("pica", "6");
-	cartas->push_front(carta11);
+//	cartas->push_front(carta3);
+//	Carta* carta4 = new Carta("corazon", "7");
+//	cartas->push_front(carta4);
+//	Carta* carta5 = new Carta("pica", "4");
+//	cartas->push_front(carta5);
+//	Carta* carta6 = new Carta("rombo", "11");
+//	cartas->push_front(carta6);
+//	Carta* carta7 = new Carta("corazon", "8");
+//	cartas->push_front(carta7);
+//	Carta* carta8 = new Carta("pica", "13");
+//	cartas->push_front(carta8);
+//	Carta* carta9 = new Carta("trebol", "1");
+//	cartas->push_front(carta9);
+//	Carta* carta10 = new Carta("rombo", "12");
+//	cartas->push_front(carta10);
+//	Carta* carta11 = new Carta("pica", "6");
+//	cartas->push_front(carta11);
 }
 
 Procesador::Procesador(int i) {
@@ -48,7 +48,7 @@ Procesador::Procesador(int i) {
 	this->jugadores = new list<Jugador*>;
 	this->bote = 0;
 	this->apuestaMayorEnRonda = 0;
-	//this->setMesa();
+	this->setMesa();
 }
 
 char* Procesador::getRespuesta(char* xml){
@@ -103,6 +103,8 @@ char* Procesador::getRespuesta(char* xml){
 		list<string>* respuestaDeOperacion = new list<string>();
 		list<string>::iterator it;
 		it = respuestaDeOperacion->begin();
+		it=respuestaDeOperacion->insert(it,"Correcto");
+		it++;
 		it = respuestaDeOperacion->insert(it, "bote");
 		it++;
 		it = respuestaDeOperacion->insert(it, boteString);
@@ -113,15 +115,21 @@ char* Procesador::getRespuesta(char* xml){
 
 	}
 	if(res=="J"){
+		cout<<"holaaaa"<<endl;
 		list<string>* respuestaDeOperacion = operadorJ->realizarOperacion(this->jugadores);
+		cout<<"hola111"<<endl;
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		cout<<"chauuuu"<<endl;
 		delete operandos;
 		return respuesta;
 
 	}
 	if(res=="C"){
+		cout<<"C"<<endl;
 		list<string>* respuestaDeOperacion = operadorC->realizarOperacion(this->cartas);
+		cout<<"asldnas"<<endl;
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		cout<<"asldnd"<<endl;
 		delete operandos;
 		return respuesta;
 

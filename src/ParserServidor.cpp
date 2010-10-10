@@ -77,6 +77,7 @@ char* ParserServidor::armarXmlDeErrores(list<string>* base,string idOperacion){
 
 char* ParserServidor::armarXmlDeResultado(list<string>* base, string idOperacion){
 	string aEnviar;
+	cout<<"dmpezo"<<endl;
 	(aEnviar)="<respuesta>\n	</operacion id=\""+idOperacion+"\"/>\n	<resultados>\n";
 	list<string>::const_iterator iterador;
 	iterador=base->begin();
@@ -86,10 +87,12 @@ char* ParserServidor::armarXmlDeResultado(list<string>* base, string idOperacion
 		(aEnviar)+="		"+(*iterador)+"\n		</resultado>\n";
 		iterador++;
 	}
+	cout<<"termino"<<endl;
 	(aEnviar)+="	</resultados>\n</respuesta>";
 	char* data=new char[aEnviar.size()];
 	memset((void*)data,'\0',aEnviar.size());
 	for(unsigned int i=0;i<aEnviar.size();i++){data[i]=aEnviar[i];}
+	cout<<data<<endl;
 	return (data);
 }
 

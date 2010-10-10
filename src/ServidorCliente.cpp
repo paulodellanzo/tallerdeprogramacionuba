@@ -134,7 +134,9 @@ void ServidorCliente::interactuarConCliente(){
 				string path=this->procesador->getPathArchivo();
 				paraVerSiCortoComunicacion=this->enviarArchivoBMP(path);
 			}else{
+				cout<<"hola"<<endl;
 				data=this->procesador->getRespuesta(xml);
+				cout<<data<<endl;
 				paraVerSiCortoComunicacion=this->enviarACliente(data);
 			}
 			//la corroboracion es para ver si devuelve 0 es porq se desconecto el cliente
