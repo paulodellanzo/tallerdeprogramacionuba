@@ -15,6 +15,8 @@ using namespace std;
 #include "D.h"
 #include "R.h"
 #include "M.h"
+#include "J.h"
+#include "C.h"
 #include <map>
 #include <list>
 #include <ctype.h>
@@ -27,8 +29,8 @@ protected:
 private:
 	ParserServidor* parser;
 	static Procesador* instanciaUnica;
-	list<Carta>* cartas;
-	list<Jugador>* jugadores; //Los jugadores que se van agregando
+	list<Carta*>* cartas;
+	list<Jugador*>* jugadores; //Los jugadores que se van agregando
 	long int bote; //Poso que se va acumulando
 	long int apuestaMayorEnRonda; //sirve para cuando pasan los turnos de todos cuanto se va apostando
 	string path; //La que se tiene que mandar cuando se lo pida
@@ -39,6 +41,7 @@ public:
 	bool enviarArchivo(char*xml); //FALTA VER LO DE SI ES UNA IMAGEN DE UN JUGADOR
 	char* getRespuesta(char* xml);
 	bool esMiTurno(Jugador * jugador); //Dandole un jugador dice si es su turno
+	void setMesa();
 	virtual ~Procesador();
 };
 
