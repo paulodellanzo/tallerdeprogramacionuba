@@ -17,7 +17,7 @@ class ParserServidor {
 		ParserServidor();
 		string getOperacionId(char xml[]);
 		list<char*>* getOperandos(char xml[]);
-		string* getNombreJugadorYConstrasena(char xml[]);
+		string getNombreJugador(char xml[]);
 		char* getXml(list<string>* base,string idOperacion);
 		virtual ~ParserServidor();
 };

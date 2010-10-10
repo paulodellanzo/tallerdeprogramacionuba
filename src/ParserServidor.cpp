@@ -3,6 +3,7 @@ using namespace std;
 #include <stdlib.h>
 #include <iostream>
 #include <stdio.h>
+#include <sstream>
 
 ParserServidor::ParserServidor() {
 	// TODO Auto-generated constructor stub
@@ -95,10 +96,20 @@ char* ParserServidor::armarXmlDeResultado(list<string>* base, string idOperacion
 	return (data);
 }
 
-string* ParserServidor::getNombreJugadorYConstrasena(char xml[]){
-	string * jugadorYconstrasena=new string[2];
-	jugadorYconstrasena[0]="jugador2";
-	return jugadorYconstrasena;
+string ParserServidor::getNombreJugador(char xml[]){
+	string jugador;
+	char* buffer=strtok(xml,"<>");
+	buffer=strtok(NULL,"\n<>");
+	buffer=strtok(NULL,"\n<>");
+	buffer=strtok(NULL,"\n<>");
+	buffer=strtok(NULL,"\n<>");
+	buffer=strtok(NULL,"\n<>");
+	buffer=strtok(NULL,"\n<>");
+	buffer=strtok(NULL,"\n \t <");
+	ostringstream sstream;
+	sstream << buffer;
+	jugador = sstream.str();
+	return jugador;
 }
 ParserServidor::~ParserServidor() {
 	// TODO Auto-generated destructor stub
