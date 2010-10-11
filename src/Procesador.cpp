@@ -18,11 +18,11 @@ void Procesador::setMesa(){
 			break;
 	}
 
-	Carta* carta1 = new Carta("corazon", "10");
+	Carta* carta1 = new Carta("corazones", "10");
 	cartas->push_front(carta1);
-	Carta* carta2 = new Carta("pica", "2");
+	Carta* carta2 = new Carta("picas", "2");
 	cartas->push_front(carta2);
-	Carta* carta3 = new Carta("trebol", "5");
+	Carta* carta3 = new Carta("treboles", "5");
 	cartas->push_front(carta3);
 }
 
