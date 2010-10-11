@@ -24,6 +24,12 @@ void Procesador::setMesa(){
 	cartas->push_front(carta2);
 	Carta* carta3 = new Carta("treboles", "5");
 	cartas->push_front(carta3);
+	Carta* carta4 = new Carta("corazones", "5");
+	cartas->push_front(carta4);
+	Carta* carta5 = new Carta("treboles", "rey");
+	cartas->push_front(carta5);
+	Carta* carta6 = new Carta("treboles", "7");
+	cartas->push_front(carta6);
 }
 
 Procesador::Procesador(int i) {
