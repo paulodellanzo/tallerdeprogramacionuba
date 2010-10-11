@@ -7,7 +7,7 @@ using namespace std;
 
 //metodo de ejemplo para poner algo en la mesa
 void Procesador::setMesa(){
-	for(int i = 1; i < 4; i++){
+	for(int i = 1; i < 7; i++){
 		Jugador* player = new Jugador();
 		ostringstream sstream;
 		sstream << i;
