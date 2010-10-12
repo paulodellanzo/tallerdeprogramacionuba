@@ -5,6 +5,7 @@
 #define MAXBYTES 60000
 #define MAXBYTESRECIBIDOS 60000
 #define MAXIMODEJUGADORES 6
+#define MAXIMODECARTAS 5
 #define PATHARCHIVOCONF "config.ini"
 
 using namespace std;
@@ -34,11 +35,12 @@ private:
 	long int bote; //Poso que se va acumulando
 	long int apuestaMayorEnRonda; //sirve para cuando pasan los turnos de todos cuanto se va apostando
 	string path; //La que se tiene que mandar cuando se lo pida
-	string pathEscenario;
+	informacionConfiguracion* infoconfig;
 public:
 	static Procesador* instancia();
 	string getPathArchivo();
-	bool agregarJugador(Jugador* jugadorNuevo); //FALTA IMPLEMENTAR LA IDEA ES QUE SE FIJE SI TIENE LA CANT DE JUGADORES SINO QUE NO LO AGREGUE Y DEVUELVA FALSE
+	bool agregarJugador(Jugador* jugadorNuevo);
+	bool agregarCarta(Carta* cartaNueva);
 	bool enviarArchivo(char*xml); //FALTA VER LO DE SI ES UNA IMAGEN DE UN JUGADOR
 	char* getRespuesta(char* xml);
 	bool esMiTurno(Jugador * jugador); //Dandole un jugador dice si es su turno
