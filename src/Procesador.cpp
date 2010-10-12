@@ -43,14 +43,12 @@ void Procesador::setMesa(){
 
 Procesador::Procesador(int i) {
 	ParserServidor *parserAux = new ParserServidor(PATHARCHIVOCONF);
-//	if (parserAux->comprobarSintaxis()) {
-//		this->infoconfig = parserAux->getInformacionConfig();
-//	} else {
-//		cout << "Sintaxis de archivo de configuración incorrecta" << endl;
-//	}
-	this->infoconfig = parserAux->getInformacionConfig();
-
-
+	if (parserAux->comprobarSintaxis()) {
+		this->infoconfig = parserAux->getInformacionConfig();
+	} else {
+		cout << "Sintaxis de archivo de configuración incorrecta" << endl;
+		exit(0);
+	}
 
 	this->parser=new ParserServidor();
 	this->cartas = new list<Carta*>();

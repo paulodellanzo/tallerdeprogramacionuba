@@ -195,7 +195,7 @@ void ParserServidor::construirGrafo(){
 	this->grafoTags->agregarNodo(new Nodo(7, "<jugador nombre=\"\">"));
 	this->grafoTags->agregarNodo(new Nodo(8, "valor"));
 	this->grafoTags->agregarNodo(new Nodo(9, "</jugador>"));
-	this->grafoTags->agregarNodo(new Nodo(10, "carta nombre=\"\">"));
+	this->grafoTags->agregarNodo(new Nodo(10, "<carta nombre=\"\">"));
 	this->grafoTags->agregarNodo(new Nodo(11, "valor"));
 	this->grafoTags->agregarNodo(new Nodo(12, "</carta>"));
 
@@ -209,7 +209,6 @@ void ParserServidor::construirGrafo(){
 	this->grafoTags->agregarArista(3, 4);
 	this->grafoTags->agregarArista(4, 5);
 	this->grafoTags->agregarArista(5, 6);
-	//this->grafoTags->agregarArista(6, 4);
 	this->grafoTags->agregarArista(6, 7);
 	this->grafoTags->agregarArista(6, 10);
 	this->grafoTags->agregarArista(6, 13);
