@@ -13,6 +13,13 @@ using namespace std;
 #include <cstdlib>
 #include "Grafo.h"
 
+typedef struct {
+	string pathEscenario;
+	list<string>* jugadores;
+	list<string>* cartas;
+
+}informacionConfiguracion;
+
 class ParserServidor {
 	private:
 		char* armarXmlDeErrores(list<string>* base,string idOperacion);
@@ -36,7 +43,7 @@ class ParserServidor {
 		bool comprobarSintaxis();
 		bool comprobarTag(string* cadenaArchivo,string* cadenaNodo);
 		void registrarError(string idOperacion, list<string>* mensajesError);
-		string* getInformacionConfig();
+		informacionConfiguracion* getInformacionConfig();
 		void construirGrafo();
 		virtual ~ParserServidor();
 };

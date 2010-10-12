@@ -1,4 +1,5 @@
 #include "J.h"
+#include <iostream>
 
 J::J() {
 
@@ -18,10 +19,10 @@ list<string>* J::realizarOperacion(list<Jugador*>* jugadores){
 	}
 	list<Jugador*>::iterator it2;
 	it2 = jugadores->begin();
-	ostringstream sstream;
 	for (unsigned int i = 0; i <jugadores->size(); i++) {
-		if (jugadores->front()->getNombre() != "") {
+		if ((*it2)->getNombre() != "") {
 			respuesta->push_back((*it2)->getNombre());
+			ostringstream sstream;
 			sstream << (*it2)->plataRestante();
 			string plataRestante = sstream.str();
 			respuesta->push_back(plataRestante);
@@ -37,6 +38,7 @@ list<string>* J::realizarOperacion(list<Jugador*>* jugadores){
 		}
 	}
 	respuesta->push_front("Correcto");
+
 	return respuesta;
 
 }

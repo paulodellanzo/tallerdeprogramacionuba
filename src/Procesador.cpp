@@ -4,49 +4,62 @@ using namespace std;
 #include <iostream>
 #include <stdio.h>
 #include <fstream>
+#include <cstdlib>
+
 
 //metodo de ejemplo para poner algo en la mesa
 void Procesador::setMesa(){
-	for(int i = 1; i < 7; i++){
+	list<string>::iterator it;
+	it = this->infoconfig->jugadores->begin();
+	for (unsigned int i = 0; i < this->infoconfig->jugadores->size()/2; i++) {
 		Jugador* player = new Jugador();
-		ostringstream sstream;
-		sstream << i;
-		string numero = sstream.str();
-		player->setNombre("jugador" + numero, "123456");
-		player->aumentarPlata(i * 100);
+		string nombre = *it;
+		it++;
+		string dinero = *it;
+		const char* plata = dinero.c_str();
+		it++;
+		player->setNombre(nombre, "123456");
+		player->aumentarPlata(atoi(plata));
+
 		if (!this->agregarJugador(player))
 			break;
 	}
 
-	Carta* carta1 = new Carta("corazones", "10");
-	cartas->push_front(carta1);
-	Carta* carta2 = new Carta("picas", "2");
-	cartas->push_front(carta2);
-	Carta* carta3 = new Carta("treboles", "5");
-	cartas->push_front(carta3);
-	Carta* carta4 = new Carta("corazones", "5");
-	cartas->push_front(carta4);
-	Carta* carta5 = new Carta("treboles", "13");
-	cartas->push_front(carta5);
-	Carta* carta6 = new Carta("treboles", "7");
-	cartas->push_front(carta6);
+	list<string>::iterator it2;
+	it2 = this->infoconfig->cartas->begin();
+	for (unsigned int i = 0; i < this->infoconfig->cartas->size() / 2; i++) {
+		string palo = *it2;
+		it2++;
+		string numero = *it2;
+		const char* numerocarta = numero.c_str();
+		it2++;
+		Carta* carta = new Carta(palo, numerocarta);
+
+		if (!this->agregarCarta(carta))
+			break;
+	}
 }
 
+
 Procesador::Procesador(int i) {
+	ParserServidor *parserAux = new ParserServidor(PATHARCHIVOCONF);
+//	if (parserAux->comprobarSintaxis()) {
+//		this->infoconfig = parserAux->getInformacionConfig();
+//	} else {
+//		cout << "Sintaxis de archivo de configuración incorrecta" << endl;
+//	}
+	this->infoconfig = parserAux->getInformacionConfig();
+
+
+
 	this->parser=new ParserServidor();
-	this->cartas = new list<Carta*>;
-	this->jugadores = new list<Jugador*>;
+	this->cartas = new list<Carta*>();
+	this->jugadores = new list<Jugador*>();
 	this->bote = 500;
 	this->apuestaMayorEnRonda = 0;
 	this->setMesa();
-	ParserServidor *parserAux=new ParserServidor(PATHARCHIVOCONF);
-	if(parserAux->comprobarSintaxis()){
-		pathEscenario = *(parserAux->getInformacionConfig());
-	}
-	else {
-		cout << "Sintaxis de archivo de configuración incorrecta" << endl;
-	}
 	delete parserAux;
+
 }
 
 char* Procesador::getRespuesta(char* xml){
@@ -152,7 +165,8 @@ bool Procesador::enviarArchivo(char * xml){
 	idOperacionString=toupper(idOperacionString[0]);
 	char idOperacionChar=idOperacionString[0];
 	switch(idOperacionChar){
-		case('E'):{this->path=this->pathEscenario;return true;}
+
+		case('E'):{this->path=this->infoconfig->pathEscenario;return true;}
 		case('I'):{this->path=this->parser->getNombreJugador(xml) + ".bmp"; return true;}
 	}
 	return (false);
@@ -165,6 +179,17 @@ bool Procesador::agregarJugador(Jugador* jugadorNuevo){
 	}
 	else{
 		cout << "Maximo numero de jugadores en la mesa" << endl;
+		return false;
+	}
+}
+
+bool Procesador::agregarCarta(Carta* cartaNueva){
+	if(this->cartas->size() < MAXIMODECARTAS){
+		this->cartas->push_back(cartaNueva);
+		return true;
+	}
+	else{
+		cout << "Maximo numero de cartas en la mesa" << endl;
 		return false;
 	}
 }

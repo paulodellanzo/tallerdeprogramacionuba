@@ -190,21 +190,42 @@ void ParserServidor::construirGrafo(){
 	this->grafoTags->agregarNodo(new Nodo(3,"<parametros>"));
 	this->grafoTags->agregarNodo(new Nodo(4,"<parametro nombre=\"\">"));
 	this->grafoTags->agregarNodo(new Nodo(5,"valor"));
-	this->grafoTags->agregarNodo(new Nodo(6,"</parametro>"));
-	this->grafoTags->agregarNodo(new Nodo(7,"</parametros>"));
-	this->grafoTags->agregarNodo(new Nodo(8,"</pedido>"));
-	this->grafoTags->agregarNodo(new Nodo(9,"eof"));
-	this->grafoTags->agregarArista(0,1);
-	this->grafoTags->agregarArista(1,2);
-	this->grafoTags->agregarArista(2,3);
-	this->grafoTags->agregarArista(3,4);
-	this->grafoTags->agregarArista(4,5);
-	this->grafoTags->agregarArista(5,6);
-	this->grafoTags->agregarArista(6,4);
-	this->grafoTags->agregarArista(6,7);
-	this->grafoTags->agregarArista(7,8);
-	this->grafoTags->agregarArista(8,1);
-	this->grafoTags->agregarArista(8,9);
+	this->grafoTags->agregarNodo(new Nodo(6, "</parametro>"));
+
+	this->grafoTags->agregarNodo(new Nodo(7, "<jugador nombre=\"\">"));
+	this->grafoTags->agregarNodo(new Nodo(8, "valor"));
+	this->grafoTags->agregarNodo(new Nodo(9, "</jugador>"));
+	this->grafoTags->agregarNodo(new Nodo(10, "carta nombre=\"\">"));
+	this->grafoTags->agregarNodo(new Nodo(11, "valor"));
+	this->grafoTags->agregarNodo(new Nodo(12, "</carta>"));
+
+	this->grafoTags->agregarNodo(new Nodo(13, "</parametros>"));
+	this->grafoTags->agregarNodo(new Nodo(14,"</pedido>"));
+	this->grafoTags->agregarNodo(new Nodo(15,"eof"));
+
+	this->grafoTags->agregarArista(0, 1);
+	this->grafoTags->agregarArista(1, 2);
+	this->grafoTags->agregarArista(2, 3);
+	this->grafoTags->agregarArista(3, 4);
+	this->grafoTags->agregarArista(4, 5);
+	this->grafoTags->agregarArista(5, 6);
+	//this->grafoTags->agregarArista(6, 4);
+	this->grafoTags->agregarArista(6, 7);
+	this->grafoTags->agregarArista(6, 10);
+	this->grafoTags->agregarArista(6, 13);
+	this->grafoTags->agregarArista(7, 8);
+	this->grafoTags->agregarArista(8, 9);
+	this->grafoTags->agregarArista(9, 7);
+	this->grafoTags->agregarArista(9, 10);
+	this->grafoTags->agregarArista(9, 13);
+	this->grafoTags->agregarArista(10, 11);
+	this->grafoTags->agregarArista(11, 12);
+	this->grafoTags->agregarArista(12, 7);
+	this->grafoTags->agregarArista(12, 10);
+	this->grafoTags->agregarArista(12, 13);
+	this->grafoTags->agregarArista(13, 14);
+	this->grafoTags->agregarArista(14, 15);
+
 }
 
 void ParserServidor::registrarError(string idOperacion, list<string>* mensajesError) {
@@ -225,7 +246,7 @@ void ParserServidor::registrarError(string idOperacion, list<string>* mensajesEr
 	(*this->archivoerrores) << "</respuesta>" << endl;
 }
 
-string* ParserServidor::getInformacionConfig(){
+informacionConfiguracion* ParserServidor::getInformacionConfig(){
 	string* cadenaArchivo = new string;
 	string xml = "";
 	while (this->archivo->eof() == false) {
@@ -241,18 +262,36 @@ string* ParserServidor::getInformacionConfig(){
 	char* buffer = strtok(xmlAux, "\n\t<>");
 	buffer = strtok(NULL, "<>");
 	buffer = strtok(NULL, "<>");
-	string* infoconfig = new string;
+	informacionConfiguracion* infoconfig = new informacionConfiguracion;
+	list<string>* jugadores = new list<string> ();
+	list<string>* cartas = new list<string> ();
 	while (buffer != NULL) {
-		if (strcmp(buffer, "nombre") == 0) {
+		if (strcmp(buffer, "parametro") == 0) {
+			buffer = strtok(NULL, "\t <>=\"");
 			buffer = strtok(NULL, "\t <>=\"");
 			if (strcmp(buffer, "archivoEscenario") == 0) {
 				buffer = strtok(NULL, ">\n\t");
-				(*infoconfig) = buffer;
+				infoconfig->pathEscenario = buffer;
 			}
-			buffer = strtok(NULL, ">\n\t");
+		} else if (strcmp(buffer, "jugador") == 0) {
+			buffer = strtok(NULL, "\"<>\t\n ");
+			buffer = strtok(NULL, "\"<>\t\n ");
+			jugadores->push_back(buffer);
+			buffer = strtok(NULL, ">\t\n");
+			jugadores->push_back(buffer);
+
+		} else if (strcmp(buffer, "carta") == 0) {
+			buffer = strtok(NULL, "\"<>\t\n ");
+			buffer = strtok(NULL, "\"<>\t\n ");
+			cartas->push_back(buffer);
+			buffer = strtok(NULL, ">\t\n");
+			cartas->push_back(buffer);
 		}
 		buffer = strtok(NULL, " \t<>=");
 	}
+
+	infoconfig->jugadores = jugadores;
+	infoconfig->cartas= cartas;
 	this->archivo->close();
 	return infoconfig;
 
