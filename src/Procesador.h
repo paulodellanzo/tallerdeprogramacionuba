@@ -5,7 +5,7 @@
 #define MAXBYTES 60000
 #define MAXBYTESRECIBIDOS 60000
 #define MAXIMODEJUGADORES 6
-#define PATH "tablero.bmp"
+#define PATHARCHIVOCONF "config.ini"
 
 using namespace std;
 #include <string>
@@ -34,6 +34,7 @@ private:
 	long int bote; //Poso que se va acumulando
 	long int apuestaMayorEnRonda; //sirve para cuando pasan los turnos de todos cuanto se va apostando
 	string path; //La que se tiene que mandar cuando se lo pida
+	string pathEscenario;
 public:
 	static Procesador* instancia();
 	string getPathArchivo();

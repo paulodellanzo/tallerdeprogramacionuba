@@ -39,6 +39,14 @@ Procesador::Procesador(int i) {
 	this->bote = 500;
 	this->apuestaMayorEnRonda = 0;
 	this->setMesa();
+	ParserServidor *parserAux=new ParserServidor(PATHARCHIVOCONF);
+	if(parserAux->comprobarSintaxis()){
+		pathEscenario = *(parserAux->getInformacionConfig());
+	}
+	else {
+		cout << "Sintaxis de archivo de configuración incorrecta" << endl;
+	}
+	delete parserAux;
 }
 
 char* Procesador::getRespuesta(char* xml){
@@ -144,8 +152,8 @@ bool Procesador::enviarArchivo(char * xml){
 	idOperacionString=toupper(idOperacionString[0]);
 	char idOperacionChar=idOperacionString[0];
 	switch(idOperacionChar){
-		case('E'):{this->path=PATH;return true;}
-		case('I'):{this->path="/home/gaston/workspace/TpTallerDeProgramacionI/" + this->parser->getNombreJugador(xml) + ".bmp"; return true;}
+		case('E'):{this->path=this->pathEscenario;return true;}
+		case('I'):{this->path=this->parser->getNombreJugador(xml) + ".bmp"; return true;}
 	}
 	return (false);
 }
