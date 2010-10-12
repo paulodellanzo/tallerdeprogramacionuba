@@ -90,6 +90,11 @@ int ServidorCliente::enviarArchivoBMP(string path){
     fstream  archivo;
     //intenta abrir el archivo en modo lectura y binario
     archivo.open(path.c_str(), fstream::in | fstream::binary );
+    if(!archivo.good()){
+    	cout<<"Mal imagen a enviar con path: " + path<<endl;
+    	archivo.open("ArchivoDeError.bmp", fstream::in | fstream::binary);
+    	if(!archivo.good()) cout<<"Mal archivo error bmp"<<endl;
+    }
     char * data=new char[2];
     archivo.read((char*)data,2);
     int tamano;
@@ -97,16 +102,12 @@ int ServidorCliente::enviarArchivoBMP(string path){
     archivo.close();
     archivo.open(path.c_str(), fstream::in | fstream::binary );
 	unsigned int valorSend;
-	streamsize extraidos,acumulados;
-	acumulados=0;
+	streamsize extraidos;
 	delete []data;
 	data=new char[tamano];
-	while(acumulados<tamano){
-		extraidos=archivo.readsome(data,tamano);
-		acumulados+=extraidos;
-		valorSend = send(cliente->valorAcept, data, extraidos, 0);
-		if (valorSend == -1) {cout<<"Mal enviado a cliente nº: "<<cliente->valorAcept<<endl; }
-	}
+	extraidos=archivo.readsome(data,tamano);
+	valorSend = send(cliente->valorAcept, data, extraidos, 0);
+	if (valorSend == -1) {cout<<"Mal enviado a cliente nº: "<<cliente->valorAcept<<endl; }
 	archivo.close();
 	delete []data;
 	char* data2=new char[3];
