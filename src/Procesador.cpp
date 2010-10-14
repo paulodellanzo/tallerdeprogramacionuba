@@ -47,6 +47,8 @@ Procesador::Procesador(int i) {
 		this->infoconfig = parserAux->getInformacionConfig();
 	} else {
 		cout << "Sintaxis de archivo de configuración incorrecta" << endl;
+		cout<<"Se cerrara la aplicacion..."<<endl;
+		sleep(1);
 		exit(0);
 	}
 

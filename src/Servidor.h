@@ -32,6 +32,7 @@ using namespace std;
 #include <unistd.h>
 #include <pthread.h>
 #include "ServidorCliente.h"
+#include "Procesador.h"
 
 
 class Servidor{

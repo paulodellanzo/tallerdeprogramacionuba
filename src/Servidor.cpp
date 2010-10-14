@@ -45,6 +45,7 @@ void Servidor::escuchar(){
 		cout<<"Mal listen del servidor"<<endl;
 		exit(0);
 	}else{
+		Procesador * procesador=Procesador::instancia();
 		cout<<"Escuchando..."<<endl;
 	}
 }
