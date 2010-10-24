@@ -78,6 +78,7 @@ char* Procesador::getRespuesta(char* xml){
 	Operacion* operacion;
 	J* operadorJ;
 	C* operadorC;
+	U* operadorU;
 	switch(idOperacionChar){
 		case('S'):{res="S";operacion=new S();break;}
 		case('D'):{res="S";operacion=new D();break;}
@@ -86,6 +87,7 @@ char* Procesador::getRespuesta(char* xml){
 		case('P'):{res="P";break;}
 		case('J'):{res="J";operadorJ = new J();break;}
 		case('C'):{res="C";operadorC = new C();break;}
+		case('U'):{res="U";operadorU = new U();break;}
 		default:{
 			list<string>* conError=new list<string>();
 			list<string>::iterator it=conError->begin();
@@ -134,6 +136,14 @@ char* Procesador::getRespuesta(char* xml){
 	}
 	else if(res=="C"){
 		list<string>* respuestaDeOperacion = operadorC->realizarOperacion(this->cartas);
+		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		delete operandos;
+		return respuesta;
+
+	}else if(res=="U"){
+
+		list<string>* respuestaDeOperacion=operadorU->realizarOpearacion(operandos);
+
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete operandos;
 		return respuesta;

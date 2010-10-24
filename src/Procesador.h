@@ -18,11 +18,13 @@ using namespace std;
 #include "M.h"
 #include "J.h"
 #include "C.h"
+#include "U.h"
 #include <map>
 #include <list>
 #include <ctype.h>
 #include "Carta.h"
 #include "Jugador.h"
+#include "Conexion.h"
 
 class Procesador {
 protected:
