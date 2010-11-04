@@ -58,7 +58,6 @@ Procesador::Procesador(int i) {
 	this->bote = 500;
 	this->apuestaMayorEnRonda = 0;
 	this->setMesa();
-	this->jugadorJugando=this->jugadores->begin();
 	delete parserAux;
 
 }
@@ -81,10 +80,11 @@ char* Procesador::getRespuesta(char* xml){
 	C* operadorC;
 	U* operadorU;
 	switch(idOperacionChar){
-		case('P'):{res="P";break;}
-		case('J'):{res="J";operadorJ = new J();break;}
-		case('C'):{res="C";operadorC = new C();break;}
-		case('U'):{res="U";operadorU = new U();break;}
+		case('P'):{res="P";break;}//EL poso
+		case('J'):{res="J";operadorJ = new J();break;}//los jugadores jugando
+		case('C'):{res="C";operadorC = new C();break;}//las cartas de la mesa
+		case('U'):{res="U";operadorU = new U();break;}//NO SE QUE HACE JAJAJA
+		case('A'):{res="A"; break;}//De quien es el turno
 		default:{
 			list<string>* conError=new list<string>();
 			list<string>::iterator it=conError->begin();
@@ -134,6 +134,19 @@ char* Procesador::getRespuesta(char* xml){
 		delete operandos;
 		return respuesta;
 
+	}else if(res=="A"){
+		list<string>* respuestaDeOperacion = new list<string>();
+		list<string>::iterator it;
+		it = respuestaDeOperacion->begin();
+		it = respuestaDeOperacion->insert(it, "Correcto");
+		it++;
+		it = respuestaDeOperacion->insert(it, "jugador");
+		it++;
+		it = respuestaDeOperacion->insert(it, this->nombreJugadorJugando);
+		it++;
+		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		delete operandos;
+		return respuesta;
 	}
 	return"";
 
