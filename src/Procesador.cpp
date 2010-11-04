@@ -58,6 +58,7 @@ Procesador::Procesador(int i) {
 	this->bote = 500;
 	this->apuestaMayorEnRonda = 0;
 	this->setMesa();
+	this->jugadorJugando=this->jugadores->begin();
 	delete parserAux;
 
 }
@@ -128,9 +129,7 @@ char* Procesador::getRespuesta(char* xml){
 		return respuesta;
 
 	}else if(res=="U"){
-
 		list<string>* respuestaDeOperacion=operadorU->realizarOpearacion(operandos);
-
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete operandos;
 		return respuesta;
@@ -189,6 +188,18 @@ bool Procesador::agregarCarta(Carta* cartaNueva){
 		cout << "Maximo numero de cartas en la mesa" << endl;
 		return false;
 	}
+}
+
+void Procesador::terminoMiTurno(){
+	Jugador * jugadorEnTurno=this->jugadores->front();
+	this->jugadores->pop_front();
+	this->jugadores->push_back(jugadorEnTurno);
+	jugadorEnTurno=this->jugadores->front();
+	this->nombreJugadorJugando=jugadorEnTurno->getNombre();
+}
+
+bool Procesador::esMiTurno(Jugador *  jugador){
+	return this->nombreJugadorJugando==jugador->getNombre();
 }
 
 Procesador::~Procesador() {

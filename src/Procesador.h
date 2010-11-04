@@ -38,6 +38,7 @@ private:
 	long int apuestaMayorEnRonda; //sirve para cuando pasan los turnos de todos cuanto se va apostando
 	string path; //La que se tiene que mandar cuando se lo pida
 	informacionConfiguracion* infoconfig;
+	string nombreJugadorJugando;
 public:
 	static Procesador* instancia();
 	string getPathArchivo();
@@ -46,6 +47,7 @@ public:
 	bool enviarArchivo(char*xml); //FALTA VER LO DE SI ES UNA IMAGEN DE UN JUGADOR
 	char* getRespuesta(char* xml);
 	bool esMiTurno(Jugador * jugador); //Dandole un jugador dice si es su turno
+	void terminoMiTurno();
 	void setMesa();
 	virtual ~Procesador();
 };
