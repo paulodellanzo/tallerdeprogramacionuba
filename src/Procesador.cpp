@@ -85,6 +85,9 @@ char* Procesador::getRespuesta(char* xml){
 		case('C'):{res="C";operadorC = new C();break;}//las cartas de la mesa
 		case('U'):{res="U";operadorU = new U();break;}//NO SE QUE HACE JAJAJA
 		case('A'):{res="A"; break;}//De quien es el turno
+		case('B'):{res="B";break;}//Pide las cartas de un jugador, le pasa el nombre
+		case('D'):{res="D";break;}//Pide la apuesta en esa partida
+		case('E'):{res="E";break;}//
 		default:{
 			list<string>* conError=new list<string>();
 			list<string>::iterator it=conError->begin();
