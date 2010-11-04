@@ -19,7 +19,7 @@ void Procesador::setMesa(){
 		const char* plata = dinero.c_str();
 		it++;
 		player->setNombre(nombre, "123456");
-		player->aumentarPlata(atoi(plata));
+		player->modificarPlataEn(atoi(plata));
 
 		if (!this->agregarJugador(player))
 			break;
@@ -80,10 +80,6 @@ char* Procesador::getRespuesta(char* xml){
 	C* operadorC;
 	U* operadorU;
 	switch(idOperacionChar){
-		case('S'):{res="S";operacion=new S();break;}
-		case('D'):{res="S";operacion=new D();break;}
-		case('M'):{res="S";operacion=new M();break;}
-		case('R'):{res="S";operacion=new R();break;}
 		case('P'):{res="P";break;}
 		case('J'):{res="J";operadorJ = new J();break;}
 		case('C'):{res="C";operadorC = new C();break;}
@@ -102,14 +98,7 @@ char* Procesador::getRespuesta(char* xml){
 			return respuesta;
 		}
 	}
-	if(res=="S"){
-			list<string>* respuestaDeOperacion=operacion->realizarOpearacion(operandos);
-			respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
-			delete respuestaDeOperacion;
-			delete operandos;
-			return respuesta;
-	}
-	else if(res=="P"){
+	if(res=="P"){
 		ostringstream sstream;
 		sstream << this->bote;
 		string boteString = sstream.str();
@@ -126,15 +115,13 @@ char* Procesador::getRespuesta(char* xml){
 		delete operandos;
 		return respuesta;
 
-	}
-	else if(res=="J"){
+	}else if(res=="J"){
 		list<string>* respuestaDeOperacion = operadorJ->realizarOperacion(this->jugadores);
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete operandos;
 		return respuesta;
 
-	}
-	else if(res=="C"){
+	}else if(res=="C"){
 		list<string>* respuestaDeOperacion = operadorC->realizarOperacion(this->cartas);
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete operandos;

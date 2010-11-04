@@ -5,6 +5,10 @@ Operacion::Operacion() {
 
 }
 
+list<string>* Operacion::realizarOpearacion(list<char*>* operandos){
+	return NULL;
+}
+
 bool Operacion::esUnNumero(char* numero){
 	ostringstream sstream;
 	sstream << numero;
@@ -18,10 +22,6 @@ bool Operacion::esUnNumero(char* numero){
 		i++;
 		}
 	return esUnNumero;
-}
-
-list<string>* Operacion::realizarOpearacion(list<char*>* operandos){
-	return new list<string>();
 }
 
 Operacion::~Operacion() {

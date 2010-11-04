@@ -5,8 +5,8 @@ using namespace std;
 #include <string>
 #include <list>
 #include "Carta.h"
-
-class C {
+#include "Operacion.h"
+class C : public Operacion {
 public:
 	C();
 	list<string>* realizarOperacion(list<Carta*>* jugadores);

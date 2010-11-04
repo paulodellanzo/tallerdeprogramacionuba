@@ -6,8 +6,9 @@ using namespace std;
 #include <list>
 #include "Jugador.h"
 #include <sstream>
+#include "Operacion.h"
 
-class J {
+class J :public Operacion{
 public:
 	J();
 	list<string>* realizarOperacion(list<Jugador*>* jugadores);

@@ -14,7 +14,7 @@ using namespace std;
 #include <stdio.h>
 
 
-class U {
+class U : public Operacion{
 public:
 	U();
 	list<string>* realizarOpearacion(list<char*>* operandos);

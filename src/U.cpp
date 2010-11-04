@@ -1,8 +1,3 @@
-/*
- * U.cpp
- *
- */
-
 #include "U.h"
 
 U::U() {
