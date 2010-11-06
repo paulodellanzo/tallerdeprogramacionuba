@@ -87,7 +87,7 @@ char* Procesador::getRespuesta(char* xml){
 		case('A'):{res="A"; break;}//De quien es el turno
 		case('B'):{res="B";break;}//Pide las cartas de un jugador, le pasa el nombre
 		case('D'):{res="D";break;}//Pide la apuesta en esa partida
-		case('E'):{res="E";break;}//
+		case('F'):{res="F";break;}//Empezar a jugar cuando termino con el login y eso
 		default:{
 			list<string>* conError=new list<string>();
 			list<string>::iterator it=conError->begin();
@@ -182,6 +182,39 @@ bool Procesador::enviarArchivo(char * xml){
 		case('I'):{this->path=this->parser->getNombreJugador(xml) + ".bmp"; return true;}
 	}
 	return (false);
+}
+
+bool Procesador::empezarPartida(char* xml){
+	ostringstream sstream;
+	sstream << xml;
+	string paraVerCuantoPesa = sstream.str();
+	char xmlAux[paraVerCuantoPesa.size()];
+	for(unsigned int i=0;i<paraVerCuantoPesa.size();i++){xmlAux[i]=xml[i];}
+	string idOperacionString= this->parser->getOperacionId(xmlAux);
+	idOperacionString=toupper(idOperacionString[0]);
+	char idOperacionChar=idOperacionString[0];
+	return idOperacionChar=='F';
+}
+
+bool Procesador::seConectoJugador(char* xml){
+	ostringstream sstream;
+	sstream << xml;
+	string paraVerCuantoPesa = sstream.str();
+	char xmlAux[paraVerCuantoPesa.size()];
+	char xmlAux2[paraVerCuantoPesa.size()];
+	for(unsigned int i=0;i<paraVerCuantoPesa.size();i++){xmlAux[i]=xml[i];xmlAux2[i]=xml[i];}
+	string idOperacionString= this->parser->getOperacionId(xmlAux);
+	idOperacionString=toupper(idOperacionString[0]);
+	char idOperacionChar=idOperacionString[0];
+	U* operadorU=new U();
+	list<char*>* operandos=this->parser->getOperandos(xmlAux2);
+	if(idOperacionChar=='U'){
+		list<string>* respuestaDeOperacion=operadorU->realizarOpearacion(operandos);
+		string aux=respuestaDeOperacion->front();
+		return aux=="Correcto";
+	}else{
+		return false;
+	}
 }
 
 bool Procesador::agregarJugador(Jugador* jugadorNuevo){

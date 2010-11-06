@@ -41,6 +41,8 @@ private:
 	string nombreJugadorJugando;
 public:
 	static Procesador* instancia();
+	bool empezarPartida(char* xml);//Devuelve true si la operacion en una F cosa que empieza a jugar
+	bool seConectoJugador(char* xml);
 	string getPathArchivo();
 	bool agregarJugador(Jugador* jugadorNuevo);
 	bool agregarCarta(Carta* cartaNueva);

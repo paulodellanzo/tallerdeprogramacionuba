@@ -23,6 +23,7 @@ class ServidorCliente{
 private:
 	paraThreadsRecibidos* cliente;
 	Procesador* procesador;
+	Jugador * jugador;
 
 public:
 	ServidorCliente(paraThreadsRecibidos* cliente);

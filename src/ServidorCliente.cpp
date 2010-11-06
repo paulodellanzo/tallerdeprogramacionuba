@@ -4,6 +4,7 @@
 ServidorCliente::ServidorCliente(paraThreadsRecibidos* cliente) {
 	this->cliente=cliente;
 	this->procesador=Procesador::instancia();
+	this->jugador=NULL;
 }
 
 char* ServidorCliente::recibirDeCliente(){
@@ -125,12 +126,27 @@ int ServidorCliente::enviarArchivoBMP(string path){
 void ServidorCliente::interactuarConCliente(){
 	bool seguir=true;
 	int paraVerSiCortoComunicacion=0;
-	char* xml;
+	char* xml,* data;
+	while(seguir){
+		xml=this->recibirDeCliente();
+		if(xml==" ") break;
+		seguir=(!this->procesador->empezarPartida(xml));
+		if(seguir){
+			if(this->procesador->seConectoJugador(xml)){
+				data=this->procesador->getRespuesta(xml);
+				paraVerSiCortoComunicacion=this->enviarACliente(data);
+				seguir=false;
+			}
+			data=this->procesador->getRespuesta(xml);
+			paraVerSiCortoComunicacion=this->enviarACliente(data);
+			seguir=(paraVerSiCortoComunicacion!=0);
+		}
+	}
+	seguir=true;
 	while(seguir){
 		xml=this->recibirDeCliente();
 		seguir=((xml)!=" ");
 		if(seguir){
-			char* data;
 			if(this->procesador->enviarArchivo(xml)){
 				string path=this->procesador->getPathArchivo();
 				paraVerSiCortoComunicacion=this->enviarArchivoBMP(path);
