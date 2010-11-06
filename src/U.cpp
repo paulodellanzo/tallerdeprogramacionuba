@@ -72,6 +72,7 @@ list<string>* U::realizarOpearacion(list<char*>* operandos){
 //	it++;
 //	it = respuesta->insert(it, validoString);
 
+	//IMPORTANTEEEEEE SI ES CORRECTO DEBE DEVOLVER LA LISTA CON CORRECTO Y EL NOMBRE DEL USUARIO Y LA CONTRASEÑA
 	respuesta->push_front("Correcto");
 	return respuesta;
 

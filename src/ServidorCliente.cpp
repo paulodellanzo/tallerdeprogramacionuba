@@ -132,9 +132,15 @@ void ServidorCliente::interactuarConCliente(){
 		if(xml==" ") break;
 		seguir=(!this->procesador->empezarPartida(xml));
 		if(seguir){
-			if(this->procesador->seConectoJugador(xml)){
+			list<string>* lista=this->procesador->seConectoJugador(xml);
+			if(lista->front()=="Correcto"){
 				data=this->procesador->getRespuesta(xml);
 				paraVerSiCortoComunicacion=this->enviarACliente(data);
+				lista->pop_front();
+				string nombre=lista->front();
+				lista->pop_front();
+				string password=lista->front();
+				this->jugador=new Jugador(nombre,password);
 				seguir=false;
 			}
 			data=this->procesador->getRespuesta(xml);
@@ -143,6 +149,9 @@ void ServidorCliente::interactuarConCliente(){
 		}
 	}
 	seguir=true;
+	if(this->jugador!=NULL){
+		this->procesador->agregarJugador(this->jugador);
+	}
 	while(seguir){
 		xml=this->recibirDeCliente();
 		seguir=((xml)!=" ");
@@ -157,6 +166,9 @@ void ServidorCliente::interactuarConCliente(){
 			//la corroboracion es para ver si devuelve 0 es porq se desconecto el cliente
 			seguir=(paraVerSiCortoComunicacion!=0);
 		}
+	}
+	if(this->jugador!=NULL){
+		this->procesador->quitarJugador(this->jugador);
 	}
 }
 ServidorCliente::~ServidorCliente() {

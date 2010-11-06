@@ -16,6 +16,7 @@ private:
 	long int ultimaApuesta;
 public:
 	Jugador();
+	Jugador(string nombre, string password);
 	void setUltimaApuesta(long int apuesta){this->ultimaApuesta=apuesta;}
 	long int getUltimaApuesta(){return ultimaApuesta;}
 	void setCartas(Carta * carta1, Carta * carta2);

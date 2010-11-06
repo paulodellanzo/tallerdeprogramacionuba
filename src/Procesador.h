@@ -42,9 +42,10 @@ private:
 public:
 	static Procesador* instancia();
 	bool empezarPartida(char* xml);//Devuelve true si la operacion en una F cosa que empieza a jugar
-	bool seConectoJugador(char* xml);
+	list<string>* seConectoJugador(char* xml);
 	string getPathArchivo();
 	bool agregarJugador(Jugador* jugadorNuevo);
+	bool quitarJugador(Jugador* jugador);
 	bool agregarCarta(Carta* cartaNueva);
 	bool enviarArchivo(char*xml); //FALTA VER LO DE SI ES UNA IMAGEN DE UN JUGADOR
 	char* getRespuesta(char* xml);

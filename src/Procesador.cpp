@@ -196,7 +196,7 @@ bool Procesador::empezarPartida(char* xml){
 	return idOperacionChar=='F';
 }
 
-bool Procesador::seConectoJugador(char* xml){
+list<string>* Procesador::seConectoJugador(char* xml){
 	ostringstream sstream;
 	sstream << xml;
 	string paraVerCuantoPesa = sstream.str();
@@ -209,11 +209,9 @@ bool Procesador::seConectoJugador(char* xml){
 	U* operadorU=new U();
 	list<char*>* operandos=this->parser->getOperandos(xmlAux2);
 	if(idOperacionChar=='U'){
-		list<string>* respuestaDeOperacion=operadorU->realizarOpearacion(operandos);
-		string aux=respuestaDeOperacion->front();
-		return aux=="Correcto";
+		return operadorU->realizarOpearacion(operandos);
 	}else{
-		return false;
+		return NULL;
 	}
 }
 
@@ -226,6 +224,18 @@ bool Procesador::agregarJugador(Jugador* jugadorNuevo){
 		cout << "Maximo numero de jugadores en la mesa" << endl;
 		return false;
 	}
+}
+
+bool Procesador::quitarJugador(Jugador* jugador){
+	list<Jugador*>* lista_aux=new list<Jugador*>();
+	while(this->jugadores->size()>0){
+		Jugador* juga=this->jugadores->front();
+		this->jugadores->pop_front();
+		if(juga->getNombre()!=jugador->getNombre()){
+			lista_aux->push_front(juga);
+		}
+	}
+	this->jugadores=lista_aux;
 }
 
 bool Procesador::agregarCarta(Carta* cartaNueva){

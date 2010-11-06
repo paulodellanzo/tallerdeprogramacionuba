@@ -5,6 +5,14 @@ Jugador::Jugador() {
 	this->carta2=NULL;
 }
 
+Jugador::Jugador(string nombre,string password){
+	this->nombre=nombre;
+	this->password=password;
+	this->plata=0;
+	this->carta1=NULL;
+	this->carta2=NULL;
+}
+
 bool Jugador::setNombre(string nombre, string password){
 	this->nombre = nombre;
 	this->password = password;
