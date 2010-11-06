@@ -39,6 +39,7 @@ private:
 	string path; //La que se tiene que mandar cuando se lo pida
 	informacionConfiguracion* infoconfig;
 	string nombreJugadorJugando;
+	bool estaJugando;
 public:
 	static Procesador* instancia();
 	bool empezarPartida(char* xml);//Devuelve true si la operacion en una F cosa que empieza a jugar
@@ -52,6 +53,7 @@ public:
 	bool esMiTurno(Jugador * jugador); //Dandole un jugador dice si es su turno
 	void terminoMiTurno();
 	void setMesa();
+	bool seEstaJugando(){return this->estaJugando;}
 	virtual ~Procesador();
 };
 
