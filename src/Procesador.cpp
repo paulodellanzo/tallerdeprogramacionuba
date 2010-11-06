@@ -85,7 +85,7 @@ char* Procesador::getRespuesta(char* xml){
 		case('J'):{res="J";operadorJ = new J();break;}//los jugadores jugando
 		case('C'):{res="C";operadorC = new C();break;}//las cartas de la mesa
 		case('U'):{res="U";operadorU = new U();break;}//NO SE QUE HACE JAJAJA
-		case('A'):{res="A";break;}//De quien es el turno
+		case('A'):{res="A";break;}//De quien es el turno, devuelve el nombre del jugador
 		case('B'):{res="B";break;}//Pide las cartas de un jugador, le pasa el nombre
 		case('D'):{res="D";break;}//Pide la apuesta en esa partida
 		case('F'):{res="F";break;}//Empezar a jugar cuando termino con el login y eso
