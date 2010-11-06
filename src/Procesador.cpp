@@ -216,6 +216,7 @@ list<string>* Procesador::seConectoJugador(char* xml){
 }
 
 bool Procesador::agregarJugador(Jugador* jugadorNuevo){
+	//IMPORTANTE CUANDO SE AGREGUE EL JUGADOR HAY QUE BUSCA EN MYSQL LA TABLA Y SACAR EL DINERO QUE TIENE
 	if(this->jugadores->size() < MAXIMODEJUGADORES){
 		this->jugadores->push_back(jugadorNuevo);
 		return true;

@@ -133,19 +133,23 @@ void ServidorCliente::interactuarConCliente(){
 		seguir=(!this->procesador->empezarPartida(xml));
 		if(seguir){
 			list<string>* lista=this->procesador->seConectoJugador(xml);
-			if(lista->front()=="Correcto"){
+			if(lista!=NULL){
+				if(lista->front()=="Correcto"){
+					data=this->procesador->getRespuesta(xml);
+					paraVerSiCortoComunicacion=this->enviarACliente(data);
+					lista->pop_front();
+					string nombre=lista->front();
+					lista->pop_front();
+					string password=lista->front();
+					this->jugador=new Jugador(nombre,password);
+					seguir=false;
+				}
+			}
+			if(seguir){
 				data=this->procesador->getRespuesta(xml);
 				paraVerSiCortoComunicacion=this->enviarACliente(data);
-				lista->pop_front();
-				string nombre=lista->front();
-				lista->pop_front();
-				string password=lista->front();
-				this->jugador=new Jugador(nombre,password);
-				seguir=false;
+				seguir=(paraVerSiCortoComunicacion!=0);
 			}
-			data=this->procesador->getRespuesta(xml);
-			paraVerSiCortoComunicacion=this->enviarACliente(data);
-			seguir=(paraVerSiCortoComunicacion!=0);
 		}
 	}
 	seguir=true;
