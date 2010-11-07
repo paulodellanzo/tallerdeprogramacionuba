@@ -42,7 +42,6 @@ list<string>* U::realizarOpearacion(list<char*>* operandos){
 	string query = "select usuario from usuarios where usuario='"+usuario+"' and password='"+pass+"'";
 	const char* q = query.c_str();
 	res = Conexion::ejecutarQuery(conn, query.c_str());
-
 	double valido=0;
 	 if ((row = mysql_fetch_row(res)) !=NULL){
 		 cout<<row[0];
@@ -52,7 +51,6 @@ list<string>* U::realizarOpearacion(list<char*>* operandos){
 		 usuValido=false;
 		 valido =1;
 	 }
-
 	if(!usuValido){
 		it=respuesta->begin();
 		it=respuesta->insert(it,"Error");
@@ -66,14 +64,16 @@ list<string>* U::realizarOpearacion(list<char*>* operandos){
 //		sstream << valido;
 //		string validoString = sstream.str();
 //	it=respuesta->begin();
-//	respuesta->insert(it,"Correcto");
+//	respuesta->insert(it,"Correc");
+//	it++;
+//	respuesta->insert(it,"Usuario");
 //	it++;
 //	it = respuesta->insert(it, "usuario");
-//	it++;
-//	it = respuesta->insert(it, validoString);
+	respuesta->push_back("Correcto");
+	respuesta->push_back("Usuario");
+	respuesta->push_back(usuario);
 
 	//IMPORTANTEEEEEE SI ES CORRECTO DEBE DEVOLVER LA LISTA CON CORRECTO Y EL NOMBRE DEL USUARIO Y LA CONTRASEÑA
-	respuesta->push_front("Correcto");
 	return respuesta;
 
 }

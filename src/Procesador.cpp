@@ -136,6 +136,7 @@ char* Procesador::getRespuesta(char* xml){
 	}else if(res=="U"){
 		list<string>* respuestaDeOperacion=operadorU->realizarOpearacion(operandos);
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		cout<<respuesta<<endl;
 		delete operandos;
 		return respuesta;
 
