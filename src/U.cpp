@@ -72,10 +72,7 @@ list<string>* U::realizarOpearacion(list<char*>* operandos){
 	respuesta->push_back("Correcto");
 	respuesta->push_back("Usuario");
 	respuesta->push_back(usuario);
-
-	//IMPORTANTEEEEEE SI ES CORRECTO DEBE DEVOLVER LA LISTA CON CORRECTO Y EL NOMBRE DEL USUARIO Y LA CONTRASEÑA
 	return respuesta;
-
 }
 
 

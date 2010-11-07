@@ -6,7 +6,6 @@
 #ifndef U_H_
 #define U_H_
 using namespace std;
-using namespace std;
 #include "Operacion.h"
 #include <string>
 #include <list>

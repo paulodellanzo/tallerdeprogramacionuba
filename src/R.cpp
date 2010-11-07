@@ -6,61 +6,61 @@ R::R() {
 }
 
 list<string>* R::realizarOpearacion(list<char*>* operandos){
+	MYSQL *conn;
+	MYSQL_RES *res;
+	MYSQL_ROW row;
+	string usuario;
+	string pass;
 	list<string>* respuesta = new list<string>();
 	list<string>::iterator it=respuesta->begin();
-	bool esElPrimero=true;
-	double resta=0;
-	char* restandoChar;
-	double restandoDouble;
-	if(operandos->size()<4){
-		it=respuesta->begin();
-		it=respuesta->insert(it,"Error");
-		it++;
-		it=respuesta->insert(it,"V");
-		it++;
-		it=respuesta->insert(it,"Para la resta debe haber como mínimo dos operandos");
-		return respuesta;
-	}
+
 	while(operandos->size()>0){
-		if(strcmp(operandos->front(),"res")==0){
-			operandos->pop_front();
-			restandoChar=operandos->front();
-			operandos->pop_front();
-			if((!esUnNumero(restandoChar))){//Corroborar que no hayan puesto por ej 4.3.2
+			if(strcmp(operandos->front(),"usuario")==0){
+				operandos->pop_front();
+				usuario=operandos->front();
+				cout<<"usuario " + usuario +"\n";
+				operandos->pop_front();
+			}if(strcmp(operandos->front(),"password")==0){
+				operandos->pop_front();
+				pass=operandos->front();
+				cout<<"pass " + pass+"\n";
+				operandos->pop_front();
+
+			}else{
 				it=respuesta->begin();
 				it=respuesta->insert(it,"Error");
 				it++;
 				it=respuesta->insert(it,"V");
 				it++;
-				it=respuesta->insert(it,"Alguno de los operandos de la resta no es un número");
+				it=respuesta->insert(it,"Falta ingresar usuario o password");
 				return respuesta;
 			}
-			restandoDouble=atof(restandoChar);
-			if(esElPrimero){
-				resta=restandoDouble;
-				esElPrimero=false;
-			}else{
-				resta-=restandoDouble;}
-		}else{
-			it=respuesta->begin();
-			it=respuesta->insert(it,"Error");
-			it++;
-			it=respuesta->insert(it,"V");
-			it++;
-			it=respuesta->insert(it,"No se pasaron restandos como operandos");
-			return respuesta;
 		}
+	bool usuarioExiste;
+	conn = Conexion::crearConexion();
+
+	string query = "select usuario from usuarios where usuario='"+usuario+"'";
+	res = Conexion::ejecutarQuery(conn, query.c_str());
+	 if ((row = mysql_fetch_row(res)) !=NULL){
+		 usuarioExiste = true;
+	 }else{
+		 usuarioExiste=false;
+	 }
+	if(usuarioExiste){
+		it=respuesta->begin();
+		it=respuesta->insert(it,"Error");
+		it++;
+		it=respuesta->insert(it,"V");
+		it++;
+		it=respuesta->insert(it,"Ya existe el usuario");
+		return respuesta;
 	}
-	ostringstream sstream;
-	sstream << resta;
-	string restaString = sstream.str();
-	it=respuesta->begin();
-	it=respuesta->insert(it,"Correcto");
-	it++;
-	it=respuesta->insert(it,"res");
-	it++;
-	it=respuesta->insert(it,restaString);
-	return respuesta;;
+	query="insert into usuarios (usuario,password,plata) values ('"+usuario+"','"+pass+"',0)";
+	res = Conexion::ejecutarQuery(conn, query.c_str());
+	respuesta->push_back("Correcto");
+	respuesta->push_back("Usuario");
+	respuesta->push_back(usuario);
+	return respuesta;
 }
 
 R::~R() {

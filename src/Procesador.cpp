@@ -80,11 +80,13 @@ char* Procesador::getRespuesta(char* xml){
 	J* operadorJ;
 	C* operadorC;
 	U* operadorU;
+	R* operadorR;
 	switch(idOperacionChar){
 		case('P'):{res="P";break;}//EL poso
 		case('J'):{res="J";operadorJ = new J();break;}//los jugadores jugando
 		case('C'):{res="C";operadorC = new C();break;}//las cartas de la mesa
-		case('U'):{res="U";operadorU = new U();break;}//NO SE QUE HACE JAJAJA
+		case('U'):{res="U";operadorU = new U();break;}//para el login
+		case('R'):{res="R";operadorR = new R();break;}//registro
 		case('A'):{res="A";break;}//De quien es el turno, devuelve el nombre del jugador
 		case('B'):{res="B";break;}//Pide las cartas de un jugador, le pasa el nombre
 		case('D'):{res="D";break;}//Pide la apuesta en esa partida
@@ -135,6 +137,13 @@ char* Procesador::getRespuesta(char* xml){
 
 	}else if(res=="U"){
 		list<string>* respuestaDeOperacion=operadorU->realizarOpearacion(operandos);
+		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		cout<<respuesta<<endl;
+		delete operandos;
+		return respuesta;
+
+	}else if(res=="R"){
+		list<string>* respuestaDeOperacion=operadorR->realizarOpearacion(operandos);
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		cout<<respuesta<<endl;
 		delete operandos;
