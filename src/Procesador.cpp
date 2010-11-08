@@ -167,10 +167,13 @@ char* Procesador::getRespuesta(char* xml){
 }
 
 Procesador * Procesador::instanciaUnica;
+pthread_mutex_t Procesador::mutex;
 
 Procesador *Procesador::instancia(){
-		    if (!instanciaUnica)
+		    if (!instanciaUnica){
 		    	instanciaUnica =new Procesador(1);
+		    	pthread_mutex_init(&Procesador::mutex,NULL);
+		    }
 		    return instanciaUnica;
 }
 
@@ -246,12 +249,15 @@ list<string>* Procesador::seConectoJugador(char* xml){
 
 bool Procesador::agregarJugador(Jugador* jugadorNuevo){
 	//IMPORTANTE CUANDO SE AGREGUE EL JUGADOR HAY QUE BUSCA EN MYSQL LA TABLA Y SACAR EL DINERO QUE TIENE
+	pthread_mutex_lock(&this->mutex);
 	if(this->jugadores->size() < MAXIMODEJUGADORES){
 		this->jugadores->push_back(jugadorNuevo);
+		pthread_mutex_unlock(&this->mutex);
 		return true;
 	}
 	else{
 		cout << "Maximo numero de jugadores en la mesa" << endl;
+		pthread_mutex_unlock(&this->mutex);
 		return false;
 	}
 }
@@ -265,6 +271,7 @@ bool Procesador::quitarJugador(Jugador* jugador){
 			lista_aux->push_front(juga);
 		}
 	}
+	delete this->jugadores;
 	this->jugadores=lista_aux;
 }
 

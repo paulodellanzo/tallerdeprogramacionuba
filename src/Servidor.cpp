@@ -45,7 +45,7 @@ void Servidor::escuchar(){
 		cout<<"Mal listen del servidor"<<endl;
 		exit(0);
 	}else{
-//		pthread_mutex_init(&this->mutex, NULL);
+		pthread_mutex_init(&this->mutex, NULL);
 		Procesador * procesador=Procesador::instancia();
 		cout<<"Escuchando..."<<endl;
 	}
