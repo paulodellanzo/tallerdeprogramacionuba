@@ -171,8 +171,7 @@ void ServidorCliente::interactuarConCliente(){
 	char* xml,* data;
 	while(seguir){
 		xml=this->recibirDeCliente();
-		if(xml==" ") break;
-		seguir=(!this->procesador->empezarPartida(xml));
+		seguir=((xml)!=" ");
 		if(seguir){
 			list<string>* lista=this->procesador->seConectoJugador(xml);
 			if(lista!=NULL){
@@ -182,26 +181,19 @@ void ServidorCliente::interactuarConCliente(){
 					lista->pop_front();
 					string password=lista->front();
 					this->jugador=new Jugador(nombre,password);
-//					this->procesador->agregarJugador(this->jugador);
 				}
 			}
-			data=this->procesador->getRespuesta(xml);
-			paraVerSiCortoComunicacion=this->enviarACliente(data);
-			seguir=(paraVerSiCortoComunicacion!=0);
-		}
-	}
-	seguir=true;
-	while(seguir){
-		xml=this->recibirDeCliente();
-		seguir=((xml)!=" ");
-		if(seguir){
 			if(this->procesador->enviarArchivo(xml)){
 				string path=this->procesador->getPathArchivo();
 				paraVerSiCortoComunicacion=this->enviarArchivoBMP(path);
-			} else if(this->procesador->recibirArchivo(xml)){
+			}else if(this->procesador->recibirArchivo(xml)){
 				string path=this->procesador->getPathArchivo();
 				paraVerSiCortoComunicacion=1;
 				this->recibirArchivoDeCliente(path);
+			}else if(this->procesador->empezarPartida(xml)){
+//				pthread_mutex_lock(&this->cliente->mutex);
+				this->procesador->agregarJugador(this->jugador);
+//				pthread_mutex_unlock(&this->cliente->mutex);
 			}else{
 				data=this->procesador->getRespuesta(xml);
 				paraVerSiCortoComunicacion=this->enviarACliente(data);

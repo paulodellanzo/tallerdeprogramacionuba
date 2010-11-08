@@ -30,6 +30,7 @@ class Procesador {
 protected:
 	Procesador(int i);
 private:
+	pthread_mutex_t mutex;
 	ParserServidor* parser;
 	static Procesador* instanciaUnica;
 	list<Carta*>* cartas;

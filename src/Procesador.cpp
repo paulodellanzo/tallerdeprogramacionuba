@@ -43,6 +43,7 @@ void Procesador::setMesa(){
 
 Procesador::Procesador(int i) {
 	ParserServidor *parserAux = new ParserServidor(PATHARCHIVOCONF);
+	this->mutex=mutex;
 	if (parserAux->comprobarSintaxis()) {
 		this->infoconfig = parserAux->getInformacionConfig();
 	} else {
@@ -138,14 +139,12 @@ char* Procesador::getRespuesta(char* xml){
 	}else if(res=="U"){
 		list<string>* respuestaDeOperacion=operadorU->realizarOpearacion(operandos);
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
-		cout<<respuesta<<endl;
 		delete operandos;
 		return respuesta;
 
 	}else if(res=="R"){
 		list<string>* respuestaDeOperacion=operadorR->realizarOpearacion(operandos);
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
-		cout<<respuesta<<endl;
 		delete operandos;
 		return respuesta;
 
@@ -234,9 +233,12 @@ list<string>* Procesador::seConectoJugador(char* xml){
 	idOperacionString=toupper(idOperacionString[0]);
 	char idOperacionChar=idOperacionString[0];
 	U* operadorU=new U();
+	R* operadorR=new R();
 	list<char*>* operandos=this->parser->getOperandos(xmlAux2);
 	if(idOperacionChar=='U'){
 		return operadorU->realizarOpearacion(operandos);
+	}else if(idOperacionChar=='R'){
+		return operadorR->realizarOpearacion(operandos);
 	}else{
 		return NULL;
 	}

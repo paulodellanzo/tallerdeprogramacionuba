@@ -17,6 +17,7 @@ using namespace std;
 struct paraThreadsRecibidos{
 	sockaddr_in clientAdress;
 	int valorAcept,descriptorSocket;
+	pthread_mutex_t mutex;
 };
 
 class ServidorCliente{

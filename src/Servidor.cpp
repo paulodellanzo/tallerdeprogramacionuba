@@ -45,6 +45,7 @@ void Servidor::escuchar(){
 		cout<<"Mal listen del servidor"<<endl;
 		exit(0);
 	}else{
+//		pthread_mutex_init(&this->mutex, NULL);
 		Procesador * procesador=Procesador::instancia();
 		cout<<"Escuchando..."<<endl;
 	}
@@ -61,6 +62,7 @@ void Servidor::aceptar(){
 			threads->clientAdress=clienteAdress;
 			threads->valorAcept=valorAccept;
 			threads->descriptorSocket=this->descriptorSocket;
+			threads->mutex=this->mutex;
 			pthread_t thread;
 			int creado=pthread_create(&thread,NULL,interactuar,(void*)threads);
 			if(creado!=0) cout<<"mal creado el thread"<<endl;}

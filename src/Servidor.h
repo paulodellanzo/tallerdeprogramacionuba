@@ -39,6 +39,7 @@ class Servidor{
 private:
 	int descriptorSocket,valorAccept;
 	sockaddr_in estructurDeDirecciones,clienteAdress;
+	pthread_mutex_t mutex;
 public:
 	Servidor();
 	void escuchar();
