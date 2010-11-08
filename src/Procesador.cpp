@@ -196,6 +196,21 @@ bool Procesador::enviarArchivo(char * xml){
 	return (false);
 }
 
+bool Procesador::recibirArchivo(char * xml){
+	ostringstream sstream;
+	sstream << xml;
+	string paraVerCuantoPesa = sstream.str();
+	char xmlAux[paraVerCuantoPesa.size()];
+	for(unsigned int i=0;i<paraVerCuantoPesa.size();i++){xmlAux[i]=xml[i];}
+	string idOperacionString= this->parser->getOperacionId(xmlAux);
+	idOperacionString=toupper(idOperacionString[0]);
+	char idOperacionChar=idOperacionString[0];
+	switch(idOperacionChar){
+		case('Z'):{this->path=this->parser->getNombreJugador(xml) + ".bmp"; return true;}//Recibe la imagen del jugador
+	}
+	return (false);
+}
+
 bool Procesador::empezarPartida(char* xml){
 	ostringstream sstream;
 	sstream << xml;

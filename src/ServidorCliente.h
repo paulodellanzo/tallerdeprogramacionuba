@@ -29,6 +29,7 @@ public:
 	ServidorCliente(paraThreadsRecibidos* cliente);
 	void interactuarConCliente();
 	char* recibirDeCliente();
+	string recibirArchivoDeCliente(string path);
 	int enviarACliente(char* data);
 	int enviarArchivoBMP(string path);
 	virtual ~ServidorCliente();

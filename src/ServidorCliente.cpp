@@ -68,6 +68,47 @@ char* ServidorCliente::recibirDeCliente(){
 	return dataAux;
 }
 
+string ServidorCliente::recibirArchivoDeCliente(string path){
+        char* data=new char[MAXBYTESRECIBIDOS];
+        memset((void*)data,'\0',MAXBYTESRECIBIDOS);
+        bool seguir=true;
+        ofstream* archivoResultado = new ofstream(path.c_str(), fstream::out | fstream::binary);
+        socklen_t leng=sizeof(char[MAXBYTESRECIBIDOS]);
+        ssize_t valorRecive;
+        while(seguir){
+                valorRecive=recv(cliente->valorAcept,data,leng,0);
+                if(valorRecive==0){
+                cout<<"Se desconecto el servidor.."<<endl;
+                cout<<"Se cerrará la aplicación"<<endl;
+                sleep(2);
+                exit(0);
+                }
+                if(valorRecive==-1){
+                        cout<<"Mal recibido"<<endl;
+                }else{
+                        //corroboro que los ultimos tres formen eof
+                        if((data[valorRecive-1]=='f')and(data[valorRecive-2]=='o')and(data[valorRecive-3]=='e')){
+                                seguir=false;
+                                int bytes=valorRecive - 3;
+                                char* final=new char[bytes];
+                                for(int i=0;i<(valorRecive-3);i++) final[i]=data[i];
+                                archivoResultado->write(final,bytes);
+                                memset((void*)data,'\0',MAXBYTESRECIBIDOS);
+                        }else{
+                                archivoResultado->write(data,valorRecive);
+                                memset((void*)data,'\0',MAXBYTESRECIBIDOS);
+                                delete []data;
+                                data=new char[MAXBYTESRECIBIDOS];
+                                memset((void*)data,'\0',MAXBYTESRECIBIDOS);
+                        }
+                }
+        }
+        delete []data;
+        archivoResultado->close();
+        delete archivoResultado;
+        return path;
+}
+
 int ServidorCliente::enviarACliente(char* data){
 	ostringstream sstream;
 	sstream << data;
@@ -123,6 +164,7 @@ int ServidorCliente::enviarArchivoBMP(string path){
 
 }
 
+
 void ServidorCliente::interactuarConCliente(){
 	bool seguir=true;
 	int paraVerSiCortoComunicacion=0;
@@ -130,6 +172,7 @@ void ServidorCliente::interactuarConCliente(){
 	while(seguir){
 		xml=this->recibirDeCliente();
 		if(xml==" ") break;
+		cout<<xml<<endl;
 		seguir=(!this->procesador->empezarPartida(xml));
 		if(seguir){
 			list<string>* lista=this->procesador->seConectoJugador(xml);
@@ -153,12 +196,20 @@ void ServidorCliente::interactuarConCliente(){
 	}
 	while(seguir){
 		xml=this->recibirDeCliente();
+		cout<<"Recibir archivo"<<endl;
 		seguir=((xml)!=" ");
 		if(seguir){
 			if(this->procesador->enviarArchivo(xml)){
+				cout<<"Enviar archivo"<<endl;
 				string path=this->procesador->getPathArchivo();
 				paraVerSiCortoComunicacion=this->enviarArchivoBMP(path);
+			} else if(this->procesador->recibirArchivo(xml)){
+				cout<<"Recibir archivo"<<endl;
+				string path=this->procesador->getPathArchivo();
+				paraVerSiCortoComunicacion=1;
+				this->recibirArchivoDeCliente(path);
 			}else{
+				cout<<"Responder"<<endl;
 				data=this->procesador->getRespuesta(xml);
 				paraVerSiCortoComunicacion=this->enviarACliente(data);
 			}
