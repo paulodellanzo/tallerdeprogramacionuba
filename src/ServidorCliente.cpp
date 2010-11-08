@@ -172,7 +172,6 @@ void ServidorCliente::interactuarConCliente(){
 	while(seguir){
 		xml=this->recibirDeCliente();
 		if(xml==" ") break;
-		cout<<xml<<endl;
 		seguir=(!this->procesador->empezarPartida(xml));
 		if(seguir){
 			list<string>* lista=this->procesador->seConectoJugador(xml);
@@ -183,6 +182,7 @@ void ServidorCliente::interactuarConCliente(){
 					lista->pop_front();
 					string password=lista->front();
 					this->jugador=new Jugador(nombre,password);
+//					this->procesador->agregarJugador(this->jugador);
 				}
 			}
 			data=this->procesador->getRespuesta(xml);
@@ -191,25 +191,18 @@ void ServidorCliente::interactuarConCliente(){
 		}
 	}
 	seguir=true;
-	if(this->jugador!=NULL){
-		this->procesador->agregarJugador(this->jugador);
-	}
 	while(seguir){
 		xml=this->recibirDeCliente();
-		cout<<"Recibir archivo"<<endl;
 		seguir=((xml)!=" ");
 		if(seguir){
 			if(this->procesador->enviarArchivo(xml)){
-				cout<<"Enviar archivo"<<endl;
 				string path=this->procesador->getPathArchivo();
 				paraVerSiCortoComunicacion=this->enviarArchivoBMP(path);
 			} else if(this->procesador->recibirArchivo(xml)){
-				cout<<"Recibir archivo"<<endl;
 				string path=this->procesador->getPathArchivo();
 				paraVerSiCortoComunicacion=1;
 				this->recibirArchivoDeCliente(path);
 			}else{
-				cout<<"Responder"<<endl;
 				data=this->procesador->getRespuesta(xml);
 				paraVerSiCortoComunicacion=this->enviarACliente(data);
 			}
