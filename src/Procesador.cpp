@@ -294,10 +294,6 @@ void Procesador::terminoMiTurno(){
 	this->nombreJugadorJugando=jugadorEnTurno->getNombre();
 }
 
-bool Procesador::esMiTurno(Jugador *  jugador){
-	return this->jugadores->front()->getNombre()==jugador->getNombre();
-}
-
 Procesador::~Procesador() {
 	delete this->parser;
 }

@@ -52,7 +52,6 @@ public:
 	bool enviarArchivo(char*xml); //FALTA VER LO DE SI ES UNA IMAGEN DE UN JUGADOR
 	bool recibirArchivo(char*xml);
 	char* getRespuesta(char* xml);
-	bool esMiTurno(Jugador * jugador); //Dandole un jugador dice si es su turno
 	void terminoMiTurno();
 	void setMesa();
 	bool seEstaJugando(){return this->estaJugando;}
