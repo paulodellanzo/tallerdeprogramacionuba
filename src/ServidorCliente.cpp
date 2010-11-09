@@ -15,9 +15,7 @@ char* ServidorCliente::recibirDeCliente(){
 	socklen_t leng=sizeof(char[MAXBYTESRECIBIDOS]);
 	ssize_t valorRecive;
 	while(seguir){
-		cout<<"llega al recibir"<<endl;
 		valorRecive=recv(cliente->valorAcept,data,leng,0);
-		cout<<"recibe: "<<data<<endl;
 		if(valorRecive==0){
 			delete []data;
 			return " ";
@@ -108,7 +106,6 @@ string ServidorCliente::recibirArchivoDeCliente(string path){
         delete []data;
         archivoResultado->close();
         delete archivoResultado;
-        cout<<"recibe imagen"<<endl;
         return path;
 }
 
@@ -191,12 +188,23 @@ void ServidorCliente::interactuarConCliente(){
 				paraVerSiCortoComunicacion=this->enviarArchivoBMP(path);
 			}else if(this->procesador->recibirArchivo(xml)){
 				string path=this->procesador->getPathArchivo();
+				char * data=new char[4];
+				data[0]='h';
+				data[1]='h';
+				data[2]='h';
+				data[3]='h';
+				this->enviarACliente(data);
 				this->recibirArchivoDeCliente(path);
+				data=new char[4];
+				data[0]='h';
+				data[1]='h';
+				data[2]='h';
+				data[3]='h';
+				this->enviarACliente(data);
 				paraVerSiCortoComunicacion=1;
 			}else if(this->procesador->empezarPartida(xml)){
 				this->procesador->agregarJugador(this->jugador);
 			}else{
-				cout<<"comujn"<<endl;
 				data=this->procesador->getRespuesta(xml);
 				paraVerSiCortoComunicacion=this->enviarACliente(data);
 			}
