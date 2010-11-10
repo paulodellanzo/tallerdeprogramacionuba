@@ -20,7 +20,11 @@ void Procesador::setMesa(){
 		it++;
 		player->setNombre(nombre, "123456");
 		player->modificarPlataEn(atoi(plata));
-
+		string palo="treboles";
+		string numerocarta="1";
+		Carta* carta1 = new Carta(palo, numerocarta);
+		Carta* carta2 = new Carta(palo, numerocarta);
+		player->setCartas(carta1,carta2);
 		if (!this->agregarJugador(player))
 			break;
 	}
@@ -82,6 +86,7 @@ char* Procesador::getRespuesta(char* xml){
 	C* operadorC;
 	U* operadorU;
 	R* operadorR;
+	B* operadorB;
 	switch(idOperacionChar){
 		case('P'):{res="P";break;}//EL poso
 		case('J'):{res="J";operadorJ = new J();break;}//los jugadores jugando
@@ -89,7 +94,7 @@ char* Procesador::getRespuesta(char* xml){
 		case('U'):{res="U";operadorU = new U();break;}//para el login
 		case('R'):{res="R";operadorR = new R();break;}//registro
 		case('A'):{res="A";break;}//De quien es el turno, devuelve el nombre del jugador
-		case('B'):{res="B";break;}//Pide las cartas de un jugador, le pasa el nombre
+		case('B'):{res="B";operadorB=new B();break;}//Pide las cartas de un jugador, le pasa el nombre
 		case('D'):{res="D";break;}//Pide la apuesta en esa partida
 		case('F'):{res="F";break;}//Empezar a jugar cuando termino con el login y eso
 		case('G'):{res="G";break;}//Para saber si se esta jugando sino empieza a jugar
@@ -158,6 +163,11 @@ char* Procesador::getRespuesta(char* xml){
 		it++;
 		it = respuestaDeOperacion->insert(it, this->nombreJugadorJugando);
 		it++;
+		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		delete operandos;
+		return respuesta;
+	}else if("B"){
+		list<string>* respuestaDeOperacion=operadorB->realizarOpearacion(operandos,this->jugadores);
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete operandos;
 		return respuesta;

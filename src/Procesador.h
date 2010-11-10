@@ -19,6 +19,7 @@ using namespace std;
 #include "J.h"
 #include "C.h"
 #include "U.h"
+#include "B.h"
 #include <map>
 #include <list>
 #include <ctype.h>
