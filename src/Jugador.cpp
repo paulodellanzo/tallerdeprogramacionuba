@@ -46,6 +46,9 @@ void Jugador::setCartas(Carta * carta1, Carta * carta2){
 }
 
 list<Carta*> * Jugador::getCartas(){
+	if(carta1==NULL or carta2==NULL){
+		return NULL;
+	}
 	list<Carta*> * cartas=new list<Carta*>();
 	cartas->push_front(this->carta1);
 	cartas->push_front(this->carta2);

@@ -23,9 +23,18 @@ list<string>* B::realizarOpearacion(list<char*>* operandos,	list<Jugador*>* juga
 	}
 	while(it_jugador!=jugadores->end()){
 		if((*it_jugador)->getNombre()==usuario){
-			respuesta->push_back("Correcto");
 			list<Carta*>::iterator it2;
 			list<Carta*> * cartas=(*it_jugador)->getCartas();
+			if(cartas==NULL){
+				it=respuesta->begin();
+				it=respuesta->insert(it,"Error");
+				it++;
+				it=respuesta->insert(it,"V");
+				it++;
+				it=respuesta->insert(it,"No posee cartas");
+				return respuesta;
+			}
+			respuesta->push_back("Correcto");
 			it2 = cartas->begin();
 			for (unsigned int i = 0; i < cartas->size(); i++) {
 				respuesta->push_back((*it2)->getPalo());
