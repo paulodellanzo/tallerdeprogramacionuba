@@ -4,7 +4,7 @@
  */
 #include "stdio.h"
 #include <iostream>
-#include <mysql.h>
+#include <mysql/mysql.h>
 #include <string>
 #include <stdlib.h>
 #include "ParserServidor.h"
