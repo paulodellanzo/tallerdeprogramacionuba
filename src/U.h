@@ -6,6 +6,7 @@
 #ifndef U_H_
 #define U_H_
 using namespace std;
+using namespace std;
 #include "Operacion.h"
 #include <string>
 #include <list>
@@ -13,7 +14,7 @@ using namespace std;
 #include <stdio.h>
 
 
-class U : public Operacion{
+class U {
 public:
 	U();
 	list<string>* realizarOpearacion(list<char*>* operandos);
