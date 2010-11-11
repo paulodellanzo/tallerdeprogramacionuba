@@ -14,6 +14,7 @@ using namespace std;
 class Mazo {
 private:
 	stack<Carta> pila;
+	int semilla;
 public:
 	Mazo();
 	void mezclar();
