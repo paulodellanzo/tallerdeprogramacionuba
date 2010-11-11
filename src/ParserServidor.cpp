@@ -209,6 +209,7 @@ void ParserServidor::construirGrafo(){
 	this->grafoTags->agregarArista(3, 4);
 	this->grafoTags->agregarArista(4, 5);
 	this->grafoTags->agregarArista(5, 6);
+	this->grafoTags->agregarArista(6, 4);
 	this->grafoTags->agregarArista(6, 7);
 	this->grafoTags->agregarArista(6, 10);
 	this->grafoTags->agregarArista(6, 13);
@@ -291,6 +292,53 @@ informacionConfiguracion* ParserServidor::getInformacionConfig(){
 
 	infoconfig->jugadores = jugadores;
 	infoconfig->cartas= cartas;
+	this->archivo->close();
+	return infoconfig;
+
+}
+
+
+informacionConexion* ParserServidor::getInformacionConexion(){
+	string* cadenaArchivo = new string;
+	string xml = "";
+	while (this->archivo->eof() == false) {
+
+		std::getline(*(this->archivo), *cadenaArchivo);
+		xml += *cadenaArchivo;
+	}
+	delete cadenaArchivo;
+	char* xmlAux = new char[xml.size()];
+	for (unsigned int i = 0; i < xml.size(); i++) {
+		xmlAux[i] = xml[i];
+	}
+	char* buffer = strtok(xmlAux, "\n\t<>");
+	buffer = strtok(NULL, "<>");
+	buffer = strtok(NULL, "<>");
+	informacionConexion* infoconfig = new informacionConexion;
+	list<string>* jugadores = new list<string> ();
+	list<string>* cartas = new list<string> ();
+	while (buffer != NULL) {
+		if (strcmp(buffer, "parametro") == 0) {
+			buffer = strtok(NULL, "\t <>=\"");
+			buffer = strtok(NULL, "\t <>=\"");
+			if (strcmp(buffer, "server") == 0) {
+				buffer = strtok(NULL, ">\n\t");
+				infoconfig->server= buffer;
+			}else if(strcmp(buffer, "database") == 0) {
+				buffer = strtok(NULL, ">\n\t");
+				infoconfig->database= buffer;
+			}else if(strcmp(buffer, "user") == 0) {
+				buffer = strtok(NULL, ">\n\t");
+				infoconfig->user= buffer;
+			}else if(strcmp(buffer, "password") == 0) {
+				buffer = strtok(NULL, ">\n\t");
+				infoconfig->password= buffer;
+			}
+		}
+
+			buffer = strtok(NULL, " \t<>=");
+	}
+
 	this->archivo->close();
 	return infoconfig;
 

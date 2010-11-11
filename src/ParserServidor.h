@@ -20,6 +20,13 @@ typedef struct {
 
 }informacionConfiguracion;
 
+typedef struct {
+	char* server;
+	char* user;
+	char* password;
+	char* database;
+}informacionConexion;
+
 class ParserServidor {
 	private:
 		char* armarXmlDeErrores(list<string>* base,string idOperacion);
@@ -44,6 +51,7 @@ class ParserServidor {
 		bool comprobarTag(string* cadenaArchivo,string* cadenaNodo);
 		void registrarError(string idOperacion, list<string>* mensajesError);
 		informacionConfiguracion* getInformacionConfig();
+		informacionConexion* getInformacionConexion();
 		void construirGrafo();
 		virtual ~ParserServidor();
 };

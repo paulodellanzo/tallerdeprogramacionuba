@@ -37,15 +37,17 @@ list<string>* R::realizarOpearacion(list<char*>* operandos){
 			}
 		}
 	bool usuarioExiste;
-	conn = Conexion::crearConexion();
+	Conexion* conexion = Conexion::instancia();
 
 	string query = "select usuario from usuarios where usuario='"+usuario+"'";
-	res = Conexion::ejecutarQuery(conn, query.c_str());
+	res = conexion->ejecutarQuery(query.c_str());
+	//res = Conexion::ejecutarQuery(query.c_str());
 	 if ((row = mysql_fetch_row(res)) !=NULL){
 		 usuarioExiste = true;
 	 }else{
 		 usuarioExiste=false;
 	 }
+	 conexion->liberarConexion(res);
 	if(usuarioExiste){
 		it=respuesta->begin();
 		it=respuesta->insert(it,"Error");
@@ -56,7 +58,8 @@ list<string>* R::realizarOpearacion(list<char*>* operandos){
 		return respuesta;
 	}
 	query="insert into usuarios (usuario,password,plata) values ('"+usuario+"','"+pass+"',0)";
-	res = Conexion::ejecutarQuery(conn, query.c_str());
+	res = conexion->ejecutarQuery(query.c_str());
+	conexion->liberarConexion(res);
 	respuesta->push_back("Correcto");
 	respuesta->push_back("Usuario");
 	respuesta->push_back(usuario);
