@@ -198,13 +198,16 @@ void ServidorCliente::interactuarConCliente(){
 					}
 					data=this->procesador->getXml(lista,"R");
 					paraVerSiCortoComunicacion=this->enviarACliente(data);
+					delete xml;
 				}else{
 					data=this->procesador->getXml(lista,"R");
 					paraVerSiCortoComunicacion=this->enviarACliente(data);
+					delete xml;
 				}
 			}else if(this->procesador->enviarArchivo(xml)){
 				string path=this->procesador->getPathArchivo();
 				paraVerSiCortoComunicacion=this->enviarArchivoBMP(path);
+				delete xml;
 			}else if(this->procesador->recibirArchivo(xml)){
 				string path=this->procesador->getPathArchivo();
 				char * data=new char[4];
@@ -221,11 +224,11 @@ void ServidorCliente::interactuarConCliente(){
 				data[3]='h';
 				this->enviarACliente(data);
 				paraVerSiCortoComunicacion=1;
-			}else if(this->procesador->empezarPartida(xml)){
-				this->procesador->agregarJugador(this->jugador);
+				delete xml;
 			}else{
 				data=this->procesador->getRespuesta(xml);
 				paraVerSiCortoComunicacion=this->enviarACliente(data);
+				delete xml;
 			}
 			//la corroboracion es para ver si devuelve 0 es porq se desconecto el cliente
 			seguir=(paraVerSiCortoComunicacion!=0);
@@ -233,6 +236,7 @@ void ServidorCliente::interactuarConCliente(){
 	}
 	if(this->jugador!=NULL){
 		this->procesador->quitarJugador(this->jugador);
+		delete this->jugador;
 	}
 }
 ServidorCliente::~ServidorCliente() {

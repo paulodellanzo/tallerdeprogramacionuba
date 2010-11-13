@@ -66,7 +66,7 @@ Procesador::Procesador(int i) {
 
 char* Procesador::getRespuesta(char* xml){
 	/* Operaciones Usadas:
-	 * A - B - C - E - F - I - J - P - R - U - Z
+	 * A - B - C - E - I - J - P - R - U - Z
 	 * */
 	ostringstream sstream;
 	sstream << xml;
@@ -206,18 +206,6 @@ bool Procesador::recibirArchivo(char * xml){
 	return (false);
 }
 
-bool Procesador::empezarPartida(char* xml){
-	ostringstream sstream;
-	sstream << xml;
-	string paraVerCuantoPesa = sstream.str();
-	char xmlAux[paraVerCuantoPesa.size()];
-	for(unsigned int i=0;i<paraVerCuantoPesa.size();i++){xmlAux[i]=xml[i];}
-	string idOperacionString= this->parser->getOperacionId(xmlAux);
-	idOperacionString=toupper(idOperacionString[0]);
-	char idOperacionChar=idOperacionString[0];
-	return idOperacionChar=='F';
-}
-
 char* Procesador::getXml(list<string> *lista,string operacion){
 	char* data =this->parser->getXml(lista,operacion);
 	delete lista;
@@ -264,17 +252,37 @@ bool Procesador::agregarJugador(Jugador* jugadorNuevo){
 
 bool Procesador::quitarJugador(Jugador* jugador){
 	list<Jugador*>* lista_aux=new list<Jugador*>();
-	while(this->jugadores->size()>0){
-		Jugador* juga=this->jugadores->front();
-		this->jugadores->pop_front();
+	while(this->jugadores_a_dibujar->size()>0){
+		Jugador* juga=this->jugadores_a_dibujar->back();
+		this->jugadores_a_dibujar->pop_back();
 		if(juga->getNombre()!=jugador->getNombre()){
 			lista_aux->push_front(juga);
-		}else{
-			delete juga;
+		}
+	}
+	delete this->jugadores_a_dibujar;
+	this->jugadores_a_dibujar=lista_aux;
+
+	list<Jugador*>* lista_aux2=new list<Jugador*>();
+	while(this->jugadores->size()>0){
+		Jugador* juga=this->jugadores->back();
+		this->jugadores->pop_back();
+		if(juga->getNombre()!=jugador->getNombre()){
+			lista_aux2->push_front(juga);
 		}
 	}
 	delete this->jugadores;
-	this->jugadores=lista_aux;
+	this->jugadores=lista_aux2;
+
+	list<Jugador*>* lista_aux3=new list<Jugador*>();
+	while(this->jugadores_agregar->size()>0){
+		Jugador* juga=this->jugadores_agregar->back();
+		this->jugadores_agregar->pop_back();
+		if(juga->getNombre()!=jugador->getNombre()){
+			lista_aux3->push_front(juga);
+		}
+	}
+	delete this->jugadores_agregar;
+	this->jugadores_agregar=lista_aux3;
 	return true;
 }
 
@@ -300,8 +308,8 @@ void Procesador::terminoMiTurno(){
 
 bool Procesador::estaJugandoJugador(string nombre_jugador){
 	pthread_mutex_lock(&this->mutex);
-	list<Jugador*>::iterator iterador=this->jugadores->begin();
-	while(iterador!=this->jugadores->end()){
+	list<Jugador*>::iterator iterador=this->jugadores_a_dibujar->begin();
+	while(iterador!=this->jugadores_a_dibujar->end()){
 		if((*iterador)->getNombre()==nombre_jugador){
 			pthread_mutex_unlock(&this->mutex);
 			return true;
