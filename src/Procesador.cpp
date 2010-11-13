@@ -63,6 +63,9 @@ Procesador::Procesador(int i) {
 }
 
 char* Procesador::getRespuesta(char* xml){
+	/* Operaciones Usadas:
+	 * A - B - C - E - F - I - J - P - R - U - Z
+	 * */
 	ostringstream sstream;
 	sstream << xml;
 	string paraVerCuantoPesa = sstream.str();
@@ -73,40 +76,8 @@ char* Procesador::getRespuesta(char* xml){
 	char* respuesta=" ";
 	string res;
 	list<char*>* operandos=this->parser->getOperandos(xmlAux2);
-	idOperacionString=toupper(idOperacionString[0]);
-	char idOperacionChar=idOperacionString[0];
-	Operacion* operacion;
-	J* operadorJ;
-	C* operadorC;
-	U* operadorU;
-	R* operadorR;
-	B* operadorB;
-	switch(idOperacionChar){
-		case('P'):{res="P";break;}//EL poso
-		case('J'):{res="J";operadorJ = new J();break;}//los jugadores jugando
-		case('C'):{res="C";operadorC = new C();break;}//las cartas de la mesa
-		case('U'):{res="U";operadorU = new U();break;}//para el login
-		case('R'):{res="R";operadorR = new R();break;}//registro
-		case('A'):{res="A";break;}//De quien es el turno, devuelve el nombre del jugador
-		case('B'):{res="B";operadorB=new B();break;}//Pide las cartas de un jugador, le pasa el nombre
-		case('D'):{res="D";break;}//Pide la apuesta en esa partida
-		case('F'):{res="F";break;}//Empezar a jugar cuando termino con el login y eso
-		case('G'):{res="G";break;}//Para saber si se esta jugando sino empieza a jugar
-		default:{
-			list<string>* conError=new list<string>();
-			list<string>::iterator it=conError->begin();
-			it=conError->insert(it,"Error");
-			it++;
-			it=conError->insert(it,"V");
-			it++;
-			it=conError->insert(it,"Mal id de operacion");
-			respuesta=this->parser->getXml(conError,"");
-			delete conError;
-			delete operandos;
-			return respuesta;
-		}
-	}
-	if(res=="P"){
+	res=toupper(idOperacionString[0]);
+	if(res=="P"){//poso
 		ostringstream sstream;
 		sstream << this->bote;
 		string boteString = sstream.str();
@@ -120,34 +91,35 @@ char* Procesador::getRespuesta(char* xml){
 		it = respuestaDeOperacion->insert(it, boteString);
 		it++;
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		delete respuestaDeOperacion;
 		delete operandos;
 		return respuesta;
 
-	}else if(res=="J"){
+	}else if(res=="J"){//los jugadores jugando
+		J* operadorJ= new J();
 		list<string>* respuestaDeOperacion = operadorJ->realizarOperacion(this->jugadores);
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		delete respuestaDeOperacion;
 		delete operandos;
 		return respuesta;
 
-	}else if(res=="C"){
+	}else if(res=="C"){//Cartas de la mesa
+		C* operadorC=new C();
 		list<string>* respuestaDeOperacion = operadorC->realizarOperacion(this->cartas);
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		delete respuestaDeOperacion;
 		delete operandos;
 		return respuesta;
 
-	}else if(res=="U"){
-		list<string>* respuestaDeOperacion=operadorU->realizarOpearacion(operandos);
-		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
-		delete operandos;
-		return respuesta;
-
-	}else if(res=="R"){
+	}else if(res=="R"){//Registrarse
+		R * operadorR = new R();
 		list<string>* respuestaDeOperacion=operadorR->realizarOpearacion(operandos);
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		delete respuestaDeOperacion;
 		delete operandos;
 		return respuesta;
 
-	}else if(res=="A"){
+	}else if(res=="A"){//de quien es el turno
 		list<string>* respuestaDeOperacion = new list<string>();
 		list<string>::iterator it;
 		it = respuestaDeOperacion->begin();
@@ -158,11 +130,26 @@ char* Procesador::getRespuesta(char* xml){
 		it = respuestaDeOperacion->insert(it, this->nombreJugadorJugando);
 		it++;
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		delete respuestaDeOperacion;
 		delete operandos;
 		return respuesta;
-	}else if("B"){
+	}else if("B"){//Pedir las cartas de un jugador
+		B * operadorB=new B();
 		list<string>* respuestaDeOperacion=operadorB->realizarOpearacion(operandos,this->jugadores);
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		delete respuestaDeOperacion;
+		delete operandos;
+		return respuesta;
+	}else{
+		list<string>* conError=new list<string>();
+		list<string>::iterator it=conError->begin();
+		it=conError->insert(it,"Error");
+		it++;
+		it=conError->insert(it,"V");
+		it++;
+		it=conError->insert(it,"Mal id de operacion");
+		respuesta=this->parser->getXml(conError,"");
+		delete conError;
 		delete operandos;
 		return respuesta;
 	}
@@ -230,7 +217,6 @@ bool Procesador::empezarPartida(char* xml){
 }
 
 char* Procesador::getXml(list<string> *lista,string operacion){
-	cout<<lista->size()<<endl;
 	return this->parser->getXml(lista,operacion);
 }
 

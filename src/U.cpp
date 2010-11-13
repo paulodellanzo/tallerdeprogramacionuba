@@ -23,12 +23,10 @@ list<string>* U::realizarOpearacion(list<char*>* operandos){
 			if(strcmp(operandos->front(),"usuario")==0){
 				operandos->pop_front();
 				usuario=operandos->front();
-				cout<<"usuario " + usuario +"\n";
 				operandos->pop_front();
 			}if(strcmp(operandos->front(),"password")==0){
 				operandos->pop_front();
 				pass=operandos->front();
-				cout<<"pass " + pass+"\n";
 				operandos->pop_front();
 
 			}else{
@@ -49,7 +47,6 @@ list<string>* U::realizarOpearacion(list<char*>* operandos){
 
 	double valido=0;
 	 if ((row = mysql_fetch_row(res)) !=NULL){
-		 cout<<row[0];
 		 usuValido = true;
 		 valido=0;
 	 }else{
