@@ -54,6 +54,8 @@ Procesador::Procesador(int i) {
 	this->parser=new ParserServidor();
 	this->cartas = new list<Carta*>();
 	this->jugadores = new list<Jugador*>();
+	this->jugadores_a_dibujar = new list<Jugador*>();
+	this->jugadores_agregar = new list<Jugador*>();
 	this->bote = 500;
 	this->apuestaMayorEnRonda = 0;
 	this->setMesa();
@@ -95,9 +97,9 @@ char* Procesador::getRespuesta(char* xml){
 		delete operandos;
 		return respuesta;
 
-	}else if(res=="J"){//los jugadores jugando
+	}else if(res=="J"){//los jugadores que estan en la mesa
 		J* operadorJ= new J();
-		list<string>* respuestaDeOperacion = operadorJ->realizarOperacion(this->jugadores);
+		list<string>* respuestaDeOperacion = operadorJ->realizarOperacion(this->jugadores_a_dibujar);
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
@@ -135,7 +137,7 @@ char* Procesador::getRespuesta(char* xml){
 		return respuesta;
 	}else if("B"){//Pedir las cartas de un jugador
 		B * operadorB=new B();
-		list<string>* respuestaDeOperacion=operadorB->realizarOpearacion(operandos,this->jugadores);
+		list<string>* respuestaDeOperacion=operadorB->realizarOpearacion(operandos,this->jugadores_a_dibujar);
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
@@ -217,7 +219,9 @@ bool Procesador::empezarPartida(char* xml){
 }
 
 char* Procesador::getXml(list<string> *lista,string operacion){
-	return this->parser->getXml(lista,operacion);
+	char* data =this->parser->getXml(lista,operacion);
+	delete lista;
+	return data;
 }
 
 list<string>* Procesador::seConectoJugador(char* xml){
@@ -233,8 +237,11 @@ list<string>* Procesador::seConectoJugador(char* xml){
 	U* operadorU=new U();
 	list<char*>* operandos=this->parser->getOperandos(xmlAux2);
 	if(idOperacionChar=='U'){
-		return operadorU->realizarOpearacion(operandos);
+		list<string> * lista=operadorU->realizarOpearacion(operandos);
+		delete operadorU;
+		return lista;
 	}else{
+		delete operadorU;
 		return NULL;
 	}
 }
@@ -242,8 +249,9 @@ list<string>* Procesador::seConectoJugador(char* xml){
 bool Procesador::agregarJugador(Jugador* jugadorNuevo){
 	//IMPORTANTE CUANDO SE AGREGUE EL JUGADOR HAY QUE BUSCA EN MYSQL LA TABLA Y SACAR EL DINERO QUE TIENE
 	pthread_mutex_lock(&this->mutex);
-	if(this->jugadores->size() < MAXIMODEJUGADORES){
-		this->jugadores->push_back(jugadorNuevo);
+	if(this->jugadores_a_dibujar->size() < MAXIMODEJUGADORES){
+		this->jugadores_a_dibujar->push_back(jugadorNuevo);
+		this->jugadores_agregar->push_back(jugadorNuevo);
 		pthread_mutex_unlock(&this->mutex);
 		return true;
 	}
@@ -261,6 +269,8 @@ bool Procesador::quitarJugador(Jugador* jugador){
 		this->jugadores->pop_front();
 		if(juga->getNombre()!=jugador->getNombre()){
 			lista_aux->push_front(juga);
+		}else{
+			delete juga;
 		}
 	}
 	delete this->jugadores;
@@ -274,6 +284,7 @@ bool Procesador::agregarCarta(Carta* cartaNueva){
 		return true;
 	}
 	else{
+		delete cartaNueva;
 		cout << "Maximo numero de cartas en la mesa" << endl;
 		return false;
 	}

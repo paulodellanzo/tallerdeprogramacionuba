@@ -36,7 +36,9 @@ private:
 	ParserServidor* parser;
 	static Procesador* instanciaUnica;
 	list<Carta*>* cartas;
-	list<Jugador*>* jugadores; //Los jugadores que se van agregando
+	list<Jugador*>* jugadores; //Los jugadores que estan jugando
+	list<Jugador*>* jugadores_a_dibujar;
+	list<Jugador*>* jugadores_agregar;//Los que se agregan, serias los que se ponen a jugar cuando se termina una mano
 	long int bote; //Poso que se va acumulando
 	long int apuestaMayorEnRonda; //sirve para cuando pasan los turnos de todos cuanto se va apostando
 	string path; //La que se tiene que mandar cuando se lo pida
