@@ -63,6 +63,8 @@ list<string>* R::realizarOpearacion(list<char*>* operandos){
 	respuesta->push_back("Correcto");
 	respuesta->push_back("Usuario");
 	respuesta->push_back(usuario);
+	respuesta->push_back("Password");
+	respuesta->push_back(pass);
 	return respuesta;
 }
 

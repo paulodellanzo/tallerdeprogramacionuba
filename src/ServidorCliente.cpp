@@ -177,13 +177,26 @@ void ServidorCliente::interactuarConCliente(){
 			if(lista!=NULL){
 				if(lista->front()=="Correcto"){
 					lista->pop_front();
+					lista->pop_front();
 					string nombre=lista->front();
 					lista->pop_front();
+					lista->pop_front();
 					string password=lista->front();
+					lista->pop_front();
 					this->jugador=new Jugador(nombre,password);
+					lista->push_front(password);
+					lista->push_front("password");
+					lista->push_front(nombre);
+					lista->push_front("Usuario");
+					lista->push_front("Correcto");
+					data=this->procesador->getXml(lista,"R");
+					this->procesador->agregarJugador(this->jugador);
+					paraVerSiCortoComunicacion=this->enviarACliente(data);
+				}else{
+					data=this->procesador->getXml(lista,"R");
+					paraVerSiCortoComunicacion=this->enviarACliente(data);
 				}
-			}
-			if(this->procesador->enviarArchivo(xml)){
+			}else if(this->procesador->enviarArchivo(xml)){
 				string path=this->procesador->getPathArchivo();
 				paraVerSiCortoComunicacion=this->enviarArchivoBMP(path);
 			}else if(this->procesador->recibirArchivo(xml)){

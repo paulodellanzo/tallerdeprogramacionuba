@@ -78,8 +78,10 @@ list<string>* U::realizarOpearacion(list<char*>* operandos){
 //	it = respuesta->insert(it, validoString);
 
 	respuesta->push_back("Correcto");
-		respuesta->push_back("usuario");
-		respuesta->push_back("1");
+	respuesta->push_back("usuario");
+	respuesta->push_back(usuario);
+	respuesta->push_back("password");
+	respuesta->push_back(pass);
 	return respuesta;
 
 }

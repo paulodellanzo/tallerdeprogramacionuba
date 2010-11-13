@@ -235,6 +235,11 @@ bool Procesador::empezarPartida(char* xml){
 	return idOperacionChar=='F';
 }
 
+char* Procesador::getXml(list<string> *lista,string operacion){
+	cout<<lista->size()<<endl;
+	return this->parser->getXml(lista,operacion);
+}
+
 list<string>* Procesador::seConectoJugador(char* xml){
 	ostringstream sstream;
 	sstream << xml;
@@ -262,6 +267,7 @@ bool Procesador::agregarJugador(Jugador* jugadorNuevo){
 	pthread_mutex_lock(&this->mutex);
 	if(this->jugadores->size() < MAXIMODEJUGADORES){
 		this->jugadores->push_back(jugadorNuevo);
+		cout<<jugadorNuevo->getNombre()<<endl;
 		pthread_mutex_unlock(&this->mutex);
 		return true;
 	}
@@ -283,6 +289,7 @@ bool Procesador::quitarJugador(Jugador* jugador){
 	}
 	delete this->jugadores;
 	this->jugadores=lista_aux;
+	return true;
 }
 
 bool Procesador::agregarCarta(Carta* cartaNueva){
