@@ -17,39 +17,24 @@ void Procesador::setMesa(){
 	this->agregarCarta(carta);
 	carta=this->mazo->getCarta();
 	this->agregarCarta(carta);
-//	list<string>::iterator it;
-//	it = this->infoconfig->jugadores->begin();
-//	for (unsigned int i = 0; i < this->infoconfig->jugadores->size()/2; i++) {
-//		Jugador* player = new Jugador();
-//		string nombre = *it;
-//		it++;
-//		string dinero = *it;
-//		const char* plata = dinero.c_str();
-//		it++;
-//		player->setNombre(nombre, "123456");
-//		player->modificarPlataEn(atoi(plata));
-//		string palo="treboles";
-//		string numerocarta="1";
-//		Carta* carta1 = new Carta(palo, numerocarta);
-//		Carta* carta2 = new Carta(palo, numerocarta);
-//		player->setCartas(carta1,carta2);
-//		if (!this->agregarJugador(player))
-//			break;
-//	}
-//
-//	list<string>::iterator it2;
-//	it2 = this->infoconfig->cartas->begin();
-//	for (unsigned int i = 0; i < this->infoconfig->cartas->size() / 2; i++) {
-//		string palo = *it2;
-//		it2++;
-//		string numero = *it2;
-//		const char* numerocarta = numero.c_str();
-//		it2++;
-//		Carta* carta = new Carta(palo, numerocarta);
-//
-//		if (!this->agregarCarta(carta))
-//			break;
-//	}
+	list<string>::iterator it;
+	it = this->infoconfig->jugadores->begin();
+	for (unsigned int i = 0; i < this->infoconfig->jugadores->size()/2; i++) {
+		Jugador* player = new Jugador();
+		string nombre = *it;
+		it++;
+		string dinero = *it;
+		const char* plata = dinero.c_str();
+		it++;
+		player->setNombre(nombre, "123456");
+		player->modificarPlataEn(atoi(plata));
+		string palo="treboles";
+		string numerocarta="1";
+		player->setCartas(this->mazo->getCarta(),this->mazo->getCarta());
+		if (!this->agregarJugador(player))
+			break;
+	}
+
 }
 
 
