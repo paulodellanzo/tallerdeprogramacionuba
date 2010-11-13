@@ -9,6 +9,14 @@ using namespace std;
 
 //metodo de ejemplo para poner algo en la mesa
 void Procesador::setMesa(){
+	Carta* carta= this->mazo->getCarta();
+	this->agregarCarta(carta);
+	carta=this->mazo->getCarta();
+	this->agregarCarta(carta);
+	carta=this->mazo->getCarta();
+	this->agregarCarta(carta);
+	carta=this->mazo->getCarta();
+	this->agregarCarta(carta);
 	list<string>::iterator it;
 	it = this->infoconfig->jugadores->begin();
 	for (unsigned int i = 0; i < this->infoconfig->jugadores->size()/2; i++) {
@@ -49,6 +57,7 @@ Procesador::Procesador(int i) {
 	ParserServidor *parserAux = new ParserServidor(PATHARCHIVOCONF);
 	this->mutex=mutex;
 	if (parserAux->comprobarSintaxis()) {
+		this->mazo=new Mazo();
 		this->infoconfig = parserAux->getInformacionConfig();
 	} else {
 		cout << "Sintaxis de archivo de configuración incorrecta" << endl;

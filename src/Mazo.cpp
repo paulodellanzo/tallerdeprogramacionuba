@@ -34,10 +34,10 @@ void Mazo::mezclar(){
 
 	for(int i=0;i<=12;i++){
 		sprintf(aux,"%d",i+1);
-		cartas.push_back(Carta("corazon",aux));
-		cartas.push_back(Carta("diamante",aux));
-		cartas.push_back(Carta("pica",aux));
-		cartas.push_back(Carta("trebol",aux));
+		cartas.push_back(Carta("corazones",aux));
+		cartas.push_back(Carta("diamantes",aux));
+		cartas.push_back(Carta("picas",aux));
+		cartas.push_back(Carta("treboles",aux));
 	}
 
 	for (int j=0;j<52;j++){

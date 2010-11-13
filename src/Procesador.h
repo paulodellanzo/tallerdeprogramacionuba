@@ -11,6 +11,7 @@
 using namespace std;
 #include <string>
 #include "Operacion.h"
+#include "Mazo.h"
 #include "ParserServidor.h"
 #include "S.h"
 #include "D.h"
@@ -42,6 +43,7 @@ private:
 	informacionConfiguracion* infoconfig;
 	string nombreJugadorJugando;
 	bool estaJugando;
+	Mazo * mazo;
 public:
 	static Procesador* instancia();
 	bool empezarPartida(char* xml);//Devuelve true si la operacion en una F cosa que empieza a jugar
