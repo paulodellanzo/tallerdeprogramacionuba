@@ -17,39 +17,39 @@ void Procesador::setMesa(){
 	this->agregarCarta(carta);
 	carta=this->mazo->getCarta();
 	this->agregarCarta(carta);
-	list<string>::iterator it;
-	it = this->infoconfig->jugadores->begin();
-	for (unsigned int i = 0; i < this->infoconfig->jugadores->size()/2; i++) {
-		Jugador* player = new Jugador();
-		string nombre = *it;
-		it++;
-		string dinero = *it;
-		const char* plata = dinero.c_str();
-		it++;
-		player->setNombre(nombre, "123456");
-		player->modificarPlataEn(atoi(plata));
-		string palo="treboles";
-		string numerocarta="1";
-		Carta* carta1 = new Carta(palo, numerocarta);
-		Carta* carta2 = new Carta(palo, numerocarta);
-		player->setCartas(carta1,carta2);
-		if (!this->agregarJugador(player))
-			break;
-	}
-
-	list<string>::iterator it2;
-	it2 = this->infoconfig->cartas->begin();
-	for (unsigned int i = 0; i < this->infoconfig->cartas->size() / 2; i++) {
-		string palo = *it2;
-		it2++;
-		string numero = *it2;
-		const char* numerocarta = numero.c_str();
-		it2++;
-		Carta* carta = new Carta(palo, numerocarta);
-
-		if (!this->agregarCarta(carta))
-			break;
-	}
+//	list<string>::iterator it;
+//	it = this->infoconfig->jugadores->begin();
+//	for (unsigned int i = 0; i < this->infoconfig->jugadores->size()/2; i++) {
+//		Jugador* player = new Jugador();
+//		string nombre = *it;
+//		it++;
+//		string dinero = *it;
+//		const char* plata = dinero.c_str();
+//		it++;
+//		player->setNombre(nombre, "123456");
+//		player->modificarPlataEn(atoi(plata));
+//		string palo="treboles";
+//		string numerocarta="1";
+//		Carta* carta1 = new Carta(palo, numerocarta);
+//		Carta* carta2 = new Carta(palo, numerocarta);
+//		player->setCartas(carta1,carta2);
+//		if (!this->agregarJugador(player))
+//			break;
+//	}
+//
+//	list<string>::iterator it2;
+//	it2 = this->infoconfig->cartas->begin();
+//	for (unsigned int i = 0; i < this->infoconfig->cartas->size() / 2; i++) {
+//		string palo = *it2;
+//		it2++;
+//		string numero = *it2;
+//		const char* numerocarta = numero.c_str();
+//		it2++;
+//		Carta* carta = new Carta(palo, numerocarta);
+//
+//		if (!this->agregarCarta(carta))
+//			break;
+//	}
 }
 
 
@@ -260,12 +260,9 @@ list<string>* Procesador::seConectoJugador(char* xml){
 	idOperacionString=toupper(idOperacionString[0]);
 	char idOperacionChar=idOperacionString[0];
 	U* operadorU=new U();
-	R* operadorR=new R();
 	list<char*>* operandos=this->parser->getOperandos(xmlAux2);
 	if(idOperacionChar=='U'){
 		return operadorU->realizarOpearacion(operandos);
-	}else if(idOperacionChar=='R'){
-		return operadorR->realizarOpearacion(operandos);
 	}else{
 		return NULL;
 	}
@@ -276,7 +273,6 @@ bool Procesador::agregarJugador(Jugador* jugadorNuevo){
 	pthread_mutex_lock(&this->mutex);
 	if(this->jugadores->size() < MAXIMODEJUGADORES){
 		this->jugadores->push_back(jugadorNuevo);
-		cout<<jugadorNuevo->getNombre()<<endl;
 		pthread_mutex_unlock(&this->mutex);
 		return true;
 	}
@@ -320,6 +316,19 @@ void Procesador::terminoMiTurno(){
 	this->nombreJugadorJugando=jugadorEnTurno->getNombre();
 }
 
+bool Procesador::estaJugandoJugador(string nombre_jugador){
+	pthread_mutex_lock(&this->mutex);
+	list<Jugador*>::iterator iterador=this->jugadores->begin();
+	while(iterador!=this->jugadores->end()){
+		if((*iterador)->getNombre()==nombre_jugador){
+			pthread_mutex_unlock(&this->mutex);
+			return true;
+		}
+		iterador++;
+	}
+	pthread_mutex_unlock(&this->mutex);
+	return false;
+}
 Procesador::~Procesador() {
 	delete this->parser;
 }

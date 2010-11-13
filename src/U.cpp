@@ -67,15 +67,6 @@ list<string>* U::realizarOpearacion(list<char*>* operandos){
 		it=respuesta->insert(it,"Usuario invalido");
 		return respuesta;
 	}
-//	ostringstream sstream;
-//		sstream << valido;
-//		string validoString = sstream.str();
-//	it=respuesta->begin();
-//	respuesta->insert(it,"Correcto");
-//	it++;
-//	it = respuesta->insert(it, "usuario");
-//	it++;
-//	it = respuesta->insert(it, validoString);
 
 	respuesta->push_back("Correcto");
 	respuesta->push_back("usuario");

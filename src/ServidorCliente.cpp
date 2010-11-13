@@ -183,14 +183,20 @@ void ServidorCliente::interactuarConCliente(){
 					lista->pop_front();
 					string password=lista->front();
 					lista->pop_front();
-					this->jugador=new Jugador(nombre,password);
-					lista->push_front(password);
-					lista->push_front("password");
-					lista->push_front(nombre);
-					lista->push_front("Usuario");
-					lista->push_front("Correcto");
+					if(this->procesador->estaJugandoJugador(nombre)){
+						lista->push_front("Ya esta logueado ese usuario");
+						lista->push_front("V");
+						lista->push_front("Error");
+					}else{
+						this->jugador=new Jugador(nombre,password);
+						lista->push_front(password);
+						lista->push_front("password");
+						lista->push_front(nombre);
+						lista->push_front("Usuario");
+						lista->push_front("Correcto");
+						this->procesador->agregarJugador(this->jugador);
+					}
 					data=this->procesador->getXml(lista,"R");
-					this->procesador->agregarJugador(this->jugador);
 					paraVerSiCortoComunicacion=this->enviarACliente(data);
 				}else{
 					data=this->procesador->getXml(lista,"R");

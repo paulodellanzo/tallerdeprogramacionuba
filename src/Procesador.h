@@ -58,6 +58,7 @@ public:
 	void terminoMiTurno();
 	void setMesa();
 	bool seEstaJugando(){return this->estaJugando;}
+	bool estaJugandoJugador(string nombre_jugador);
 	char * getXml(list<string> * lista,string operacion);
 	virtual ~Procesador();
 };
