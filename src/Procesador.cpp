@@ -6,6 +6,31 @@ using namespace std;
 #include <fstream>
 #include <cstdlib>
 
+void* empiezaJuego(void* procesadorPasado){
+	Procesador* procesador=(Procesador*) procesadorPasado;
+	procesador->jugar();
+	return NULL;
+}
+
+void Procesador::jugar(){
+	while (true){
+		while(jugadores_a_dibujar->size()<=2){
+
+			while(true){ //mientras no estén todas las apuestas iguales
+
+			}
+			while(true){ //mientras no estén todas las apuestas iguales
+
+			}
+			while(true){ //mientras no estén todas las apuestas iguales
+
+			}
+			while(true){ //mientras no estén todas las apuestas iguales
+
+			}
+		}
+	}
+}
 
 //metodo de ejemplo para poner algo en la mesa
 void Procesador::setMesa(){
@@ -39,6 +64,8 @@ void Procesador::setMesa(){
 
 
 Procesador::Procesador(int i) {
+	pthread_t hilo;
+	pthread_create(&hilo,NULL,empiezaJuego,(void*)this);
 	ParserServidor *parserAux = new ParserServidor(PATHARCHIVOCONF);
 	this->mutex=mutex;
 	if (parserAux->comprobarSintaxis()) {

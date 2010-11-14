@@ -47,6 +47,7 @@ private:
 	bool estaJugando;
 	Mazo * mazo;
 public:
+	void jugar();
 	static Procesador* instancia();
 	bool empezarPartida(char* xml);//Devuelve true si la operacion en una F cosa que empieza a jugar
 	list<string>* seConectoJugador(char* xml);
