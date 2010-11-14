@@ -15,6 +15,7 @@ class Poker{
 private:
 	float puntaje;
 	list<Carta>* mejoresCartas;
+	list<Carta>* crearLista(list<Carta>*,int,int,int,int,int);
 	float esEscaleraReal(list<Carta>* cartas);
 	float esEscaleraDeColor(list<Carta>* cartas);
 	float esPoker(list<Carta>* cartas);
