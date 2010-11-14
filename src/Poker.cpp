@@ -835,5 +835,5 @@ float Poker::getPuntaje(){
 }
 
 Poker::~Poker() {
-
+	delete mejoresCartas;
 }
