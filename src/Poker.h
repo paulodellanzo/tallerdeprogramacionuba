@@ -9,15 +9,27 @@ using namespace std;
 #include <stdlib.h>
 #include <list>
 #include "Carta.h"
+#include <math.h>
 
 class Poker{
 private:
-	int puntaje;
+	float puntaje;
 	list<Carta>* mejoresCartas;
+	float esEscaleraReal(list<Carta>* cartas);
+	float esEscaleraDeColor(list<Carta>* cartas);
+	float esPoker(list<Carta>* cartas);
+	float esFull(list<Carta>* cartas);
+	float esColor(list<Carta>* cartas);
+	float esEscalera(list<Carta>* cartas);
+	float esTrio(list<Carta>* cartas);
+	float esDoblePar(list<Carta>* cartas);
+	float esPar(list<Carta>* cartas);
+	float mayorCarta(list<Carta>* cartas);
+	float getPuntajeMano(list<Carta>* cartas);
 public:
-	Poker(list<Carta>,list<Carta>);
+	Poker(list<Carta>*);
 	list<Carta>* getMejoresCartas();
-	int getPuntaje();
+	float getPuntaje();
 	~Poker();
 };
 
