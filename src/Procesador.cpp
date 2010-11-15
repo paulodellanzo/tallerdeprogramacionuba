@@ -14,10 +14,9 @@ void* empiezaJuego(void* procesadorPasado){
 
 void Procesador::jugar(){
 	while (true){
-
-		while(jugadores_a_dibujar->size()>=2){ //TODO Hay que reemplazar jugadores_a_dibujar por jugadores
+	list<Jugador*>::iterator itJugadores;
+		while(jugadores->size()>=2){
 			//Inicializo variables
-			list<Jugador*>::iterator itJugadores;
 			Carta* cartaAuxiliar;
 			Mazo* mazo = new Mazo();
 			itJugadores=jugadores->begin();
@@ -78,9 +77,10 @@ void Procesador::jugar(){
 			delete mazo;
 			delete cartasComunitarias;
 		}
-		//TODO Agregar jugadores_agregar a jugadores
 
-
+		//Paso los jugadores a agregar a la lista de jugadores
+		itJugadores=jugadores->end();
+		jugadores->splice(itJugadores,*jugadores_agregar);
 	}
 }
 
