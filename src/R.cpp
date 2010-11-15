@@ -57,7 +57,7 @@ list<string>* R::realizarOpearacion(list<char*>* operandos){
 		it=respuesta->insert(it,"Ya existe el usuario");
 		return respuesta;
 	}
-	query="insert into usuarios (usuario,password,plata) values ('"+usuario+"','"+pass+"',0)";
+	query="insert into usuarios (usuario,password,plata,fechaRegistro) values ('"+usuario+"','"+pass+"',0, curdate())";
 	res = conexion->ejecutarQuery(query.c_str());
 	conexion->liberarConexion(res);
 	respuesta->push_back("Correcto");

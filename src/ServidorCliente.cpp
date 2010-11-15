@@ -188,6 +188,19 @@ void ServidorCliente::interactuarConCliente(){
 						lista->push_front("V");
 						lista->push_front("Error");
 					}else{
+						MYSQL_RES *res;
+						MYSQL_ROW row;
+						Conexion* conexion = Conexion::instancia();
+						string q="select id from usuarios where usuario='"+nombre+"'";
+						res = conexion->ejecutarQuery(q.c_str());
+						row = mysql_fetch_row(res);
+						string id = row[0];
+						conexion->liberarConexion(res);
+
+						string query = "insert into estadistica (fechaLogin,usuarioId) values(curdate(), "+id+")";
+						res = conexion->ejecutarQuery(query.c_str());
+						conexion->liberarConexion(res);
+
 						this->jugador=new Jugador(nombre,password);
 						lista->push_front(password);
 						lista->push_front("password");

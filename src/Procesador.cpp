@@ -214,9 +214,16 @@ char* Procesador::getRespuesta(char* xml){
 		delete respuestaDeOperacion;
 		delete operandos;
 		return respuesta;
-	}else if("B"){//Pedir las cartas de un jugador
+	}else if(res=="B"){//Pedir las cartas de un jugador
 		B * operadorB=new B();
 		list<string>* respuestaDeOperacion=operadorB->realizarOpearacion(operandos,this->jugadores_a_dibujar);
+		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		delete respuestaDeOperacion;
+		delete operandos;
+		return respuesta;
+	}else if(res=="K"){//ranking de usuarios
+		K * operadorK=new K();
+		list<string>* respuestaDeOperacion=operadorK->realizarOpearacion(operandos);
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
