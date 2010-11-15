@@ -92,6 +92,7 @@ void Procesador::jugar(){
 			(*itJugadores)->setCartas(NULL,NULL);
 			itJugadores++;
 		}
+		sleep(5);
 
 		//Paso los jugadores a agregar a la lista de jugadores
 		itJugadores=jugadores->end();
