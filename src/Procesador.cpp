@@ -15,17 +15,60 @@ void* empiezaJuego(void* procesadorPasado){
 void Procesador::jugar(){
 	while (true){
 		while(jugadores_a_dibujar->size()<=2){
+			//Inicializo variables
+			Carta* cartaAuxiliar;
+			Mazo* mazo = new Mazo();
+			list<Jugador*>::iterator itJugadores=jugadores->begin();
+			list<Carta>* cartasComunitarias=new list<Carta>;
 
-			while(true){ //mientras no estén todas las apuestas iguales
+			//Reparto dos cartas a cada jugador
+			while(itJugadores!=jugadores->end()){
+				itJugadores->setCartas(mazo->getCarta(),mazo->getCarta());
+				itJugadores++;
+			}
+
+			//Primera ronda de apuestas
+			bool FinDeApuestas=false;
+			while(FinDeApuestas==false){
+
+
 
 			}
-			while(true){ //mientras no estén todas las apuestas iguales
+
+			//Agrego primeras tres cartas comunitarias
+			for(int i=0;i<3;i++){
+				cartaAuxiliar=mazo->getCarta();
+				this->agregarCarta(cartaAuxiliar);
+				cartasComunitarias->push_back(Carta(cartaAuxiliar->getPalo(),cartaAuxiliar->getNumero()));
+			}
+
+			//Segunda ronda de apuestas
+			bool FinDeApuestas=false;
+			while(FinDeApuestas==false){
 
 			}
-			while(true){ //mientras no estén todas las apuestas iguales
+
+			//Agrego cuarta carta comunitaria
+			cartaAuxiliar=mazo->getCarta();
+			this->agregarCarta(cartaAuxiliar);
+			cartasComunitarias->push_back(Carta(cartaAuxiliar->getPalo(),cartaAuxiliar->getNumero()));
+
+			//Tercera ronda de apuestas
+			bool FinDeApuestas=false;
+			while(FinDeApuestas==false){
 
 			}
-			while(true){ //mientras no estén todas las apuestas iguales
+
+			//Agrego quinta carta comunitaria
+			cartaAuxiliar=mazo->getCarta();
+			this->agregarCarta(cartaAuxiliar);
+			cartasComunitarias->push_back(Carta(cartaAuxiliar->getPalo(),cartaAuxiliar->getNumero()));
+
+			//Cuarta ronda de apuestas
+			bool FinDeApuestas=false;
+			while(FinDeApuestas==false){
+
+			//Ver quien ganó
 
 			}
 		}
