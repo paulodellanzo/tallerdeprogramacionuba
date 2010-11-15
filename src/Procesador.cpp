@@ -14,22 +14,25 @@ void* empiezaJuego(void* procesadorPasado){
 
 void Procesador::jugar(){
 	while (true){
-		while(jugadores_a_dibujar->size()<=2){
+
+		while(jugadores_a_dibujar->size()>=2){ //TODO Hay que reemplazar jugadores_a_dibujar por jugadores
 			//Inicializo variables
+			list<Jugador*>::iterator itJugadores;
 			Carta* cartaAuxiliar;
 			Mazo* mazo = new Mazo();
-			list<Jugador*>::iterator itJugadores=jugadores->begin();
+			itJugadores=jugadores->begin();
 			list<Carta>* cartasComunitarias=new list<Carta>;
+			bool finDeApuestas;
 
 			//Reparto dos cartas a cada jugador
 			while(itJugadores!=jugadores->end()){
-				itJugadores->setCartas(mazo->getCarta(),mazo->getCarta());
+				(*itJugadores)->setCartas(mazo->getCarta(),mazo->getCarta());
 				itJugadores++;
 			}
 
-			//Primera ronda de apuestas
-			bool FinDeApuestas=false;
-			while(FinDeApuestas==false){
+			//TODO Primera ronda de apuestas
+			finDeApuestas=false;
+			while(finDeApuestas==false){
 
 
 
@@ -42,9 +45,9 @@ void Procesador::jugar(){
 				cartasComunitarias->push_back(Carta(cartaAuxiliar->getPalo(),cartaAuxiliar->getNumero()));
 			}
 
-			//Segunda ronda de apuestas
-			bool FinDeApuestas=false;
-			while(FinDeApuestas==false){
+			//TODO Segunda ronda de apuestas
+			finDeApuestas=false;
+			while(finDeApuestas==false){
 
 			}
 
@@ -53,9 +56,9 @@ void Procesador::jugar(){
 			this->agregarCarta(cartaAuxiliar);
 			cartasComunitarias->push_back(Carta(cartaAuxiliar->getPalo(),cartaAuxiliar->getNumero()));
 
-			//Tercera ronda de apuestas
-			bool FinDeApuestas=false;
-			while(FinDeApuestas==false){
+			//TODO Tercera ronda de apuestas
+			finDeApuestas=false;
+			while(finDeApuestas==false){
 
 			}
 
@@ -64,14 +67,20 @@ void Procesador::jugar(){
 			this->agregarCarta(cartaAuxiliar);
 			cartasComunitarias->push_back(Carta(cartaAuxiliar->getPalo(),cartaAuxiliar->getNumero()));
 
-			//Cuarta ronda de apuestas
-			bool FinDeApuestas=false;
-			while(FinDeApuestas==false){
-
-			//Ver quien ganó
-
+			//TODO Cuarta ronda de apuestas
+			finDeApuestas=false;
+			while(finDeApuestas==false){
 			}
+
+			//TODO Ver quien ganó
+
+			//Destruyo objetos
+			delete mazo;
+			delete cartasComunitarias;
 		}
+		//TODO Agregar jugadores_agregar a jugadores
+
+
 	}
 }
 
@@ -108,7 +117,6 @@ void Procesador::setMesa(){
 
 Procesador::Procesador(int i) {
 	pthread_t hilo;
-	pthread_create(&hilo,NULL,empiezaJuego,(void*)this);
 	ParserServidor *parserAux = new ParserServidor(PATHARCHIVOCONF);
 	this->mutex=mutex;
 	if (parserAux->comprobarSintaxis()) {
@@ -131,6 +139,7 @@ Procesador::Procesador(int i) {
 	this->setMesa();
 	delete parserAux;
 	this->estaJugando=false;
+	pthread_create(&hilo,NULL,empiezaJuego,(void*)this);
 
 }
 
