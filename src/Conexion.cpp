@@ -57,9 +57,7 @@ MYSQL_RES* Conexion::ejecutarQuery(const char *sql_query)
 }
 
 void Conexion::liberarConexion(MYSQL_RES *result){
-
 	mysql_free_result(result);
-
 }
 
 

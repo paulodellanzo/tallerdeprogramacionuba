@@ -8,7 +8,15 @@ Jugador::Jugador() {
 Jugador::Jugador(string nombre,string password){
 	this->nombre=nombre;
 	this->password=password;
-	this->plata=0;
+	//hay que hacer que lo levante de la base da datos
+	Conexion* conexion = Conexion::instancia();
+	MYSQL_RES *res;
+	MYSQL_ROW row;
+	string query = "select plata from usuarios where usuario='"+this->nombre+"'";
+	res = conexion->ejecutarQuery(query.c_str());
+	row = mysql_fetch_row(res);
+	this->plata=atoi(*row);
+	conexion->liberarConexion(res);
 	this->carta1=NULL;
 	this->carta2=NULL;
 }
@@ -16,8 +24,16 @@ Jugador::Jugador(string nombre,string password){
 bool Jugador::setNombre(string nombre, string password){
 	this->nombre = nombre;
 	this->password = password;
-	this->jugando = true;
-	this->plata = 0;
+	//hay que hacer que lo levante de la base da datos
+	Conexion* conexion = Conexion::instancia();
+	string query = "select plata from usuarios where usuario='"+this->nombre+"' and password='"+this->password+"'";
+	MYSQL_RES *res;
+	MYSQL_ROW row;
+	res = conexion->ejecutarQuery(query.c_str());
+	row = mysql_fetch_row(res);
+	this->plata=atoi(*row);
+	conexion->liberarConexion(res);
+	return true;
 }
 
 long int Jugador::plataRestante(){
@@ -29,7 +45,7 @@ string Jugador::getNombre(){
 }
 
 bool Jugador::participando(){
-	return this->jugando;
+	return this->jugando_en_partida;
 }
 
 bool Jugador::modificarPlataEn(long int plata){
