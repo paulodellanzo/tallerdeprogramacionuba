@@ -19,7 +19,7 @@ void Procesador::jugar(){
 		while(jugadores->size()>=2){
 			//Inicializo variables
 			Carta* cartaAuxiliar;
-			Mazo* mazo = new Mazo();
+			this->mazo = new Mazo();
 			itJugadores=jugadores->begin();
 			list<Carta>* cartasComunitarias=new list<Carta>;
 			bool finDeApuestas;
@@ -112,43 +112,11 @@ void Procesador::vaciarCartas(){
 	pthread_mutex_unlock(&this->mutex);
 }
 
-//metodo de ejemplo para poner algo en la mesa
-void Procesador::setMesa(){
-//	Carta* carta= this->mazo->getCarta();
-//	this->agregarCarta(carta);
-//	carta=this->mazo->getCarta();
-//	this->agregarCarta(carta);
-//	carta=this->mazo->getCarta();
-//	this->agregarCarta(carta);
-//	carta=this->mazo->getCarta();
-//	this->agregarCarta(carta);
-	list<string>::iterator it;
-	it = this->infoconfig->jugadores->begin();
-	for (unsigned int i = 0; i < this->infoconfig->jugadores->size()/2; i++) {
-		Jugador* player = new Jugador();
-		string nombre = *it;
-		it++;
-		string dinero = *it;
-		const char* plata = dinero.c_str();
-		it++;
-		player->setNombre(nombre, "123456");
-		player->modificarPlataEn(atoi(plata));
-		string palo="treboles";
-		string numerocarta="1";
-		player->setCartas(this->mazo->getCarta(),this->mazo->getCarta());
-		if (!this->agregarJugador(player))
-			break;
-	}
-
-}
-
-
 Procesador::Procesador(int i) {
 	pthread_t hilo;
 	ParserServidor *parserAux = new ParserServidor(PATHARCHIVOCONF);
 	this->mutex=mutex;
 	if (parserAux->comprobarSintaxis()) {
-		this->mazo=new Mazo();
 		this->infoconfig = parserAux->getInformacionConfig();
 	} else {
 		cout << "Sintaxis de archivo de configuración incorrecta" << endl;
@@ -164,7 +132,6 @@ Procesador::Procesador(int i) {
 	this->jugadores_agregar = new list<Jugador*>();
 	this->bote = 0;
 	this->apuestaMayorEnRonda = 0;
-	this->setMesa();
 	delete parserAux;
 	this->estaJugando=false;
 	pthread_create(&hilo,NULL,empiezaJuego,(void*)this);
@@ -173,7 +140,7 @@ Procesador::Procesador(int i) {
 
 char* Procesador::getRespuesta(char* xml){
 	/* Operaciones Usadas:
-	 * A - B - C - E - I - J - P - R - U - Z
+	 * A - B - C - D - E - F - G - H - I - J - K - P - R - U - Z
 	 * */
 	ostringstream sstream;
 	sstream << xml;
@@ -186,6 +153,7 @@ char* Procesador::getRespuesta(char* xml){
 	string res;
 	list<char*>* operandos=this->parser->getOperandos(xmlAux2);
 	res=toupper(idOperacionString[0]);
+
 	if(res=="P"){//poso
 		ostringstream sstream;
 		sstream << this->bote;
@@ -258,6 +226,14 @@ char* Procesador::getRespuesta(char* xml){
 		delete respuestaDeOperacion;
 		delete operandos;
 		return respuesta;
+	}else if(res=="D"){//Apuesta
+
+	}else if(res=="F"){//Pasar
+
+	}else if(res=="G"){//La maxima apuesta en esa mano
+
+	}else if(res=="H"){//Para cargar plata
+
 	}else{
 		list<string>* conError=new list<string>();
 		list<string>::iterator it=conError->begin();

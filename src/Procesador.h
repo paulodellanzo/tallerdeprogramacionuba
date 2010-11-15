@@ -34,17 +34,17 @@ protected:
 	Procesador(int i);
 private:
 	static pthread_mutex_t mutex;
-	ParserServidor* parser;
 	static Procesador* instanciaUnica;
+	informacionConfiguracion* infoconfig;
+	ParserServidor* parser;
+	string path; //La que se tiene que mandar cuando se lo pida
 	list<Carta*>* cartas;
 	list<Jugador*>* jugadores; //Los jugadores que estan jugando
 	list<Jugador*>* jugadores_a_dibujar;
 	list<Jugador*>* jugadores_agregar;//Los que se agregan, serias los que se ponen a jugar cuando se termina una mano
+	string nombreJugadorJugando;
 	long int bote; //Poso que se va acumulando
 	long int apuestaMayorEnRonda; //sirve para cuando pasan los turnos de todos cuanto se va apostando
-	string path; //La que se tiene que mandar cuando se lo pida
-	informacionConfiguracion* infoconfig;
-	string nombreJugadorJugando;
 	bool estaJugando;
 	Mazo * mazo;
 public:
@@ -60,7 +60,6 @@ public:
 	bool recibirArchivo(char*xml);
 	char* getRespuesta(char* xml);
 	void terminoMiTurno();
-	void setMesa();
 	bool seEstaJugando(){return this->estaJugando;}
 	bool estaJugandoJugador(string nombre_jugador);
 	char * getXml(list<string> * lista,string operacion);
