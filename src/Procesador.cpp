@@ -13,8 +13,9 @@ void* empiezaJuego(void* procesadorPasado){
 }
 
 void Procesador::jugar(){
-	list<Jugador*>::iterator itJugadores;
+
 	while (true){
+		list<Jugador*>::iterator itJugadores;
 		while(jugadores->size()>=2){
 			//Inicializo variables
 			Carta* cartaAuxiliar;
@@ -85,15 +86,18 @@ void Procesador::jugar(){
 			this->vaciarCartas();
 			delete mazo;
 			delete cartasComunitarias;
-		}
 
-		itJugadores=this->jugadores->begin();
-		while(itJugadores!=jugadores->end()){
-			(*itJugadores)->setCartas(NULL,NULL);
-			itJugadores++;
-		}
-		sleep(5);
+			itJugadores=this->jugadores->begin();
+			while(itJugadores!=jugadores->end()){
+				(*itJugadores)->setCartas(NULL,NULL);
+				itJugadores++;
+			}
+			sleep(5);
 
+			//Paso los jugadores a agregar a la lista de jugadores
+			itJugadores=jugadores->end();
+			jugadores->splice(itJugadores,*jugadores_agregar);
+		}
 		//Paso los jugadores a agregar a la lista de jugadores
 		itJugadores=jugadores->end();
 		jugadores->splice(itJugadores,*jugadores_agregar);
@@ -350,6 +354,7 @@ bool Procesador::agregarJugador(Jugador* jugadorNuevo){
 	//IMPORTANTE CUANDO SE AGREGUE EL JUGADOR HAY QUE BUSCA EN MYSQL LA TABLA Y SACAR EL DINERO QUE TIENE
 	pthread_mutex_lock(&this->mutex);
 	if(this->jugadores_a_dibujar->size() < MAXIMODEJUGADORES){
+		cout<<"Se agrego Jugador: "<<jugadorNuevo->getNombre()<<endl;
 		this->jugadores_a_dibujar->push_back(jugadorNuevo);
 		this->jugadores_agregar->push_back(jugadorNuevo);
 		pthread_mutex_unlock(&this->mutex);
