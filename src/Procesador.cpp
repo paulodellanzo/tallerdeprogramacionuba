@@ -28,15 +28,16 @@ void Procesador::jugar(){
 				(*itJugadores)->setCartas(mazo->getCarta(),mazo->getCarta());
 				itJugadores++;
 			}
-
+			cout<<"Empieza la partida"<<endl;
+			sleep(5);
 			//TODO Primera ronda de apuestas
 			finDeApuestas=false;
-			while(finDeApuestas==false){
-
-
-
+			while(!finDeApuestas){
+				sleep(5);
+				finDeApuestas=true;
 			}
 
+			cout<<"Agregamos la tres primeras cartas"<<endl;
 			//Agrego primeras tres cartas comunitarias
 			for(int i=0;i<3;i++){
 				cartaAuxiliar=mazo->getCarta();
@@ -46,36 +47,50 @@ void Procesador::jugar(){
 
 			//TODO Segunda ronda de apuestas
 			finDeApuestas=false;
-			while(finDeApuestas==false){
-
+			while(!finDeApuestas){
+				sleep(5);
+				finDeApuestas=true;
 			}
 
 			//Agrego cuarta carta comunitaria
+			cout<<"Agregamos la cuarta carta"<<endl;
 			cartaAuxiliar=mazo->getCarta();
 			this->agregarCarta(cartaAuxiliar);
 			cartasComunitarias->push_back(Carta(cartaAuxiliar->getPalo(),cartaAuxiliar->getNumero()));
 
 			//TODO Tercera ronda de apuestas
 			finDeApuestas=false;
-			while(finDeApuestas==false){
-
+			while(!finDeApuestas){
+				sleep(5);
+				finDeApuestas=true;
 			}
 
 			//Agrego quinta carta comunitaria
+			cout<<"Agregamos la quinta carta"<<endl;
 			cartaAuxiliar=mazo->getCarta();
 			this->agregarCarta(cartaAuxiliar);
 			cartasComunitarias->push_back(Carta(cartaAuxiliar->getPalo(),cartaAuxiliar->getNumero()));
 
 			//TODO Cuarta ronda de apuestas
 			finDeApuestas=false;
-			while(finDeApuestas==false){
+			while(!finDeApuestas){
+				sleep(5);
+				finDeApuestas=true;
 			}
 
 			//TODO Ver quien ganó
-
+			cout<<"Gano...."<<endl;
+			sleep(5);
 			//Destruyo objetos
+			this->vaciarCartas();
 			delete mazo;
 			delete cartasComunitarias;
+		}
+
+		itJugadores=this->jugadores->begin();
+		while(itJugadores!=jugadores->end()){
+			(*itJugadores)->setCartas(NULL,NULL);
+			itJugadores++;
 		}
 
 		//Paso los jugadores a agregar a la lista de jugadores
@@ -84,16 +99,24 @@ void Procesador::jugar(){
 	}
 }
 
+void Procesador::vaciarCartas(){
+	pthread_mutex_lock(&this->mutex);
+	while(this->cartas->size()>0){
+		this->cartas->pop_front();
+	}
+	pthread_mutex_unlock(&this->mutex);
+}
+
 //metodo de ejemplo para poner algo en la mesa
 void Procesador::setMesa(){
-	Carta* carta= this->mazo->getCarta();
-	this->agregarCarta(carta);
-	carta=this->mazo->getCarta();
-	this->agregarCarta(carta);
-	carta=this->mazo->getCarta();
-	this->agregarCarta(carta);
-	carta=this->mazo->getCarta();
-	this->agregarCarta(carta);
+//	Carta* carta= this->mazo->getCarta();
+//	this->agregarCarta(carta);
+//	carta=this->mazo->getCarta();
+//	this->agregarCarta(carta);
+//	carta=this->mazo->getCarta();
+//	this->agregarCarta(carta);
+//	carta=this->mazo->getCarta();
+//	this->agregarCarta(carta);
 	list<string>::iterator it;
 	it = this->infoconfig->jugadores->begin();
 	for (unsigned int i = 0; i < this->infoconfig->jugadores->size()/2; i++) {
@@ -134,7 +157,7 @@ Procesador::Procesador(int i) {
 	this->jugadores = new list<Jugador*>();
 	this->jugadores_a_dibujar = new list<Jugador*>();
 	this->jugadores_agregar = new list<Jugador*>();
-	this->bote = 500;
+	this->bote = 0;
 	this->apuestaMayorEnRonda = 0;
 	this->setMesa();
 	delete parserAux;
@@ -216,7 +239,9 @@ char* Procesador::getRespuesta(char* xml){
 		return respuesta;
 	}else if(res=="B"){//Pedir las cartas de un jugador
 		B * operadorB=new B();
+		pthread_mutex_lock(&this->mutex);
 		list<string>* respuestaDeOperacion=operadorB->realizarOpearacion(operandos,this->jugadores_a_dibujar);
+		pthread_mutex_unlock(&this->mutex);
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
@@ -373,13 +398,16 @@ bool Procesador::quitarJugador(Jugador* jugador){
 }
 
 bool Procesador::agregarCarta(Carta* cartaNueva){
+	pthread_mutex_lock(&this->mutex);
 	if(this->cartas->size() < MAXIMODECARTAS){
 		this->cartas->push_back(cartaNueva);
+		pthread_mutex_unlock(&this->mutex);
 		return true;
 	}
 	else{
 		delete cartaNueva;
 		cout << "Maximo numero de cartas en la mesa" << endl;
+		pthread_mutex_unlock(&this->mutex);
 		return false;
 	}
 }

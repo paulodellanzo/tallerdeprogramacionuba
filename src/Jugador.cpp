@@ -54,8 +54,8 @@ bool Jugador::modificarPlataEn(long int plata){
 }
 
 void Jugador::setCartas(Carta * carta1, Carta * carta2){
-	if(this->carta1!=NULL) delete carta1;
-	if (this->carta2!=NULL) delete carta2;
+//	if(this->carta1!=NULL) delete carta1;
+//	if (this->carta2!=NULL) delete carta2;
 
 	this->carta1=carta1;
 	this->carta2=carta2;

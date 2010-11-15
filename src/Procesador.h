@@ -64,6 +64,7 @@ public:
 	bool seEstaJugando(){return this->estaJugando;}
 	bool estaJugandoJugador(string nombre_jugador);
 	char * getXml(list<string> * lista,string operacion);
+	void vaciarCartas();
 	virtual ~Procesador();
 };
 
