@@ -5,6 +5,7 @@ using namespace std;
 #include <stdio.h>
 #include <fstream>
 #include <cstdlib>
+#include "Poker.h"
 
 void* empiezaJuego(void* procesadorPasado){
 	Procesador* procesador=(Procesador*) procesadorPasado;
@@ -80,11 +81,47 @@ void Procesador::jugar(){
 			}
 
 			//TODO Ver quien ganó
-			cout<<"Gano...."<<endl;
+			cout<<"Gano: ";
+
+			string jugadorGanador;
+			float puntajeGanador=0;
+			itJugadores=this->jugadores->begin();
+			list<Carta> * lista_aux=new list<Carta>;
+			list<Carta*>::iterator itCartas=this->cartas->begin();
+
+			//Agrego las cartas comunitarias
+			while(itCartas!=this->cartas->end()){
+				lista_aux->push_front(*(*itCartas));
+				itCartas++;
+			}
+
+			while(itJugadores!=jugadores->end()){
+				list<Carta*> * cartasJugador=(*itJugadores)->getCartas();
+				//Agrego las cartas del jugador a la lista
+				lista_aux->push_front(*(cartasJugador->front()));
+				lista_aux->push_front(*(cartasJugador->back()));
+
+				Poker * poker=new Poker(lista_aux);
+				float puntaje=poker->getPuntaje();
+
+				if(puntaje>puntajeGanador){
+					puntajeGanador=puntaje;
+					jugadorGanador=(*itJugadores)->getNombre();
+				}
+
+				itJugadores++;
+				delete poker;
+				//Saco las cartas del jugador de la lista
+				lista_aux->pop_back();
+				lista_aux->pop_back();
+			}
+
+			cout<<jugadorGanador<<" con puntaje: "<<puntajeGanador<<endl;
 			sleep(5);
 			//Destruyo objetos
 			this->vaciarCartas();
 			delete mazo;
+			delete lista_aux;
 			delete cartasComunitarias;
 
 			itJugadores=this->jugadores->begin();
