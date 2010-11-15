@@ -13,8 +13,8 @@ void* empiezaJuego(void* procesadorPasado){
 }
 
 void Procesador::jugar(){
-	while (true){
 	list<Jugador*>::iterator itJugadores;
+	while (true){
 		while(jugadores->size()>=2){
 			//Inicializo variables
 			Carta* cartaAuxiliar;
