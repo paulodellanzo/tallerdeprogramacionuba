@@ -15,8 +15,8 @@ void* empiezaJuego(void* procesadorPasado){
 
 void Procesador::jugar(){
 
+	list<Jugador*>::iterator itJugadores;
 	while (true){
-		list<Jugador*>::iterator itJugadores;
 		while(jugadores->size()>=2){
 			//Inicializo variables
 			Carta* cartaAuxiliar;
@@ -32,6 +32,8 @@ void Procesador::jugar(){
 			}
 			cout<<"Empieza la partida"<<endl;
 			sleep(5);
+			this->apuestaMayorEnRonda=0;
+			this->bote=0;
 			//TODO Primera ronda de apuestas
 			finDeApuestas=false;
 			while(!finDeApuestas){
@@ -40,6 +42,8 @@ void Procesador::jugar(){
 			}
 
 			cout<<"Agregamos la tres primeras cartas"<<endl;
+
+			this->bote+=apuestaMayorEnRonda;
 			//Agrego primeras tres cartas comunitarias
 			for(int i=0;i<3;i++){
 				cartaAuxiliar=mazo->getCarta();
@@ -49,11 +53,13 @@ void Procesador::jugar(){
 
 			//TODO Segunda ronda de apuestas
 			finDeApuestas=false;
+			this->apuestaMayorEnRonda=0;
 			while(!finDeApuestas){
 				sleep(5);
 				finDeApuestas=true;
 			}
 
+			this->bote+=apuestaMayorEnRonda;
 			//Agrego cuarta carta comunitaria
 			cout<<"Agregamos la cuarta carta"<<endl;
 			cartaAuxiliar=mazo->getCarta();
@@ -62,11 +68,13 @@ void Procesador::jugar(){
 
 			//TODO Tercera ronda de apuestas
 			finDeApuestas=false;
+			this->apuestaMayorEnRonda=0;
 			while(!finDeApuestas){
 				sleep(5);
 				finDeApuestas=true;
 			}
 
+			this->bote+=apuestaMayorEnRonda;
 			//Agrego quinta carta comunitaria
 			cout<<"Agregamos la quinta carta"<<endl;
 			cartaAuxiliar=mazo->getCarta();
@@ -75,11 +83,13 @@ void Procesador::jugar(){
 
 			//TODO Cuarta ronda de apuestas
 			finDeApuestas=false;
+			this->apuestaMayorEnRonda=0;
 			while(!finDeApuestas){
 				sleep(5);
 				finDeApuestas=true;
 			}
 
+			this->bote+=apuestaMayorEnRonda;
 			//TODO Ver quien ganó
 			cout<<"Gano: ";
 
@@ -138,6 +148,7 @@ void Procesador::jugar(){
 		//Paso los jugadores a agregar a la lista de jugadores
 		itJugadores=jugadores->end();
 		jugadores->splice(itJugadores,*jugadores_agregar);
+		sleep(2);
 	}
 }
 
@@ -177,7 +188,7 @@ Procesador::Procesador(int i) {
 
 char* Procesador::getRespuesta(char* xml){
 	/* Operaciones Usadas:
-	 * A - B - C - D - E - F - G - H - I - J - K - P - R - U - Z
+	 * A - B - C - D - E - F - G - H - I - J - K - L - P - R - U - Z
 	 * */
 	ostringstream sstream;
 	sstream << xml;
@@ -270,6 +281,8 @@ char* Procesador::getRespuesta(char* xml){
 	}else if(res=="G"){//La maxima apuesta en esa mano
 
 	}else if(res=="H"){//Para cargar plata
+
+	}else if(res=="L"){//Apuesta de cierto jugador
 
 	}else{
 		list<string>* conError=new list<string>();
