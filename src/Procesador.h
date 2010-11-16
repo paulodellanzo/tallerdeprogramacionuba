@@ -9,6 +9,12 @@
 #define PATHARCHIVOCONF "config.ini"
 
 using namespace std;
+#include <stdlib.h>
+#include <iostream>
+#include <stdio.h>
+#include <fstream>
+#include <cstdlib>
+#include "Poker.h"
 #include <string>
 #include "Operacion.h"
 #include "Mazo.h"
@@ -16,6 +22,7 @@ using namespace std;
 #include "S.h"
 #include "D.h"
 #include "R.h"
+#include "L.h"
 #include "M.h"
 #include "J.h"
 #include "C.h"
@@ -58,12 +65,13 @@ public:
 	bool agregarCarta(Carta* cartaNueva);
 	bool enviarArchivo(char*xml); //FALTA VER LO DE SI ES UNA IMAGEN DE UN JUGADOR
 	bool recibirArchivo(char*xml);
-	char* getRespuesta(char* xml);
+	char* getRespuesta(char* xml, Jugador * jugador);
 	void terminoMiTurno();
 	bool seEstaJugando(){return this->estaJugando;}
 	bool estaJugandoJugador(string nombre_jugador);
 	char * getXml(list<string> * lista,string operacion);
 	void vaciarCartas();
+	void empezarPartida();
 	virtual ~Procesador();
 };
 

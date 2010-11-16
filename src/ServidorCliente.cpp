@@ -239,7 +239,7 @@ void ServidorCliente::interactuarConCliente(){
 				paraVerSiCortoComunicacion=1;
 				delete xml;
 			}else{
-				data=this->procesador->getRespuesta(xml);
+				data=this->procesador->getRespuesta(xml,this->jugador);
 				paraVerSiCortoComunicacion=this->enviarACliente(data);
 				delete xml;
 			}

@@ -4,12 +4,13 @@
 using namespace std;
 #include <string>
 #include "Operacion.h"
+#include "Jugador.h"
 #include <list>
 
-class D : public Operacion{
+class D {
 public:
 	D();
-	virtual list<string>* realizarOpearacion(list<char*>* operandos);
+	virtual list<string>* realizarOperacion(list<char*>* operandos, Jugador * jugador);
 	virtual ~D();
 };
 

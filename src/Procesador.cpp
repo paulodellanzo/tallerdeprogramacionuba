@@ -1,16 +1,13 @@
 #include "Procesador.h"
-using namespace std;
-#include <stdlib.h>
-#include <iostream>
-#include <stdio.h>
-#include <fstream>
-#include <cstdlib>
-#include "Poker.h"
 
 void* empiezaJuego(void* procesadorPasado){
 	Procesador* procesador=(Procesador*) procesadorPasado;
 	procesador->jugar();
 	return NULL;
+}
+
+void Procesador::empezarPartida(){
+	this->nombreJugadorJugando=this->jugadores->front()->getNombre();
 }
 
 void Procesador::jugar(){
@@ -21,81 +18,129 @@ void Procesador::jugar(){
 			//Inicializo variables
 			Carta* cartaAuxiliar;
 			this->mazo = new Mazo();
-			itJugadores=jugadores->begin();
 			bool finDeApuestas;
-
-			//Reparto dos cartas a cada jugador
-			while(itJugadores!=jugadores->end()){
-				(*itJugadores)->setCartas(mazo->getCarta(),mazo->getCarta());
-				itJugadores++;
-			}
-			cout<<"Empieza la partida"<<endl;
-			sleep(5);
 			this->apuestaMayorEnRonda=0;
 			this->bote=0;
+
+			//Reparto dos cartas a cada jugador y empiezan a jugar
+			itJugadores=jugadores->begin();
+			while(itJugadores!=jugadores->end()){
+				(*itJugadores)->setCartas(mazo->getCarta(),mazo->getCarta());
+				(*itJugadores)->empezarAJugar();
+				(*itJugadores)->setUltimaApuesta(-1);
+				itJugadores++;
+			}
+			this->empezarPartida();
+			cout<<"Empieza la partida"<<endl;
+			sleep(7);
+
 			//TODO Primera ronda de apuestas
 			finDeApuestas=false;
 			while(!finDeApuestas){
-				sleep(5);
 				finDeApuestas=true;
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
-					(*itJugadores)->setUltimaApuesta(this->apuestaMayorEnRonda);
-					if((*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda)==false)	//TODO Cambiar parametro
-						finDeApuestas=false;												//por apuesta del jugador
+					(*itJugadores)->setUltimaApuesta(this->apuestaMayorEnRonda);//ESTO NO VA EN REALIDAD
+					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda) and (*itJugadores)->participando())
+						finDeApuestas=false;
 					itJugadores++;
 				}
 			}
-
-			cout<<"Agregamos las tres primeras cartas"<<endl;
-
+			sleep(7);
 			this->bote+=apuestaMayorEnRonda;
+			this->apuestaMayorEnRonda=10;
+
+			itJugadores=this->jugadores->begin();
+			while(itJugadores!=jugadores->end()){
+				(*itJugadores)->setUltimaApuesta(-1);
+				itJugadores++;
+			}
+
 			//Agrego primeras tres cartas comunitarias
 			for(int i=0;i<3;i++){
 				cartaAuxiliar=mazo->getCarta();
 				this->agregarCarta(cartaAuxiliar);
 			}
+			cout<<"Agregamos las tres primeras cartas"<<endl;
+			sleep(7);
 
 			//TODO Segunda ronda de apuestas
 			finDeApuestas=false;
-			this->apuestaMayorEnRonda=0;
 			while(!finDeApuestas){
-				sleep(5);
 				finDeApuestas=true;
+				itJugadores=jugadores->begin();
+				while (itJugadores!=jugadores->end()){
+					(*itJugadores)->setUltimaApuesta(this->apuestaMayorEnRonda);//ESTO NO VA EN REALIDAD
+					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda) and (*itJugadores)->participando())
+						finDeApuestas=false;
+					itJugadores++;
+				}
 			}
 
+			sleep(7);
 			this->bote+=apuestaMayorEnRonda;
+			this->apuestaMayorEnRonda=10;
+
+			itJugadores=this->jugadores->begin();
+			while(itJugadores!=jugadores->end()){
+				(*itJugadores)->setUltimaApuesta(-1);
+				itJugadores++;
+			}
+
 			//Agrego cuarta carta comunitaria
-			cout<<"Agregamos la cuarta carta"<<endl;
 			cartaAuxiliar=mazo->getCarta();
 			this->agregarCarta(cartaAuxiliar);
+			cout<<"Agregamos la cuarta carta"<<endl;
 
 			//TODO Tercera ronda de apuestas
 			finDeApuestas=false;
-			this->apuestaMayorEnRonda=0;
 			while(!finDeApuestas){
-				sleep(5);
 				finDeApuestas=true;
+				itJugadores=jugadores->begin();
+				while (itJugadores!=jugadores->end()){
+					(*itJugadores)->setUltimaApuesta(this->apuestaMayorEnRonda);//ESTO NO VA EN REALIDAD
+					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda) and (*itJugadores)->participando())
+						finDeApuestas=false;
+					itJugadores++;
+				}
 			}
 
+			sleep(7);
 			this->bote+=apuestaMayorEnRonda;
+			this->apuestaMayorEnRonda=10;
+
+			itJugadores=this->jugadores->begin();
+			while(itJugadores!=jugadores->end()){
+				(*itJugadores)->setUltimaApuesta(-1);
+				itJugadores++;
+			}
+
 			//Agrego quinta carta comunitaria
 			cout<<"Agregamos la quinta carta"<<endl;
 			cartaAuxiliar=mazo->getCarta();
 			this->agregarCarta(cartaAuxiliar);
 
 			//TODO Cuarta ronda de apuestas
+
 			finDeApuestas=false;
-			this->apuestaMayorEnRonda=0;
+
 			while(!finDeApuestas){
-				sleep(5);
 				finDeApuestas=true;
+				itJugadores=jugadores->begin();
+				while (itJugadores!=jugadores->end()){
+					(*itJugadores)->setUltimaApuesta(this->apuestaMayorEnRonda);//ESTO NO VA EN REALIDAD
+					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda) and (*itJugadores)->participando())
+						finDeApuestas=false;
+					itJugadores++;
+				}
 			}
 
+			sleep(7);
 			this->bote+=apuestaMayorEnRonda;
+
 			cout<<"Gano: ";
 
-			string jugadorGanador;
+			Jugador* jugadorGanador;
 			float puntajeGanador=0;
 			itJugadores=this->jugadores->begin();
 			list<Carta> * lista_aux=new list<Carta>;
@@ -118,7 +163,7 @@ void Procesador::jugar(){
 
 				if(puntaje>puntajeGanador){
 					puntajeGanador=puntaje;
-					jugadorGanador=(*itJugadores)->getNombre();
+					jugadorGanador=(*itJugadores);
 				}
 
 				itJugadores++;
@@ -128,8 +173,10 @@ void Procesador::jugar(){
 				lista_aux->pop_back();
 			}
 
-			cout<<jugadorGanador<<" con puntaje: "<<puntajeGanador<<endl;
-			sleep(5);
+			jugadorGanador->modificarPlataEn(this->bote);
+			cout<<jugadorGanador->getNombre()<<" con puntaje: "<<puntajeGanador<<endl;
+			sleep(6);
+
 			//Destruyo objetos
 			this->vaciarCartas();
 			delete mazo;
@@ -140,16 +187,16 @@ void Procesador::jugar(){
 				(*itJugadores)->setCartas(NULL,NULL);
 				itJugadores++;
 			}
-			sleep(5);
 
 			//Paso los jugadores a agregar a la lista de jugadores
 			itJugadores=jugadores->end();
 			jugadores->splice(itJugadores,*jugadores_agregar);
+			sleep(5);
 		}
 		//Paso los jugadores a agregar a la lista de jugadores
 		itJugadores=jugadores->end();
 		jugadores->splice(itJugadores,*jugadores_agregar);
-		sleep(2);
+		sleep(5);
 	}
 }
 
@@ -187,7 +234,7 @@ Procesador::Procesador(int i) {
 
 }
 
-char* Procesador::getRespuesta(char* xml){
+char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 	/* Operaciones Usadas:
 	 * A - B - C - D - E - F - G - H - I - J - K - L - P - R - U - Z
 	 * */
@@ -227,6 +274,7 @@ char* Procesador::getRespuesta(char* xml){
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
+		delete operadorJ;
 		return respuesta;
 
 	}else if(res=="C"){//Cartas de la mesa
@@ -235,6 +283,7 @@ char* Procesador::getRespuesta(char* xml){
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
+		delete operadorC;
 		return respuesta;
 
 	}else if(res=="R"){//Registrarse
@@ -243,6 +292,7 @@ char* Procesador::getRespuesta(char* xml){
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
+		delete operadorR;
 		return respuesta;
 
 	}else if(res=="A"){//de quien es el turno
@@ -267,6 +317,7 @@ char* Procesador::getRespuesta(char* xml){
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
+		delete operadorB;
 		return respuesta;
 	}else if(res=="K"){//ranking de usuarios
 		K * operadorK=new K();
@@ -274,17 +325,68 @@ char* Procesador::getRespuesta(char* xml){
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
+		delete operadorK;
 		return respuesta;
 	}else if(res=="D"){//Apuesta
-
+		D* operadorD=new D();
+		list<string> * respuestaDeOperacion=operadorD->realizarOperacion(operandos,jugador);
+		string aux=respuestaDeOperacion->front();
+		if(aux=="Correcto"){
+			string apuestaString=respuestaDeOperacion->back();
+			int apuesta=atoi(apuestaString.c_str());
+			if(this->apuestaMayorEnRonda<apuesta){
+				this->apuestaMayorEnRonda=apuesta;
+			}
+		}
+		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		this->terminoMiTurno();
+		delete respuestaDeOperacion;
+		delete operandos;
+		delete operadorD;
+		return respuesta;
 	}else if(res=="F"){//Pasar
+		list<string>* respuestaDeOperacion = new list<string>();
+		list<string>::iterator it;
+		it = respuestaDeOperacion->begin();
+		it = respuestaDeOperacion->insert(it, "Correcto");
+		it++;
+		it = respuestaDeOperacion->insert(it, "pasar");
+		it++;
+		it = respuestaDeOperacion->insert(it, "0");
+		it++;
+		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		delete respuestaDeOperacion;
+		this->terminoMiTurno();
+		return respuesta;
 
 	}else if(res=="G"){//La maxima apuesta en esa mano
+		ostringstream sstream;
+		sstream << this->apuestaMayorEnRonda;
+		string apuestaString = sstream.str();
+		list<string>* respuestaDeOperacion = new list<string>();
+		list<string>::iterator it;
+		it = respuestaDeOperacion->begin();
+		it = respuestaDeOperacion->insert(it, "Correcto");
+		it++;
+		it = respuestaDeOperacion->insert(it, "apuestaMax");
+		it++;
+		it = respuestaDeOperacion->insert(it, apuestaString);
+		it++;
+		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		delete respuestaDeOperacion;
+		delete operandos;
+		return respuesta;
 
 	}else if(res=="H"){//Para cargar plata
 
-	}else if(res=="L"){//Apuesta de cierto jugador
-
+	}else if(res=="L"){//Pedir apuesta de cierto jugador
+		L * operadorL=new L();
+		list<string>* respuestaDeOperacion=operadorL->realizarOpearacion(operandos,this->jugadores_a_dibujar);
+		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		delete respuestaDeOperacion;
+		delete operandos;
+		delete operadorL;
+		return respuesta;
 	}else{
 		list<string>* conError=new list<string>();
 		list<string>::iterator it=conError->begin();
@@ -395,6 +497,8 @@ bool Procesador::agregarJugador(Jugador* jugadorNuevo){
 }
 
 bool Procesador::quitarJugador(Jugador* jugador){
+	if(jugador->getNombre()==this->nombreJugadorJugando)
+		this->terminoMiTurno();
 	list<Jugador*>* lista_aux=new list<Jugador*>();
 	while(this->jugadores_a_dibujar->size()>0){
 		Jugador* juga=this->jugadores_a_dibujar->back();
@@ -448,9 +552,21 @@ bool Procesador::agregarCarta(Carta* cartaNueva){
 void Procesador::terminoMiTurno(){
 	Jugador * jugadorEnTurno=this->jugadores->front();
 	this->jugadores->pop_front();
-	this->jugadores->push_back(jugadorEnTurno);
-	jugadorEnTurno=this->jugadores->front();
-	this->nombreJugadorJugando=jugadorEnTurno->getNombre();
+	if(jugadorEnTurno->participando())
+		this->jugadores->push_back(jugadorEnTurno);
+	bool seguir=true;
+	string nombreJugador;
+	while(seguir and this->jugadores->size()>0){
+		jugadorEnTurno=this->jugadores->front();
+		this->jugadores->pop_front();
+		if(jugadorEnTurno->participando()){
+			this->nombreJugadorJugando=jugadorEnTurno->getNombre();
+			this->jugadores->push_front(jugadorEnTurno);
+			seguir=false;
+		}
+	}
+	if(seguir)
+		this->nombreJugadorJugando=" ";
 }
 
 bool Procesador::estaJugandoJugador(string nombre_jugador){
