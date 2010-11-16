@@ -22,7 +22,6 @@ void Procesador::jugar(){
 			Carta* cartaAuxiliar;
 			this->mazo = new Mazo();
 			itJugadores=jugadores->begin();
-			list<Carta>* cartasComunitarias=new list<Carta>;
 			bool finDeApuestas;
 
 			//Reparto dos cartas a cada jugador
@@ -37,7 +36,9 @@ void Procesador::jugar(){
 			//TODO Primera ronda de apuestas
 			finDeApuestas=false;
 			while(!finDeApuestas){
+
 				sleep(5);
+
 				finDeApuestas=true;
 			}
 
@@ -48,7 +49,6 @@ void Procesador::jugar(){
 			for(int i=0;i<3;i++){
 				cartaAuxiliar=mazo->getCarta();
 				this->agregarCarta(cartaAuxiliar);
-				cartasComunitarias->push_back(Carta(cartaAuxiliar->getPalo(),cartaAuxiliar->getNumero()));
 			}
 
 			//TODO Segunda ronda de apuestas
@@ -64,7 +64,6 @@ void Procesador::jugar(){
 			cout<<"Agregamos la cuarta carta"<<endl;
 			cartaAuxiliar=mazo->getCarta();
 			this->agregarCarta(cartaAuxiliar);
-			cartasComunitarias->push_back(Carta(cartaAuxiliar->getPalo(),cartaAuxiliar->getNumero()));
 
 			//TODO Tercera ronda de apuestas
 			finDeApuestas=false;
@@ -79,7 +78,6 @@ void Procesador::jugar(){
 			cout<<"Agregamos la quinta carta"<<endl;
 			cartaAuxiliar=mazo->getCarta();
 			this->agregarCarta(cartaAuxiliar);
-			cartasComunitarias->push_back(Carta(cartaAuxiliar->getPalo(),cartaAuxiliar->getNumero()));
 
 			//TODO Cuarta ronda de apuestas
 			finDeApuestas=false;
@@ -90,7 +88,6 @@ void Procesador::jugar(){
 			}
 
 			this->bote+=apuestaMayorEnRonda;
-			//TODO Ver quien ganó
 			cout<<"Gano: ";
 
 			string jugadorGanador;
@@ -132,7 +129,6 @@ void Procesador::jugar(){
 			this->vaciarCartas();
 			delete mazo;
 			delete lista_aux;
-			delete cartasComunitarias;
 
 			itJugadores=this->jugadores->begin();
 			while(itJugadores!=jugadores->end()){
