@@ -36,13 +36,18 @@ void Procesador::jugar(){
 			//TODO Primera ronda de apuestas
 			finDeApuestas=false;
 			while(!finDeApuestas){
-
 				sleep(5);
-
 				finDeApuestas=true;
+				itJugadores=jugadores->begin();
+				while (itJugadores!=jugadores->end()){
+					(*itJugadores)->setUltimaApuesta(this->apuestaMayorEnRonda);
+					if((*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda)==false)	//TODO Cambiar parametro
+						finDeApuestas=false;												//por apuesta del jugador
+					itJugadores++;
+				}
 			}
 
-			cout<<"Agregamos la tres primeras cartas"<<endl;
+			cout<<"Agregamos las tres primeras cartas"<<endl;
 
 			this->bote+=apuestaMayorEnRonda;
 			//Agrego primeras tres cartas comunitarias
