@@ -334,6 +334,7 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		if(aux=="Correcto"){
 			string apuestaString=respuestaDeOperacion->back();
 			int apuesta=atoi(apuestaString.c_str());
+			this->bote+=apuesta;
 			if(this->apuestaMayorEnRonda<apuesta){
 				this->apuestaMayorEnRonda=apuesta;
 			}
