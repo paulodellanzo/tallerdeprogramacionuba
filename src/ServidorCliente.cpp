@@ -198,7 +198,7 @@ void ServidorCliente::interactuarConCliente(){
 						string id = row[0];
 						conexion->liberarConexion(res);
 
-						string query = "insert into estadistica (fechaLogin,usuarioId) values(curdate(), "+id+")";
+						string query = "insert into estadistica (fechaLogin,usuarioId) values(STR_TO_DATE(DATE_FORMAT(now(),'%d/%m/%Y'),'%d/%m/%Y'), "+id+")";
 						res = conexion->ejecutarQuery(query.c_str());
 						conexion->liberarConexion(res);
 
