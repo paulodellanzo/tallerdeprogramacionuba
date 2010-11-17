@@ -248,7 +248,7 @@ Procesador::Procesador(int i) {
 
 char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 	/* Operaciones Usadas:
-	 * A - B - C - D - E - F - G - H - I - J - K - L - P - R - U - Z
+	 * A - B - C - D - E - F - G - H - I - J - K - L - M - N - P - R - U - Z
 	 * */
 	ostringstream sstream;
 	sstream << xml;
@@ -306,6 +306,15 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		delete operandos;
 		delete operadorR;
 		return respuesta;
+
+	}else if(res=="N"){//Registrarse
+			N * operadorN = new N();
+			list<string>* respuestaDeOperacion=operadorN->realizarOpearacion(operandos);
+			respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+			delete respuestaDeOperacion;
+			delete operandos;
+			delete operadorN;
+			return respuesta;
 
 	}else if(res=="A"){//de quien es el turno
 		list<string>* respuestaDeOperacion = new list<string>();
