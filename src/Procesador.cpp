@@ -54,8 +54,6 @@ void Procesador::jugar(){
 				while (itJugadores!=jugadores->end()){
 					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda) and (*itJugadores)->participando())
 						finDeApuestas=false;
-					else
-						cout<<"Ya aposto: "<<(*itJugadores)->getNombre()<<endl;
 					itJugadores++;
 				}
 			}
@@ -84,8 +82,6 @@ void Procesador::jugar(){
 				while (itJugadores!=jugadores->end()){
 					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda) and (*itJugadores)->participando())
 						finDeApuestas=false;
-					else
-						cout<<"Ya aposto: "<<(*itJugadores)->getNombre()<<endl;
 					itJugadores++;
 				}
 			}
@@ -112,8 +108,6 @@ void Procesador::jugar(){
 				while (itJugadores!=jugadores->end()){
 					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda) and (*itJugadores)->participando())
 						finDeApuestas=false;
-					else
-						cout<<"Ya aposto: "<<(*itJugadores)->getNombre()<<endl;
 					itJugadores++;
 				}
 			}
@@ -142,8 +136,6 @@ void Procesador::jugar(){
 				while (itJugadores!=jugadores->end()){
 					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda) and (*itJugadores)->participando())
 						finDeApuestas=false;
-					else
-						cout<<"Ya aposto: "<<(*itJugadores)->getNombre()<<endl;
 					itJugadores++;
 				}
 			}
@@ -334,9 +326,7 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		return respuesta;
 	}else if(res=="B"){//Pedir las cartas de un jugador
 		B * operadorB=new B();
-		pthread_mutex_lock(&this->mutex);
 		list<string>* respuestaDeOperacion=operadorB->realizarOpearacion(operandos,this->jugadores_a_dibujar);
-		pthread_mutex_unlock(&this->mutex);
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
@@ -382,6 +372,7 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		it++;
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
+		jugador->setUltimaApuesta(this->apuestaMayorEnRonda);
 		this->terminoMiTurno();
 		return respuesta;
 
