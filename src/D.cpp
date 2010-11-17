@@ -9,7 +9,7 @@ list<string>* D::realizarOperacion(list<char*>* operandos, Jugador * jugador){
 	list<string>::iterator it=respuesta->begin();
 	char * apuesta;
 
-	if(strcmp(operandos->front(),"apuesta")==0){
+	if(strcmp(operandos->front(),"Poso")==0){
 		operandos->pop_front();
 		apuesta=operandos->front();
 		operandos->pop_front();
@@ -37,7 +37,7 @@ list<string>* D::realizarOperacion(list<char*>* operandos, Jugador * jugador){
 	it=respuesta->begin();
 	it=respuesta->insert(it,"Correcto");
 	it++;
-	it=respuesta->insert(it,"apuesta");
+	it=respuesta->insert(it,"Poso");
 	it++;
 	it=respuesta->insert(it,apuestaString);
 	return respuesta;

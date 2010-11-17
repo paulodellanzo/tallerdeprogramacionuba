@@ -52,7 +52,7 @@ void Procesador::jugar(){
 				finDeApuestas=true;
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
-					(*itJugadores)->setUltimaApuesta(this->apuestaMayorEnRonda);//ESTO NO VA EN REALIDAD
+//					(*itJugadores)->setUltimaApuesta(this->apuestaMayorEnRonda);//ESTO NO VA EN REALIDAD
 					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda) and (*itJugadores)->participando())
 						finDeApuestas=false;
 					itJugadores++;
@@ -82,7 +82,7 @@ void Procesador::jugar(){
 				finDeApuestas=true;
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
-					(*itJugadores)->setUltimaApuesta(this->apuestaMayorEnRonda);//ESTO NO VA EN REALIDAD
+//					(*itJugadores)->setUltimaApuesta(this->apuestaMayorEnRonda);//ESTO NO VA EN REALIDAD
 					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda) and (*itJugadores)->participando())
 						finDeApuestas=false;
 					itJugadores++;
@@ -110,7 +110,7 @@ void Procesador::jugar(){
 				finDeApuestas=true;
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
-					(*itJugadores)->setUltimaApuesta(this->apuestaMayorEnRonda);//ESTO NO VA EN REALIDAD
+//					(*itJugadores)->setUltimaApuesta(this->apuestaMayorEnRonda);//ESTO NO VA EN REALIDAD
 					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda) and (*itJugadores)->participando())
 						finDeApuestas=false;
 					itJugadores++;
@@ -140,7 +140,7 @@ void Procesador::jugar(){
 				finDeApuestas=true;
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
-					(*itJugadores)->setUltimaApuesta(this->apuestaMayorEnRonda);//ESTO NO VA EN REALIDAD
+//					(*itJugadores)->setUltimaApuesta(this->apuestaMayorEnRonda);//ESTO NO VA EN REALIDAD
 					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda) and (*itJugadores)->participando())
 						finDeApuestas=false;
 					itJugadores++;
@@ -340,12 +340,14 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		delete operadorK;
 		return respuesta;
 	}else if(res=="D"){//Apuesta
+		cout<<"Aposto jugador: "<<jugador->getNombre()<<endl;
 		D* operadorD=new D();
 		list<string> * respuestaDeOperacion=operadorD->realizarOperacion(operandos,jugador);
 		string aux=respuestaDeOperacion->front();
 		if(aux=="Correcto"){
 			string apuestaString=respuestaDeOperacion->back();
 			int apuesta=atoi(apuestaString.c_str());
+			cout<<apuesta<<endl;
 			this->bote+=apuesta;
 			if(this->apuestaMayorEnRonda<apuesta){
 				this->apuestaMayorEnRonda=apuesta;
