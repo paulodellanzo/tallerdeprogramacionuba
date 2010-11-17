@@ -8,6 +8,7 @@ void* empiezaJuego(void* procesadorPasado){
 
 void Procesador::empezarPartida(){
 	this->nombreJugadorJugando=this->jugadores->front()->getNombre();
+	cout<<"Es el turno de: "<<this->nombreJugadorJugando<<endl;
 }
 
 bool Procesador::empezarPartida(char * xml){
@@ -376,6 +377,25 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		this->terminoMiTurno();
 		return respuesta;
 
+	}else if(res=="Y"){
+		list<string>* respuestaDeOperacion = new list<string>();
+		list<string>::iterator it;
+		it = respuestaDeOperacion->begin();
+		it = respuestaDeOperacion->insert(it, "Correcto");
+		it++;
+		it = respuestaDeOperacion->insert(it, "igualar");
+		it++;
+		it = respuestaDeOperacion->insert(it, "0");
+		it++;
+		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		delete respuestaDeOperacion;
+		int diferencia=(jugador->getUltimaApuesta() - this->apuestaMayorEnRonda);
+		jugador->modificarPlataEn(diferencia);
+		jugador->setUltimaApuesta(this->apuestaMayorEnRonda);
+		this->bote-=diferencia;
+		this->terminoMiTurno();
+		return respuesta;
+
 	}else if(res=="G"){//La maxima apuesta en esa mano
 		ostringstream sstream;
 		sstream << this->apuestaMayorEnRonda;
@@ -597,6 +617,7 @@ void Procesador::terminoMiTurno(){
 	}
 	if(seguir)
 		this->nombreJugadorJugando=" ";
+	cout<<"Es el turno de: "<<this->nombreJugadorJugando<<endl;
 }
 
 bool Procesador::estaJugandoJugador(string nombre_jugador){
