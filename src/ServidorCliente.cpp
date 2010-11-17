@@ -123,6 +123,7 @@ int ServidorCliente::enviarACliente(char* data){
 	data2[1]='o';
 	data2[2]='f';
 	valorSend=send(cliente->valorAcept,data2,3,0);
+	if (valorSend == -1) {cout<<"Mal enviado a cliente nº: "<<cliente->valorAcept<<endl; }
 	delete []data2;
 	return valorSend;
 }
@@ -244,7 +245,7 @@ void ServidorCliente::interactuarConCliente(){
 				delete xml;
 			}
 			//la corroboracion es para ver si devuelve 0 es porq se desconecto el cliente
-			seguir=(paraVerSiCortoComunicacion!=0);
+			seguir=((paraVerSiCortoComunicacion!=0)and(paraVerSiCortoComunicacion!=(-1)));
 		}
 	}
 	if(this->jugador!=NULL){

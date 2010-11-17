@@ -532,6 +532,17 @@ bool Procesador::quitarJugador(Jugador* jugador){
 	}
 	delete this->jugadores_agregar;
 	this->jugadores_agregar=lista_aux3;
+
+	//Aca le persisto la plata del jugador que se fue
+	Conexion* conexion = Conexion::instancia();
+	ostringstream sstream;
+	sstream << jugador->plataRestante();
+	string plata = sstream.str();
+	string query="update usuarios set plata='"+plata+"' where usuario='"+jugador->getNombre()+"'";
+	MYSQL_RES *res;
+	MYSQL_ROW row;
+	res = conexion->ejecutarQuery(query.c_str());
+	conexion->liberarConexion(res);
 	return true;
 }
 
