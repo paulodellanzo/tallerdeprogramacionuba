@@ -1,8 +1,0 @@
-<respuesta>
-	<operacion id=""/>
-	<errores>
-		<error tipo="S">
-		Hay un error al abrir el archivo
-		</error>
-	</errores>
-</respuesta>

@@ -208,19 +208,34 @@ void ServidorCliente::interactuarConCliente(){
 						lista->push_front(nombre);
 						lista->push_front("Usuario");
 						lista->push_front("Correcto");
-						this->procesador->agregarJugador(this->jugador);
 					}
-					data=this->procesador->getXml(lista,"R");
+					data=this->procesador->getXml(lista,"U");
 					paraVerSiCortoComunicacion=this->enviarACliente(data);
 					delete xml;
 				}else{
-					data=this->procesador->getXml(lista,"R");
+					data=this->procesador->getXml(lista,"U");
 					paraVerSiCortoComunicacion=this->enviarACliente(data);
 					delete xml;
 				}
 			}else if(this->procesador->enviarArchivo(xml)){
 				string path=this->procesador->getPathArchivo();
 				paraVerSiCortoComunicacion=this->enviarArchivoBMP(path);
+				delete xml;
+			}else if(this->procesador->empezarPartida(xml)){
+				if(this->jugador!=NULL){
+					this->procesador->agregarJugador(this->jugador);
+					lista->push_front(this->jugador->getNombre());
+					lista->push_front("password");
+					lista->push_front(this->jugador->getNombre());
+					lista->push_front("Usuario");
+					lista->push_front("Correcto");
+				}else{
+					lista->push_front("No logueo usuario");
+					lista->push_front("V");
+					lista->push_front("Error");
+				}
+				data=this->procesador->getXml(lista,"M");
+				paraVerSiCortoComunicacion=this->enviarACliente(data);
 				delete xml;
 			}else if(this->procesador->recibirArchivo(xml)){
 				string path=this->procesador->getPathArchivo();

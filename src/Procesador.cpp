@@ -10,6 +10,18 @@ void Procesador::empezarPartida(){
 	this->nombreJugadorJugando=this->jugadores->front()->getNombre();
 }
 
+bool Procesador::empezarPartida(char * xml){
+	ostringstream sstream;
+	sstream << xml;
+	string paraVerCuantoPesa = sstream.str();
+	char xmlAux[paraVerCuantoPesa.size()];
+	for(unsigned int i=0;i<paraVerCuantoPesa.size();i++){xmlAux[i]=xml[i];}
+	string idOperacionString= this->parser->getOperacionId(xmlAux);
+	idOperacionString=toupper(idOperacionString[0]);
+	char idOperacionChar=idOperacionString[0];
+	return idOperacionChar=='M';
+
+}
 void Procesador::jugar(){
 
 	list<Jugador*>::iterator itJugadores;
@@ -457,6 +469,8 @@ char* Procesador::getXml(list<string> *lista,string operacion){
 	delete lista;
 	return data;
 }
+
+
 
 list<string>* Procesador::seConectoJugador(char* xml){
 	ostringstream sstream;
