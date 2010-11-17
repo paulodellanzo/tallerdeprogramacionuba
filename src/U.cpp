@@ -42,7 +42,7 @@ list<string>* U::realizarOpearacion(list<char*>* operandos){
 	bool usuValido;
 	Conexion* conexion = Conexion::instancia();
 
-	string query = "select usuario from usuarios where usuario='"+usuario+"' and password='"+pass+"'";
+	string query = "select usuario,plata,fechaultimacarga, CURRENT_DATE,cargaultimodia  from usuarios where usuario='"+usuario+"' and password='"+pass+"'";
 	res = conexion->ejecutarQuery(query.c_str());
 
 	double valido=0;
@@ -53,6 +53,7 @@ list<string>* U::realizarOpearacion(list<char*>* operandos){
 		 usuValido=false;
 		 valido =1;
 	 }
+
 	 conexion->liberarConexion(res);
 
 	if(!usuValido){
@@ -65,11 +66,21 @@ list<string>* U::realizarOpearacion(list<char*>* operandos){
 		return respuesta;
 	}
 
+	string plata(row[1]);
+	string cargado(row[4]);
+	if(strcmp(row[2],row[3])!=0){
+		cargado="0";
+	}
+
 	respuesta->push_back("Correcto");
 	respuesta->push_back("usuario");
 	respuesta->push_back(usuario);
 	respuesta->push_back("password");
 	respuesta->push_back(pass);
+	respuesta->push_back("plata");
+	respuesta->push_back(plata);
+	respuesta->push_back("cargado");
+	respuesta->push_back(cargado);
 	return respuesta;
 
 }
