@@ -53,8 +53,9 @@ void Procesador::jugar(){
 				finDeApuestas=true;
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
-					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda) and (*itJugadores)->participando())
-						finDeApuestas=false;
+					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda))
+						if((*itJugadores)->participando())
+							finDeApuestas=false;
 					itJugadores++;
 				}
 			}
@@ -81,8 +82,9 @@ void Procesador::jugar(){
 				finDeApuestas=true;
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
-					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda) and (*itJugadores)->participando())
-						finDeApuestas=false;
+					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda))
+						if((*itJugadores)->participando())
+							finDeApuestas=false;
 					itJugadores++;
 				}
 			}
@@ -107,8 +109,9 @@ void Procesador::jugar(){
 				finDeApuestas=true;
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
-					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda) and (*itJugadores)->participando())
-						finDeApuestas=false;
+					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda))
+						if((*itJugadores)->participando())
+							finDeApuestas=false;
 					itJugadores++;
 				}
 			}
@@ -130,13 +133,13 @@ void Procesador::jugar(){
 			//TODO Cuarta ronda de apuestas
 
 			finDeApuestas=false;
-
 			while(!finDeApuestas){
 				finDeApuestas=true;
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
-					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda) and (*itJugadores)->participando())
-						finDeApuestas=false;
+					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda))
+						if((*itJugadores)->participando())
+							finDeApuestas=false;
 					itJugadores++;
 				}
 			}
@@ -362,6 +365,7 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		delete operadorD;
 		return respuesta;
 	}else if(res=="F"){//Pasar
+		cout<<"Pasa : ";
 		list<string>* respuestaDeOperacion = new list<string>();
 		list<string>::iterator it;
 		it = respuestaDeOperacion->begin();
@@ -374,10 +378,12 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		jugador->setUltimaApuesta(this->apuestaMayorEnRonda);
+		cout<<jugador->getNombre()<<endl;
 		this->terminoMiTurno();
 		return respuesta;
 
-	}else if(res=="Y"){
+	}else if(res=="Y"){//Igualar
+		cout<<"Iguala : ";
 		list<string>* respuestaDeOperacion = new list<string>();
 		list<string>::iterator it;
 		it = respuestaDeOperacion->begin();
@@ -393,6 +399,7 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		jugador->modificarPlataEn(diferencia);
 		jugador->setUltimaApuesta(this->apuestaMayorEnRonda);
 		this->bote-=diferencia;
+		cout<<jugador->getNombre()<<endl;
 		this->terminoMiTurno();
 		return respuesta;
 
