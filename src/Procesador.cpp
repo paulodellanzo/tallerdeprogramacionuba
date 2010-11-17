@@ -44,7 +44,7 @@ void Procesador::jugar(){
 			}
 			this->empezarPartida();
 			cout<<"Empieza la partida"<<endl;
-			sleep(7);
+			sleep(2);
 
 			//TODO Primera ronda de apuestas
 			finDeApuestas=false;
@@ -52,15 +52,15 @@ void Procesador::jugar(){
 				finDeApuestas=true;
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
-//					(*itJugadores)->setUltimaApuesta(this->apuestaMayorEnRonda);//ESTO NO VA EN REALIDAD
 					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda) and (*itJugadores)->participando())
 						finDeApuestas=false;
+					else
+						cout<<"Ya aposto: "<<(*itJugadores)->getNombre()<<endl;
 					itJugadores++;
 				}
 			}
-			sleep(7);
-			this->bote+=apuestaMayorEnRonda;
-			this->apuestaMayorEnRonda=10;
+			sleep(2);
+			this->apuestaMayorEnRonda=0;
 
 			itJugadores=this->jugadores->begin();
 			while(itJugadores!=jugadores->end()){
@@ -74,7 +74,7 @@ void Procesador::jugar(){
 				this->agregarCarta(cartaAuxiliar);
 			}
 			cout<<"Agregamos las tres primeras cartas"<<endl;
-			sleep(7);
+			sleep(2);
 
 			//TODO Segunda ronda de apuestas
 			finDeApuestas=false;
@@ -82,16 +82,16 @@ void Procesador::jugar(){
 				finDeApuestas=true;
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
-//					(*itJugadores)->setUltimaApuesta(this->apuestaMayorEnRonda);//ESTO NO VA EN REALIDAD
 					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda) and (*itJugadores)->participando())
 						finDeApuestas=false;
+					else
+						cout<<"Ya aposto: "<<(*itJugadores)->getNombre()<<endl;
 					itJugadores++;
 				}
 			}
 
-			sleep(7);
-			this->bote+=apuestaMayorEnRonda;
-			this->apuestaMayorEnRonda=10;
+			sleep(2);
+			this->apuestaMayorEnRonda=0;
 
 			itJugadores=this->jugadores->begin();
 			while(itJugadores!=jugadores->end()){
@@ -110,16 +110,16 @@ void Procesador::jugar(){
 				finDeApuestas=true;
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
-//					(*itJugadores)->setUltimaApuesta(this->apuestaMayorEnRonda);//ESTO NO VA EN REALIDAD
 					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda) and (*itJugadores)->participando())
 						finDeApuestas=false;
+					else
+						cout<<"Ya aposto: "<<(*itJugadores)->getNombre()<<endl;
 					itJugadores++;
 				}
 			}
 
-			sleep(7);
-			this->bote+=apuestaMayorEnRonda;
-			this->apuestaMayorEnRonda=10;
+			sleep(2);
+			this->apuestaMayorEnRonda=0;
 
 			itJugadores=this->jugadores->begin();
 			while(itJugadores!=jugadores->end()){
@@ -140,15 +140,16 @@ void Procesador::jugar(){
 				finDeApuestas=true;
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
-//					(*itJugadores)->setUltimaApuesta(this->apuestaMayorEnRonda);//ESTO NO VA EN REALIDAD
 					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda) and (*itJugadores)->participando())
 						finDeApuestas=false;
+					else
+						cout<<"Ya aposto: "<<(*itJugadores)->getNombre()<<endl;
 					itJugadores++;
 				}
 			}
 
-			sleep(7);
-			this->bote+=apuestaMayorEnRonda;
+			sleep(2);
+			this->apuestaMayorEnRonda=0;
 
 			cout<<"Gano: ";
 
@@ -187,7 +188,8 @@ void Procesador::jugar(){
 
 			jugadorGanador->modificarPlataEn(this->bote);
 			cout<<jugadorGanador->getNombre()<<" con puntaje: "<<puntajeGanador<<endl;
-			sleep(6);
+			this->bote=0;
+			sleep(2);
 
 			//Destruyo objetos
 			this->vaciarCartas();
