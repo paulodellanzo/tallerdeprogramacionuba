@@ -222,6 +222,7 @@ void ServidorCliente::interactuarConCliente(){
 				paraVerSiCortoComunicacion=this->enviarArchivoBMP(path);
 				delete xml;
 			}else if(this->procesador->empezarPartida(xml)){
+				list<string>* lista=new list<string>();
 				if(this->jugador!=NULL){
 					this->procesador->agregarJugador(this->jugador);
 					lista->push_front(this->jugador->getNombre());
