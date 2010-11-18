@@ -322,7 +322,9 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		it++;
 		it = respuestaDeOperacion->insert(it, "jugador");
 		it++;
-		it = respuestaDeOperacion->insert(it, this->nombreJugadorJugando);
+		string nombreJugador=this->nombreJugadorJugando;
+		if(nombreJugador=="") nombreJugador="/";
+		it = respuestaDeOperacion->insert(it, nombreJugador);
 		it++;
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
