@@ -45,8 +45,7 @@ void Procesador::jugar(){
 			}
 			this->empezarPartida();
 			cout<<"Empieza la partida"<<endl;
-			sleep(2);
-
+			sleep(0.5);
 			//TODO Primera ronda de apuestas
 			finDeApuestas=false;
 			while(!finDeApuestas){
@@ -59,7 +58,7 @@ void Procesador::jugar(){
 					itJugadores++;
 				}
 			}
-			sleep(2);
+
 			this->apuestaMayorEnRonda=0;
 
 			itJugadores=this->jugadores->begin();
@@ -146,6 +145,7 @@ void Procesador::jugar(){
 
 			sleep(2);
 			this->apuestaMayorEnRonda=0;
+			this->nombreJugadorJugando=" ";
 
 			cout<<"Gano: ";
 
