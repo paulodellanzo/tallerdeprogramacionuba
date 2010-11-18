@@ -24,8 +24,10 @@ list<string>* D::realizarOperacion(list<char*>* operandos, Jugador * jugador){
 	}
 
 	int apuestaInt=atoi(apuesta);
-	if(apuestaInt==0)
+	if(apuestaInt==0){
 		jugador->dejarDeJugar();
+		cout<<"Dejo de jugar"<<endl;
+	}
 	int apuestaAux=0 - apuestaInt;
 	jugador->modificarPlataEn(apuestaAux);
 	apuestaInt+=jugador->getUltimaApuesta();

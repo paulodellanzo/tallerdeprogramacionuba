@@ -7,7 +7,6 @@ void* empiezaJuego(void* procesadorPasado){
 }
 
 bool Procesador::abandonarMano(){
-	int sizeJugadores=this->jugadores->size();
 	if(sizeJugadores==0){
 		cout<<"Quedaron cero jugadores"<<endl;
 		this->nombreJugadorJugando=" ";
@@ -18,6 +17,7 @@ bool Procesador::abandonarMano(){
 	}else if(sizeJugadores==1){
 		cout<<"Quedo un jugador"<<endl;
 		this->nombreJugadorJugando=" ";
+		cout<<"Gano: "<<jugadores->front()->getNombre()<<endl;
 		jugadores->front()->setCartas(NULL,NULL);
 		if(this->jugadores->front()->participando()){
 			this->jugadores->front()->modificarPlataEn(this->bote);
@@ -53,7 +53,7 @@ void Procesador::jugar(){
 	list<Jugador*>::iterator itJugadores;
 	while (true){
 		while(jugadores->size()>=2){
-
+			this->sizeJugadores=this->jugadores->size();
 			//Inicializo variables
 			itJugadores=this->jugadores->begin();
 			while(itJugadores!=jugadores->end()){
@@ -380,6 +380,7 @@ Procesador::Procesador(int i) {
 	this->apuestaMayorEnRonda = 0;
 	delete parserAux;
 	this->estaJugando=false;
+	this->sizeJugadores=0;
 	pthread_create(&hilo,NULL,empiezaJuego,(void*)this);
 
 }
@@ -563,8 +564,6 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		delete operandos;
 		return respuesta;
 
-	}else if(res=="H"){//Para cargar plata
-
 	}else if(res=="L"){//Pedir apuesta de cierto jugador
 		L * operadorL=new L();
 		list<string>* respuestaDeOperacion=operadorL->realizarOpearacion(operandos,this->jugadores_a_dibujar);
@@ -685,6 +684,7 @@ bool Procesador::agregarJugador(Jugador* jugadorNuevo){
 }
 
 bool Procesador::quitarJugador(Jugador* jugador){
+	this->sizeJugadores--;
 	if(jugador->getNombre()==this->nombreJugadorJugando)
 		this->terminoMiTurno();
 	list<Jugador*>* lista_aux=new list<Jugador*>();
@@ -751,8 +751,12 @@ bool Procesador::agregarCarta(Carta* cartaNueva){
 void Procesador::terminoMiTurno(){
 	Jugador * jugadorEnTurno=this->jugadores->front();
 	this->jugadores->pop_front();
-	if(jugadorEnTurno->participando())
+	if(jugadorEnTurno->participando()){
 		this->jugadores->push_back(jugadorEnTurno);
+	}else{
+		this->jugadores_agregar->push_back(jugadorEnTurno);
+		this->sizeJugadores--;
+	}
 	bool seguir=true;
 	string nombreJugador;
 	while(seguir and this->jugadores->size()>0){

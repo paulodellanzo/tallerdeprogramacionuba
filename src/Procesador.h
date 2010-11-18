@@ -41,6 +41,7 @@ class Procesador {
 protected:
 	Procesador(int i);
 private:
+	int sizeJugadores;
 	static pthread_mutex_t mutex;
 	static Procesador* instanciaUnica;
 	informacionConfiguracion* infoconfig;
