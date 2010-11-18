@@ -73,6 +73,7 @@ public:
 	char * getXml(list<string> * lista,string operacion);
 	void vaciarCartas();
 	void empezarPartida();
+	bool abandonarMano();
 	virtual ~Procesador();
 };
 

@@ -266,7 +266,8 @@ void ServidorCliente::interactuarConCliente(){
 	}
 	if(this->jugador!=NULL){
 		this->procesador->quitarJugador(this->jugador);
-		delete this->jugador;
+		cout<<"Se quito el jugador: "<<this->jugador->getNombre()<<endl;
+//		delete this->jugador;
 	}
 }
 ServidorCliente::~ServidorCliente() {

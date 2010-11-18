@@ -1,0 +1,11 @@
+<pedido>
+	<operacion id="U"/>
+	<parametros>
+		<parametro nombre="usuario">
+		tatoqac
+		</parametro>
+		<parametro nombre="password">
+		gdanielf
+		</parametro>
+	</parametros>
+</pedido>

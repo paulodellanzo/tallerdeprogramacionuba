@@ -6,6 +6,31 @@ void* empiezaJuego(void* procesadorPasado){
 	return NULL;
 }
 
+bool Procesador::abandonarMano(){
+	int sizeJugadores=this->jugadores->size();
+	if(sizeJugadores==0){
+		cout<<"Quedaron cero jugadores"<<endl;
+		this->nombreJugadorJugando=" ";
+		this->bote=0;
+		this->apuestaMayorEnRonda=0;
+		this->vaciarCartas();
+		return true;
+	}else if(sizeJugadores==1){
+		cout<<"Quedo un jugador"<<endl;
+		this->nombreJugadorJugando=" ";
+		jugadores->front()->setCartas(NULL,NULL);
+		if(this->jugadores->front()->participando()){
+			this->jugadores->front()->modificarPlataEn(this->bote);
+			this->jugadores->front()->dejarDeJugar();
+		}
+		this->bote=0;
+		this->apuestaMayorEnRonda=0;
+		this->vaciarCartas();
+		return true;
+	}
+	return false;
+}
+
 void Procesador::empezarPartida(){
 	this->nombreJugadorJugando=this->jugadores->front()->getNombre();
 	cout<<"Es el turno de: "<<this->nombreJugadorJugando<<endl;
@@ -28,12 +53,23 @@ void Procesador::jugar(){
 	list<Jugador*>::iterator itJugadores;
 	while (true){
 		while(jugadores->size()>=2){
+
 			//Inicializo variables
+			itJugadores=this->jugadores->begin();
+			while(itJugadores!=jugadores->end()){
+				(*itJugadores)->setCartas(NULL,NULL);
+				itJugadores++;
+			}
+
 			Carta* cartaAuxiliar;
 			this->mazo = new Mazo();
 			bool finDeApuestas;
 			this->apuestaMayorEnRonda=0;
 			this->bote=0;
+
+			if(this->abandonarMano()){
+				break;
+			}
 
 			//Reparto dos cartas a cada jugador y empiezan a jugar
 			itJugadores=jugadores->begin();
@@ -45,26 +81,46 @@ void Procesador::jugar(){
 			}
 			this->empezarPartida();
 			cout<<"Empieza la partida"<<endl;
+
 			sleep(0.5);
+
 			//TODO Primera ronda de apuestas
 			finDeApuestas=false;
 			while(!finDeApuestas){
 				finDeApuestas=true;
+				if(this->abandonarMano()){
+					break;
+				}
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
+					if(this->abandonarMano()){
+						break;
+					}
 					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda))
-						if((*itJugadores)->participando())
+						if((*itJugadores)->participando()){
 							finDeApuestas=false;
+						}
+					if(this->abandonarMano()){
+						break;
+					}
 					itJugadores++;
 				}
 			}
 
 			this->apuestaMayorEnRonda=0;
 
+			if(this->abandonarMano()){
+				break;
+			}
+
 			itJugadores=this->jugadores->begin();
 			while(itJugadores!=jugadores->end()){
 				(*itJugadores)->setUltimaApuesta(-1);
 				itJugadores++;
+			}
+
+			if(this->abandonarMano()){
+				break;
 			}
 
 			//Agrego primeras tres cartas comunitarias
@@ -72,51 +128,91 @@ void Procesador::jugar(){
 				cartaAuxiliar=mazo->getCarta();
 				this->agregarCarta(cartaAuxiliar);
 			}
-			cout<<"Agregamos las tres primeras cartas"<<endl;
 			sleep(2);
+			cout<<"Agregamos las tres primeras cartas"<<endl;
+
+
+			if(this->abandonarMano()){
+				break;
+			}
 
 			//TODO Segunda ronda de apuestas
 			finDeApuestas=false;
 			while(!finDeApuestas){
 				finDeApuestas=true;
+				if(this->abandonarMano()){
+					break;
+				}
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
+					if(this->abandonarMano()){
+						break;
+					}
 					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda))
-						if((*itJugadores)->participando())
+						if((*itJugadores)->participando()){
 							finDeApuestas=false;
+						}
+					if(this->abandonarMano()){
+						break;
+					}
 					itJugadores++;
 				}
 			}
 
-			sleep(2);
 			this->apuestaMayorEnRonda=0;
 
+			if(this->abandonarMano()){
+				break;
+			}
 			itJugadores=this->jugadores->begin();
 			while(itJugadores!=jugadores->end()){
 				(*itJugadores)->setUltimaApuesta(-1);
 				itJugadores++;
 			}
+
+			if(this->abandonarMano()){
+				break;
+			}
+
 
 			//Agrego cuarta carta comunitaria
 			cartaAuxiliar=mazo->getCarta();
 			this->agregarCarta(cartaAuxiliar);
-			cout<<"Agregamos la cuarta carta"<<endl;
 
+
+			if(this->abandonarMano()){
+				break;
+			}
+			sleep(2);
+			cout<<"Agregamos la cuarta carta"<<endl;
 			//TODO Tercera ronda de apuestas
 			finDeApuestas=false;
 			while(!finDeApuestas){
 				finDeApuestas=true;
+				if(this->abandonarMano()){
+					break;
+				}
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
+					if(this->abandonarMano()){
+						break;
+					}
 					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda))
-						if((*itJugadores)->participando())
+						if((*itJugadores)->participando()){
 							finDeApuestas=false;
+						}
+					if(this->abandonarMano()){
+						break;
+					}
 					itJugadores++;
 				}
 			}
 
-			sleep(2);
 			this->apuestaMayorEnRonda=0;
+
+			if(this->abandonarMano()){
+				break;
+			}
 
 			itJugadores=this->jugadores->begin();
 			while(itJugadores!=jugadores->end()){
@@ -124,30 +220,56 @@ void Procesador::jugar(){
 				itJugadores++;
 			}
 
+			if(this->abandonarMano()){
+				break;
+			}
+
 			//Agrego quinta carta comunitaria
-			cout<<"Agregamos la quinta carta"<<endl;
+
 			cartaAuxiliar=mazo->getCarta();
 			this->agregarCarta(cartaAuxiliar);
 
 			//TODO Cuarta ronda de apuestas
-
+			if(this->abandonarMano()){
+				break;
+			}
+			sleep(2);
+			cout<<"Agregamos la quinta carta"<<endl;
 			finDeApuestas=false;
 			while(!finDeApuestas){
 				finDeApuestas=true;
+				if(this->abandonarMano()){
+					break;
+				}
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
+					if(this->abandonarMano()){
+						break;
+					}
 					if(!(*itJugadores)->igualoApuestaMano(this->apuestaMayorEnRonda))
-						if((*itJugadores)->participando())
+						if((*itJugadores)->participando()){
 							finDeApuestas=false;
+						}
+					if(this->abandonarMano()){
+						break;
+					}
 					itJugadores++;
 				}
 			}
 
-			sleep(2);
 			this->apuestaMayorEnRonda=0;
+
+			if(this->abandonarMano()){
+				break;
+			}
 			this->nombreJugadorJugando=" ";
 
+			sleep(2);
 			cout<<"Gano: ";
+
+			if(this->abandonarMano()){
+				break;
+			}
 
 			Jugador* jugadorGanador;
 			float puntajeGanador=0;
@@ -159,6 +281,10 @@ void Procesador::jugar(){
 			while(itCartas!=this->cartas->end()){
 				lista_aux->push_front(*(*itCartas));
 				itCartas++;
+			}
+
+			if(this->abandonarMano()){
+				break;
 			}
 
 			while(itJugadores!=jugadores->end()){
@@ -180,17 +306,27 @@ void Procesador::jugar(){
 				//Saco las cartas del jugador de la lista
 				lista_aux->pop_back();
 				lista_aux->pop_back();
+				if(this->abandonarMano()){
+					break;
+				}
+			}
+
+			if(this->abandonarMano()){
+				break;
 			}
 
 			jugadorGanador->modificarPlataEn(this->bote);
 			cout<<jugadorGanador->getNombre()<<" con puntaje: "<<puntajeGanador<<endl;
 			this->bote=0;
-			sleep(2);
 
 			//Destruyo objetos
 			this->vaciarCartas();
 			delete mazo;
 			delete lista_aux;
+
+			if(this->abandonarMano()){
+				break;
+			}
 
 			itJugadores=this->jugadores->begin();
 			while(itJugadores!=jugadores->end()){
@@ -198,15 +334,19 @@ void Procesador::jugar(){
 				itJugadores++;
 			}
 
+			if(this->abandonarMano()){
+				break;
+			}
+
 			//Paso los jugadores a agregar a la lista de jugadores
 			itJugadores=jugadores->end();
 			jugadores->splice(itJugadores,*jugadores_agregar);
-			sleep(5);
+			sleep(2);
 		}
 		//Paso los jugadores a agregar a la lista de jugadores
 		itJugadores=jugadores->end();
 		jugadores->splice(itJugadores,*jugadores_agregar);
-		sleep(5);
+		sleep(2);
 	}
 }
 
