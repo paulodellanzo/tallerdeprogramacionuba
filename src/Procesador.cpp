@@ -17,7 +17,8 @@ bool Procesador::abandonarMano(){
 	}else if(sizeJugadores==1){
 		cout<<"Quedo un jugador"<<endl;
 		this->nombreJugadorJugando=" ";
-		cout<<"Gano: "<<jugadores->front()->getNombre()<<endl;
+		this->ganador=jugadores->front()->getNombre();
+		cout<<"Gano: "<<this->ganador<<endl;
 		jugadores->front()->setCartas(NULL,NULL);
 		if(this->jugadores->front()->participando()){
 			this->jugadores->front()->modificarPlataEn(this->bote);
@@ -53,6 +54,7 @@ void Procesador::jugar(){
 	list<Jugador*>::iterator itJugadores;
 	while (true){
 		while(jugadores->size()>=2){
+			this->ganador=" ";
 			this->sizeJugadores=this->jugadores->size();
 			//Inicializo variables
 			itJugadores=this->jugadores->begin();
@@ -316,13 +318,15 @@ void Procesador::jugar(){
 			}
 
 			jugadorGanador->modificarPlataEn(this->bote);
-			cout<<jugadorGanador->getNombre()<<" con puntaje: "<<puntajeGanador<<endl;
+			this->ganador=jugadorGanador->getNombre();
+			cout<<this->ganador<<" con puntaje: "<<puntajeGanador<<endl;
 			this->bote=0;
 
 			//Destruyo objetos
 			this->vaciarCartas();
 			delete mazo;
 			delete lista_aux;
+			sleep(7);
 
 			if(this->abandonarMano()){
 				break;
@@ -338,6 +342,7 @@ void Procesador::jugar(){
 				break;
 			}
 
+			cout<<"Todo listo para comenzar una nueva partida"<<endl;
 			//Paso los jugadores a agregar a la lista de jugadores
 			itJugadores=jugadores->end();
 			jugadores->splice(itJugadores,*jugadores_agregar);
@@ -373,6 +378,7 @@ Procesador::Procesador(int i) {
 
 	this->parser=new ParserServidor();
 	this->cartas = new list<Carta*>();
+	this->ganador=" ";
 	this->jugadores = new list<Jugador*>();
 	this->jugadores_a_dibujar = new list<Jugador*>();
 	this->jugadores_agregar = new list<Jugador*>();
@@ -464,6 +470,22 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		it = respuestaDeOperacion->insert(it, "jugador");
 		it++;
 		string nombreJugador=this->nombreJugadorJugando;
+		if(nombreJugador=="") nombreJugador="/";
+		it = respuestaDeOperacion->insert(it, nombreJugador);
+		it++;
+		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		delete respuestaDeOperacion;
+		delete operandos;
+		return respuesta;
+	}else if(res=="H"){//Pedir el ganador
+		list<string>* respuestaDeOperacion = new list<string>();
+		list<string>::iterator it;
+		it = respuestaDeOperacion->begin();
+		it = respuestaDeOperacion->insert(it, "Correcto");
+		it++;
+		it = respuestaDeOperacion->insert(it, "jugador");
+		it++;
+		string nombreJugador=this->ganador;
 		if(nombreJugador=="") nombreJugador="/";
 		it = respuestaDeOperacion->insert(it, nombreJugador);
 		it++;

@@ -56,6 +56,7 @@ private:
 	long int apuestaMayorEnRonda; //sirve para cuando pasan los turnos de todos cuanto se va apostando
 	bool estaJugando;
 	Mazo * mazo;
+	string ganador;
 public:
 	void jugar();
 	static Procesador* instancia();
