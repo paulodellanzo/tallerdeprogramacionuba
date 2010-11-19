@@ -116,7 +116,7 @@ list<string>* K::realizarOpearacion(list<char*>* operandos){
 								 }
 
 	}else if(strcmp(operandos->back(),"evolucionUsuario")==0){
-			string query = "SELECT DATE_FORMAT(fechaRegistro,'%d/%m/%Y'), COUNT(DISTINCT(id)) FROM usuarios group by fechaRegistro";
+			string query = "SELECT DATE_FORMAT(fechaRegistro,'%d/%m/%Y'), COUNT(DISTINCT(id)) FROM usuarios group by DATE_FORMAT(fechaRegistro,'%d/%m/%Y')";
 									res = conexion->ejecutarQuery(query.c_str());
 									int size =(int) mysql_num_fields(res);
 									while ((row = mysql_fetch_row(res)))
