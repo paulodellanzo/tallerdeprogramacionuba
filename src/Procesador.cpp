@@ -455,6 +455,10 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 	}else if(res=="N"){//Registrarse
 			N * operadorN = new N();
 			list<string>* respuestaDeOperacion=operadorN->realizarOpearacion(operandos);
+			if(respuestaDeOperacion->front()=="Correcto"){
+				long int monto=atoi(respuestaDeOperacion->back().c_str());
+				jugador->modificarPlataEn(monto);
+			}
 			respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 			delete respuestaDeOperacion;
 			delete operandos;
@@ -749,7 +753,6 @@ bool Procesador::quitarJugador(Jugador* jugador){
 	string plata = sstream.str();
 	string query="update usuarios set plata='"+plata+"' where usuario='"+jugador->getNombre()+"'";
 	MYSQL_RES *res;
-	MYSQL_ROW row;
 	res = conexion->ejecutarQuery(query.c_str());
 	conexion->liberarConexion(res);
 	return true;
