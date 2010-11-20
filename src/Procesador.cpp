@@ -8,14 +8,12 @@ void* empiezaJuego(void* procesadorPasado){
 
 bool Procesador::abandonarMano(){
 	if(sizeJugadores==0){
-		cout<<"Quedaron cero jugadores"<<endl;
 		this->nombreJugadorJugando=" ";
 		this->bote=0;
 		this->apuestaMayorEnRonda=0;
 		this->vaciarCartas();
 		return true;
 	}else if(sizeJugadores==1){
-		cout<<"Quedo un jugador"<<endl;
 		this->nombreJugadorJugando=" ";
 		this->ganador=jugadores->front()->getNombre();
 		cout<<"Gano: "<<this->ganador<<endl;
@@ -130,7 +128,7 @@ void Procesador::jugar(){
 				cartaAuxiliar=mazo->getCarta();
 				this->agregarCarta(cartaAuxiliar);
 			}
-			sleep(2);
+			sleep(1);
 			cout<<"Agregamos las tres primeras cartas"<<endl;
 
 
@@ -185,7 +183,7 @@ void Procesador::jugar(){
 			if(this->abandonarMano()){
 				break;
 			}
-			sleep(2);
+			sleep(1);
 			cout<<"Agregamos la cuarta carta"<<endl;
 			//TODO Tercera ronda de apuestas
 			finDeApuestas=false;
@@ -235,7 +233,7 @@ void Procesador::jugar(){
 			if(this->abandonarMano()){
 				break;
 			}
-			sleep(2);
+			sleep(1);
 			cout<<"Agregamos la quinta carta"<<endl;
 			finDeApuestas=false;
 			while(!finDeApuestas){
@@ -266,7 +264,7 @@ void Procesador::jugar(){
 			}
 			this->nombreJugadorJugando=" ";
 
-			sleep(2);
+			sleep(1);
 			cout<<"Gano: ";
 
 			if(this->abandonarMano()){
@@ -476,7 +474,7 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		it = respuestaDeOperacion->insert(it, "jugador");
 		it++;
 		string nombreJugador=this->nombreJugadorJugando;
-		if(nombreJugador=="") nombreJugador="/";
+		if(nombreJugador==" ") nombreJugador="/";
 		it = respuestaDeOperacion->insert(it, nombreJugador);
 		it++;
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
