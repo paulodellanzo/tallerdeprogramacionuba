@@ -20,6 +20,7 @@ private:
 public:
 	K();
 	list<string>* realizarOpearacion(list<char*>* operandos);
+	list<string>* getRespuestaEstadistica(string query);
    ~K();
 };
 
