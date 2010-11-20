@@ -30,7 +30,7 @@ list<string>* D::realizarOperacion(list<char*>* operandos, Jugador * jugador){
 	}
 	int apuestaAux=0 - apuestaInt;
 	jugador->modificarPlataEn(apuestaAux);
-	apuestaInt+=jugador->getUltimaApuesta();
+	apuestaInt+=jugador->getUltimaApuesta() + 1;
 	jugador->setUltimaApuesta(apuestaInt);
 
 	ostringstream sstream;

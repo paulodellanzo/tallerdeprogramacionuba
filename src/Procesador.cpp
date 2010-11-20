@@ -322,11 +322,13 @@ void Procesador::jugar(){
 			cout<<this->ganador<<" con puntaje: "<<puntajeGanador<<endl;
 			this->bote=0;
 
+
 			//Destruyo objetos
-			this->vaciarCartas();
 			delete mazo;
 			delete lista_aux;
-			sleep(7);
+			sleep(5);
+
+			this->vaciarCartas();
 
 			if(this->abandonarMano()){
 				break;
@@ -346,7 +348,7 @@ void Procesador::jugar(){
 			//Paso los jugadores a agregar a la lista de jugadores
 			itJugadores=jugadores->end();
 			jugadores->splice(itJugadores,*jugadores_agregar);
-			sleep(2);
+			sleep(1);
 		}
 		//Paso los jugadores a agregar a la lista de jugadores
 		itJugadores=jugadores->end();
@@ -564,7 +566,12 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		it++;
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
-		int diferencia=(jugador->getUltimaApuesta() - this->apuestaMayorEnRonda);
+		int diferencia;
+		if(jugador->getUltimaApuesta()!=(-1)){
+			diferencia = (jugador->getUltimaApuesta() - this->apuestaMayorEnRonda);
+		}else{
+			diferencia = (0 -this->apuestaMayorEnRonda);
+		}
 		jugador->modificarPlataEn(diferencia);
 		jugador->setUltimaApuesta(this->apuestaMayorEnRonda);
 		this->bote-=diferencia;
