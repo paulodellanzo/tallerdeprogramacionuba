@@ -54,6 +54,7 @@ private:
 	string nombreJugadorJugando;
 	long int bote; //Poso que se va acumulando
 	long int apuestaMayorEnRonda; //sirve para cuando pasan los turnos de todos cuanto se va apostando
+	long int apuestaAnterior;
 	bool estaJugando;
 	Mazo * mazo;
 	string ganador;

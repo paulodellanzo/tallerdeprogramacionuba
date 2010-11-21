@@ -23,6 +23,7 @@ bool Procesador::abandonarMano(){
 			this->jugadores->front()->dejarDeJugar();
 		}
 		this->bote=0;
+		this->apuestaAnterior=0;
 		this->apuestaMayorEnRonda=0;
 		this->vaciarCartas();
 		return true;
@@ -50,6 +51,7 @@ bool Procesador::empezarPartida(char * xml){
 void Procesador::jugar(){
 
 	list<Jugador*>::iterator itJugadores;
+
 	while (true){
 		while(jugadores->size()>=2){
 			this->ganador=" ";
@@ -64,7 +66,7 @@ void Procesador::jugar(){
 			Carta* cartaAuxiliar;
 			this->mazo = new Mazo();
 			bool finDeApuestas;
-			this->apuestaMayorEnRonda=0;
+			this->apuestaMayorEnRonda=20;
 			this->bote=0;
 
 			if(this->abandonarMano()){
@@ -87,6 +89,7 @@ void Procesador::jugar(){
 			//TODO Primera ronda de apuestas
 			finDeApuestas=false;
 			while(!finDeApuestas){
+				this->apuestaAnterior=this->apuestaMayorEnRonda;
 				finDeApuestas=true;
 				if(this->abandonarMano()){
 					break;
@@ -105,6 +108,9 @@ void Procesador::jugar(){
 					}
 					itJugadores++;
 				}
+				if(this->apuestaAnterior!=this->apuestaMayorEnRonda)
+					finDeApuestas=false;
+				sleep(0.5);
 			}
 
 			this->apuestaMayorEnRonda=0;
@@ -139,6 +145,7 @@ void Procesador::jugar(){
 			//TODO Segunda ronda de apuestas
 			finDeApuestas=false;
 			while(!finDeApuestas){
+				this->apuestaAnterior=this->apuestaMayorEnRonda;
 				finDeApuestas=true;
 				if(this->abandonarMano()){
 					break;
@@ -157,6 +164,9 @@ void Procesador::jugar(){
 					}
 					itJugadores++;
 				}
+				if(this->apuestaAnterior!=this->apuestaMayorEnRonda)
+					finDeApuestas=false;
+				sleep(0.5);
 			}
 
 			this->apuestaMayorEnRonda=0;
@@ -188,6 +198,7 @@ void Procesador::jugar(){
 			//TODO Tercera ronda de apuestas
 			finDeApuestas=false;
 			while(!finDeApuestas){
+				this->apuestaAnterior=this->apuestaMayorEnRonda;
 				finDeApuestas=true;
 				if(this->abandonarMano()){
 					break;
@@ -206,6 +217,9 @@ void Procesador::jugar(){
 					}
 					itJugadores++;
 				}
+				if(this->apuestaAnterior!=this->apuestaMayorEnRonda)
+					finDeApuestas=false;
+				sleep(0.5);
 			}
 
 			this->apuestaMayorEnRonda=0;
@@ -237,6 +251,7 @@ void Procesador::jugar(){
 			cout<<"Agregamos la quinta carta"<<endl;
 			finDeApuestas=false;
 			while(!finDeApuestas){
+				this->apuestaAnterior=this->apuestaMayorEnRonda;
 				finDeApuestas=true;
 				if(this->abandonarMano()){
 					break;
@@ -255,6 +270,9 @@ void Procesador::jugar(){
 					}
 					itJugadores++;
 				}
+				if(this->apuestaAnterior!=this->apuestaMayorEnRonda)
+					finDeApuestas=false;
+				sleep(0.5);
 			}
 
 			this->apuestaMayorEnRonda=0;
@@ -384,6 +402,7 @@ Procesador::Procesador(int i) {
 	this->jugadores_agregar = new list<Jugador*>();
 	this->bote = 0;
 	this->apuestaMayorEnRonda = 0;
+	this->apuestaAnterior=0;
 	delete parserAux;
 	this->estaJugando=false;
 	this->sizeJugadores=0;
