@@ -10,17 +10,22 @@ using namespace std;
 #include <list>
 #include "Conexion.h"
 #include <stdio.h>
+using namespace std;
+#include <iostream>
+#include <fstream>
 
 #ifndef K_H_
 #define K_H_
 
 class K {
 private:
-
+	ofstream* archivoEstadistica;
 public:
 	K();
-	list<string>* realizarOpearacion(list<char*>* operandos);
+	list<string>* realizarOpearacion(list<char*>* operandos, ofstream* archivo);
 	list<string>* getRespuestaEstadistica(string query);
+	void escribirArchivoEstadisticas(string titulo,string op, list<string>* respuesta);
+	list<string>* getTituloEstadistica(string op);
    ~K();
 };
 
