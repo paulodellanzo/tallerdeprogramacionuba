@@ -12,7 +12,16 @@ void* cortarConexion(void* seguir){
 	exit(0);
 }
 
-int main(){
+int main(int argc,char* argv[]){
+	char ip[255];
+	int puerto;
+	if(argc!=3){
+		cout<<"Cantidad de parámetros incorrecta"<<endl;
+		return 1;
+	}
+	strcpy(ip,argv[1]);
+	puerto=atoi(argv[2]);
+
 	void *seguir;
 	Servidor* servidor=new Servidor();
 	seguir=(void*)servidor;
