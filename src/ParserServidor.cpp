@@ -438,13 +438,15 @@ char* ParserServidor::armarXmlDeResultado(list<string>* base, string idOperacion
 string ParserServidor::getNombreJugador(char xml[]){
 	string jugador;
 	char* buffer=strtok(xml,"<>");
-	buffer=strtok(NULL,"\n<>");
-	buffer=strtok(NULL,"\n<>");
-	buffer=strtok(NULL,"\n<>");
-	buffer=strtok(NULL,"\n<>");
-	buffer=strtok(NULL,"\n<>");
-	buffer=strtok(NULL,"\n<>");
-	buffer=strtok(NULL,"\n \t <");
+	int iteracion = 0;
+	while(buffer != NULL and iteracion != 6){
+		buffer=strtok(NULL,"\n<>");
+		iteracion++;
+	}
+	if(buffer!=NULL)
+		buffer=strtok(NULL,"\n \t <");
+	else
+		return "";
 	ostringstream sstream;
 	sstream << buffer;
 	jugador = sstream.str();

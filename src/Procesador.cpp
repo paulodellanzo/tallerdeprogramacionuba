@@ -40,11 +40,17 @@ bool Procesador::empezarPartida(char * xml){
 	ostringstream sstream;
 	sstream << xml;
 	string paraVerCuantoPesa = sstream.str();
-	char xmlAux[paraVerCuantoPesa.size()];
+//	cout << paraVerCuantoPesa.size() + " ";
+	char* xmlAux=new char[paraVerCuantoPesa.size() + 1];
+	memset((void*)xmlAux,'\0',paraVerCuantoPesa.size() + 1);
 	for(unsigned int i=0;i<paraVerCuantoPesa.size();i++){xmlAux[i]=xml[i];}
+	xmlAux[paraVerCuantoPesa.size()]='\0';
+//	char xmlAux[paraVerCuantoPesa.size()];
+//	for(unsigned int i=0;i<paraVerCuantoPesa.size();i++){xmlAux[i]=xml[i];}
 	string idOperacionString= this->parser->getOperacionId(xmlAux);
 	idOperacionString=toupper(idOperacionString[0]);
 	char idOperacionChar=idOperacionString[0];
+	delete xmlAux;
 	return idOperacionChar=='M';
 
 }
@@ -420,14 +426,26 @@ Procesador::Procesador(int i) {
 
 char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 	/* Operaciones Usadas:
-	 * A - B - C - D - E - F - G - H - I - J - K - L - M - N - P - R - U - Z
+	 * A - B - C - D - E - F - G - H - I - J - K - L - M - N - P - R - U - Y - Z
 	 * */
+	if(xml==NULL)
+		cout << "WTF";
+//	cout << xml;
 	ostringstream sstream;
 	sstream << xml;
 	string paraVerCuantoPesa = sstream.str();
-	char xmlAux[paraVerCuantoPesa.size()];
-	char xmlAux2[paraVerCuantoPesa.size()];
+//	char xmlAux[paraVerCuantoPesa.size()];
+//	char xmlAux2[paraVerCuantoPesa.size()];
+
+	char* xmlAux=new char[paraVerCuantoPesa.size() + 1];
+	memset((void*)xmlAux,'\0',paraVerCuantoPesa.size() + 1);
+	char* xmlAux2=new char[paraVerCuantoPesa.size() + 1];
+	memset((void*)xmlAux2,'\0',paraVerCuantoPesa.size() + 1);
 	for(unsigned int i=0;i<paraVerCuantoPesa.size();i++){xmlAux[i]=xml[i];xmlAux2[i]=xml[i];}
+	xmlAux[paraVerCuantoPesa.size()]='\0';
+	xmlAux2[paraVerCuantoPesa.size()]='\0';
+
+//	for(unsigned int i=0;i<paraVerCuantoPesa.size();i++){xmlAux[i]=xml[i];xmlAux2[i]=xml[i];}
 	string idOperacionString= this->parser->getOperacionId(xmlAux);
 	char* respuesta=" ";
 	string res;
@@ -688,6 +706,8 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		delete operandos;
 		return respuesta;
 	}
+	delete xmlAux;
+	delete xmlAux2;
 	return"";
 
 }
@@ -711,11 +731,18 @@ bool Procesador::enviarArchivo(char * xml){
 	ostringstream sstream;
 	sstream << xml;
 	string paraVerCuantoPesa = sstream.str();
-	char xmlAux[paraVerCuantoPesa.size()];
+
+	char* xmlAux=new char[paraVerCuantoPesa.size() + 1];
+	memset((void*)xmlAux,'\0',paraVerCuantoPesa.size() + 1);
 	for(unsigned int i=0;i<paraVerCuantoPesa.size();i++){xmlAux[i]=xml[i];}
+	xmlAux[paraVerCuantoPesa.size()]='\0';
+
+//	char xmlAux[paraVerCuantoPesa.size()];
+//	for(unsigned int i=0;i<paraVerCuantoPesa.size();i++){xmlAux[i]=xml[i];}
 	string idOperacionString= this->parser->getOperacionId(xmlAux);
 	idOperacionString=toupper(idOperacionString[0]);
 	char idOperacionChar=idOperacionString[0];
+	delete xmlAux;
 	switch(idOperacionChar){
 
 		case('E'):{this->path=this->infoconfig->pathEscenario;return true;}
@@ -728,11 +755,18 @@ bool Procesador::recibirArchivo(char * xml){
 	ostringstream sstream;
 	sstream << xml;
 	string paraVerCuantoPesa = sstream.str();
-	char xmlAux[paraVerCuantoPesa.size()];
+
+	char* xmlAux=new char[paraVerCuantoPesa.size() + 1];
+	memset((void*)xmlAux,'\0',paraVerCuantoPesa.size() + 1);
 	for(unsigned int i=0;i<paraVerCuantoPesa.size();i++){xmlAux[i]=xml[i];}
+	xmlAux[paraVerCuantoPesa.size()]='\0';
+
+//	char xmlAux[paraVerCuantoPesa.size()];
+//	for(unsigned int i=0;i<paraVerCuantoPesa.size();i++){xmlAux[i]=xml[i];}
 	string idOperacionString= this->parser->getOperacionId(xmlAux);
 	idOperacionString=toupper(idOperacionString[0]);
 	char idOperacionChar=idOperacionString[0];
+	delete xmlAux;
 	switch(idOperacionChar){
 		case('Z'):{this->path=this->parser->getNombreJugador(xml) + ".bmp"; return true;}//Recibe la imagen del jugador
 	}
@@ -741,7 +775,7 @@ bool Procesador::recibirArchivo(char * xml){
 
 char* Procesador::getXml(list<string> *lista,string operacion){
 	char* data =this->parser->getXml(lista,operacion);
-	delete lista;
+//	delete lista;
 	return data;
 }
 
@@ -751,14 +785,25 @@ list<string>* Procesador::seConectoJugador(char* xml){
 	ostringstream sstream;
 	sstream << xml;
 	string paraVerCuantoPesa = sstream.str();
-	char xmlAux[paraVerCuantoPesa.size()];
-	char xmlAux2[paraVerCuantoPesa.size()];
+
+	char* xmlAux=new char[paraVerCuantoPesa.size() + 1];
+	memset((void*)xmlAux,'\0',paraVerCuantoPesa.size() + 1);
+	char* xmlAux2=new char[paraVerCuantoPesa.size() + 1];
+	memset((void*)xmlAux2,'\0',paraVerCuantoPesa.size() + 1);
 	for(unsigned int i=0;i<paraVerCuantoPesa.size();i++){xmlAux[i]=xml[i];xmlAux2[i]=xml[i];}
+	xmlAux[paraVerCuantoPesa.size()]='\0';
+	xmlAux2[paraVerCuantoPesa.size()]='\0';
+
+//	char xmlAux[paraVerCuantoPesa.size()];
+//	char xmlAux2[paraVerCuantoPesa.size()];
+//	for(unsigned int i=0;i<paraVerCuantoPesa.size();i++){xmlAux[i]=xml[i];xmlAux2[i]=xml[i];}
 	string idOperacionString= this->parser->getOperacionId(xmlAux);
 	idOperacionString=toupper(idOperacionString[0]);
 	char idOperacionChar=idOperacionString[0];
+	delete xmlAux;
 	U* operadorU=new U();
 	list<char*>* operandos=this->parser->getOperandos(xmlAux2);
+	delete xmlAux2;
 	if(idOperacionChar=='U'){
 		list<string> * lista=operadorU->realizarOpearacion(operandos);
 		delete operadorU;
