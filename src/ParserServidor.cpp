@@ -2,6 +2,9 @@
 using namespace std;
 
 ParserServidor::ParserServidor() {
+	this->tieneArchivo=false;
+	this->tieneArchivoErrores=false;
+	this->seCreoPath=false;
 	// TODO Auto-generated constructor stub
 }
 

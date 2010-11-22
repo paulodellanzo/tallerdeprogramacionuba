@@ -84,7 +84,7 @@ void Procesador::jugar(){
 			this->empezarPartida();
 			cout<<"Empieza la partida"<<endl;
 
-			sleep(0.5);
+			sleep(1);
 
 			//TODO Primera ronda de apuestas
 			finDeApuestas=false;
@@ -342,7 +342,7 @@ void Procesador::jugar(){
 			//Destruyo objetos
 			delete mazo;
 			delete lista_aux;
-			sleep(5);
+			sleep(4);
 
 			this->vaciarCartas();
 
@@ -364,11 +364,13 @@ void Procesador::jugar(){
 			//Paso los jugadores a agregar a la lista de jugadores
 			itJugadores=jugadores->end();
 			jugadores->splice(itJugadores,*jugadores_agregar);
+			this->ganador=" ";
 			sleep(1);
 		}
 		//Paso los jugadores a agregar a la lista de jugadores
 		itJugadores=jugadores->end();
 		jugadores->splice(itJugadores,*jugadores_agregar);
+		this->ganador=" ";
 		sleep(2);
 	}
 }
@@ -423,10 +425,12 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 	string idOperacionString= this->parser->getOperacionId(xmlAux);
 	char* respuesta=" ";
 	string res;
-	list<char*>* operandos=this->parser->getOperandos(xmlAux2);
+//	list<char*>* operandos=this->parser->getOperandos(xmlAux2);
 	res=toupper(idOperacionString[0]);
 
 	if(res=="P"){//poso
+		ParserServidor *parser=new ParserServidor();
+		list<char*>* operandos=parser->getOperandos(xmlAux2);
 		ostringstream sstream;
 		sstream << this->bote;
 		string boteString = sstream.str();
@@ -439,53 +443,68 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		it++;
 		it = respuestaDeOperacion->insert(it, boteString);
 		it++;
-		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		respuesta=parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
+		delete parser;
 		return respuesta;
 
 	}else if(res=="J"){//los jugadores que estan en la mesa
 		J* operadorJ= new J();
+		ParserServidor *parser=new ParserServidor();
+		list<char*>* operandos=parser->getOperandos(xmlAux2);
 		list<string>* respuestaDeOperacion = operadorJ->realizarOperacion(this->jugadores_a_dibujar);
-		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		respuesta=parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
 		delete operadorJ;
+		delete parser;
 		return respuesta;
 
 	}else if(res=="C"){//Cartas de la mesa
 		C* operadorC=new C();
+		ParserServidor *parser=new ParserServidor();
+		list<char*>* operandos=parser->getOperandos(xmlAux2);
 		list<string>* respuestaDeOperacion = operadorC->realizarOperacion(this->cartas);
-		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		respuesta=parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
 		delete operadorC;
+		delete parser;
 		return respuesta;
 
 	}else if(res=="R"){//Registrarse
 		R * operadorR = new R();
+		ParserServidor *parser=new ParserServidor();
+		list<char*>* operandos=parser->getOperandos(xmlAux2);
 		list<string>* respuestaDeOperacion=operadorR->realizarOpearacion(operandos);
-		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		respuesta=parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
 		delete operadorR;
+		delete parser;
 		return respuesta;
 
 	}else if(res=="N"){//Registrarse
 			N * operadorN = new N();
+			ParserServidor* parser=new ParserServidor();
+			list<char*>* operandos=parser->getOperandos(xmlAux2);
 			list<string>* respuestaDeOperacion=operadorN->realizarOpearacion(operandos);
 			if(respuestaDeOperacion->front()=="Correcto"){
 				long int monto=atoi(respuestaDeOperacion->back().c_str());
 				jugador->modificarPlataEn(monto);
 			}
-			respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+			respuesta=parser->getXml(respuestaDeOperacion,idOperacionString);
 			delete respuestaDeOperacion;
 			delete operandos;
 			delete operadorN;
+			delete parser;
 			return respuesta;
 
 	}else if(res=="A"){//de quien es el turno
 		list<string>* respuestaDeOperacion = new list<string>();
+		ParserServidor *parser=new ParserServidor();
+		list<char*>* operandos=parser->getOperandos(xmlAux2);
 		list<string>::iterator it;
 		it = respuestaDeOperacion->begin();
 		it = respuestaDeOperacion->insert(it, "Correcto");
@@ -496,13 +515,16 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		if(nombreJugador=="") nombreJugador="/";
 		it = respuestaDeOperacion->insert(it, nombreJugador);
 		it++;
-		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		respuesta=parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
+		delete parser;
 		return respuesta;
 	}else if(res=="H"){//Pedir el ganador
 		list<string>* respuestaDeOperacion = new list<string>();
 		list<string>::iterator it;
+		ParserServidor *parser=new ParserServidor();
+		list<char*>* operandos=parser->getOperandos(xmlAux2);
 		it = respuestaDeOperacion->begin();
 		it = respuestaDeOperacion->insert(it, "Correcto");
 		it++;
@@ -512,29 +534,38 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		if(nombreJugador=="") nombreJugador="/";
 		it = respuestaDeOperacion->insert(it, nombreJugador);
 		it++;
-		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		respuesta=parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
+		delete parser;
 		return respuesta;
 	}else if(res=="B"){//Pedir las cartas de un jugador
 		B * operadorB=new B();
+		ParserServidor *parser=new ParserServidor();
+		list<char*>* operandos=parser->getOperandos(xmlAux2);
 		list<string>* respuestaDeOperacion=operadorB->realizarOpearacion(operandos,this->jugadores_a_dibujar);
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
 		delete operadorB;
+		delete parser;
 		return respuesta;
 	}else if(res=="K"){//ranking de usuarios
 		K * operadorK=new K();
+		ParserServidor *parser=new ParserServidor();
+		list<char*>* operandos=parser->getOperandos(xmlAux2);
 		list<string>* respuestaDeOperacion=operadorK->realizarOpearacion(operandos);
-		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		respuesta=parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
 		delete operadorK;
+		delete parser;
 		return respuesta;
 	}else if(res=="D"){//Apuesta
 		cout<<"Aposto jugador: "<<jugador->getNombre()<<endl;
 		D* operadorD=new D();
+		ParserServidor *parser=new ParserServidor();
+		list<char*>* operandos=parser->getOperandos(xmlAux2);
 		list<string> * respuestaDeOperacion=operadorD->realizarOperacion(operandos,jugador);
 		string aux=respuestaDeOperacion->front();
 		if(aux=="Correcto"){
@@ -546,14 +577,17 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 				this->apuestaMayorEnRonda=apuesta;
 			}
 		}
-		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		respuesta=parser->getXml(respuestaDeOperacion,idOperacionString);
 		this->terminoMiTurno();
 		delete respuestaDeOperacion;
 		delete operandos;
 		delete operadorD;
+		delete parser;
 		return respuesta;
 	}else if(res=="F"){//Pasar
 		cout<<"Pasa : ";
+		ParserServidor* parser=new ParserServidor();
+		list<char*>* operandos=parser->getOperandos(xmlAux2);
 		list<string>* respuestaDeOperacion = new list<string>();
 		list<string>::iterator it;
 		it = respuestaDeOperacion->begin();
@@ -563,15 +597,18 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		it++;
 		it = respuestaDeOperacion->insert(it, "0");
 		it++;
-		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
+		respuesta=parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		jugador->setUltimaApuesta(this->apuestaMayorEnRonda);
 		cout<<jugador->getNombre()<<endl;
 		this->terminoMiTurno();
+		delete parser;
 		return respuesta;
 
 	}else if(res=="Y"){//Igualar
 		cout<<"Iguala : ";
+		ParserServidor *parser=new ParserServidor();
+		list<char*>* operandos=parser->getOperandos(xmlAux2);
 		list<string>* respuestaDeOperacion = new list<string>();
 		list<string>::iterator it;
 		it = respuestaDeOperacion->begin();
@@ -583,6 +620,7 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		it++;
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
+		delete parser;
 		int diferencia;
 		if(jugador->getUltimaApuesta()!=(-1)){
 			diferencia = (jugador->getUltimaApuesta() - this->apuestaMayorEnRonda);
@@ -599,6 +637,8 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 	}else if(res=="G"){//La maxima apuesta en esa mano
 		ostringstream sstream;
 		sstream << this->apuestaMayorEnRonda;
+		ParserServidor *parser=new ParserServidor();
+		list<char*>* operandos=parser->getOperandos(xmlAux2);
 		string apuestaString = sstream.str();
 		list<string>* respuestaDeOperacion = new list<string>();
 		list<string>::iterator it;
@@ -612,26 +652,33 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
+		delete parser;
 		return respuesta;
 
 	}else if(res=="L"){//Pedir apuesta de cierto jugador
 		L * operadorL=new L();
+		ParserServidor *parser=new ParserServidor();
+		list<char*>* operandos=parser->getOperandos(xmlAux2);
 		list<string>* respuestaDeOperacion=operadorL->realizarOpearacion(operandos,this->jugadores_a_dibujar);
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
 		delete operadorL;
+		delete parser;
 		return respuesta;
 	}else{
 		list<string>* conError=new list<string>();
+		ParserServidor* parser=new ParserServidor();
+		list<char*>* operandos=parser->getOperandos(xmlAux2);
 		list<string>::iterator it=conError->begin();
 		it=conError->insert(it,"Error");
 		it++;
 		it=conError->insert(it,"V");
 		it++;
 		it=conError->insert(it,"Mal id de operacion");
-		respuesta=this->parser->getXml(conError,"");
+		respuesta=parser->getXml(conError,"");
 		delete conError;
+		delete parser;
 		delete operandos;
 		return respuesta;
 	}

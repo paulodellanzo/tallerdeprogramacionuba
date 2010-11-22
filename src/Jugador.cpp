@@ -4,12 +4,14 @@ Jugador::Jugador() {
 	this->carta1=NULL;
 	this->carta2=NULL;
 	this->ultimaApuesta=0;
+	this->jugando_en_partida=false;
 }
 
 Jugador::Jugador(string nombre,string password){
 	this->nombre=nombre;
 	this->password=password;
 	this->ultimaApuesta=0;
+	this->jugando_en_partida=false;
 	//hay que hacer que lo levante de la base da datos
 	Conexion* conexion = Conexion::instancia();
 	MYSQL_RES *res;
