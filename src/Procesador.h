@@ -58,6 +58,8 @@ private:
 	bool estaJugando;
 	Mazo * mazo;
 	string ganador;
+	ofstream* archivoEstadistica;
+	bool tieneArchivoEstadistica;
 public:
 	void jugar();
 	static Procesador* instancia();

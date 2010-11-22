@@ -408,6 +408,12 @@ Procesador::Procesador(int i) {
 	delete parserAux;
 	this->estaJugando=false;
 	this->sizeJugadores=0;
+	this->archivoEstadistica = new ofstream("estadistica.txt", ios::out | ios::app);
+		if(this->archivoEstadistica->good()){
+				tieneArchivoEstadistica=true;
+		} else {
+			tieneArchivoEstadistica=false;
+		}
 	pthread_create(&hilo,NULL,empiezaJuego,(void*)this);
 
 }
@@ -554,7 +560,7 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		K * operadorK=new K();
 		ParserServidor *parser=new ParserServidor();
 		list<char*>* operandos=parser->getOperandos(xmlAux2);
-		list<string>* respuestaDeOperacion=operadorK->realizarOpearacion(operandos);
+		list<string>* respuestaDeOperacion=operadorK->realizarOpearacion(operandos,this->archivoEstadistica);
 		respuesta=parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
