@@ -23,7 +23,7 @@ int main(int argc,char* argv[]){
 	puerto=atoi(argv[2]);
 
 	void *seguir;
-	Servidor* servidor=new Servidor();
+	Servidor* servidor=new Servidor(ip,puerto);
 	seguir=(void*)servidor;
 	servidor->escuchar();
 	pthread_t thread;
