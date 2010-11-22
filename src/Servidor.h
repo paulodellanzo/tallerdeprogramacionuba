@@ -41,7 +41,7 @@ private:
 	sockaddr_in estructurDeDirecciones,clienteAdress;
 	pthread_mutex_t mutex;
 public:
-	Servidor();
+	Servidor(char*ip,int puerto);
 	void escuchar();
 	void aceptar();
 	virtual ~Servidor();

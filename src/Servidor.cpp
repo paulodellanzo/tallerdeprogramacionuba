@@ -14,7 +14,7 @@ void* interactuar(void* structThreads){
 	return arg;
 }
 
-Servidor::Servidor() {
+Servidor::Servidor(char*ip,int puerto) {
 	//creamos el socket
 	this->descriptorSocket=socket(AF_INET,SOCK_STREAM,0);
 	if(this->descriptorSocket==-1){
@@ -24,8 +24,8 @@ Servidor::Servidor() {
 
 	//para llamar al bind()
 	this->estructurDeDirecciones.sin_family=AF_INET;//para lo de family QUE SEA LOCAL
-	this->estructurDeDirecciones.sin_port=htons(PORT);
-	this->estructurDeDirecciones.sin_addr.s_addr=inet_addr("127.0.0.1");//INADDR_ANY coloca nuestra direccion IP automaticamente
+	this->estructurDeDirecciones.sin_port=htons(puerto);
+	this->estructurDeDirecciones.sin_addr.s_addr=inet_addr(ip);//INADDR_ANY coloca nuestra direccion IP automaticamente
 
 	for(int i=0;i<8;i++){
 			this->estructurDeDirecciones.sin_zero[i]=0;}
