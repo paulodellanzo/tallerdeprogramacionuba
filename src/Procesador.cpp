@@ -15,6 +15,7 @@ bool Procesador::abandonarMano(){
 		return true;
 	}else if(sizeJugadores==1){
 		this->nombreJugadorJugando=" ";
+		sem_wait(this->semaphoro);
 		this->ganador=jugadores->front()->getNombre();
 		cout<<"Gano: "<<this->ganador<<endl;
 		jugadores->front()->setCartas(NULL,NULL);
@@ -22,6 +23,7 @@ bool Procesador::abandonarMano(){
 			this->jugadores->front()->modificarPlataEn(this->bote);
 			this->jugadores->front()->dejarDeJugar();
 		}
+		sem_post(this->semaphoro);
 		this->bote=0;
 		this->apuestaAnterior=0;
 		this->apuestaMayorEnRonda=0;
@@ -61,6 +63,8 @@ void Procesador::jugar(){
 	while (true){
 		while(jugadores->size()>=2){
 			this->ganador=" ";
+
+			sem_wait(this->semaphoro);
 			this->sizeJugadores=this->jugadores->size();
 			//Inicializo variables
 			itJugadores=this->jugadores->begin();
@@ -68,6 +72,7 @@ void Procesador::jugar(){
 				(*itJugadores)->setCartas(NULL,NULL);
 				itJugadores++;
 			}
+			sem_post(this->semaphoro);
 
 			Carta* cartaAuxiliar;
 			this->mazo = new Mazo();
@@ -80,6 +85,7 @@ void Procesador::jugar(){
 			}
 
 			//Reparto dos cartas a cada jugador y empiezan a jugar
+			sem_wait(this->semaphoro);
 			itJugadores=jugadores->begin();
 			while(itJugadores!=jugadores->end()){
 				(*itJugadores)->setCartas(mazo->getCarta(),mazo->getCarta());
@@ -87,6 +93,7 @@ void Procesador::jugar(){
 				(*itJugadores)->setUltimaApuesta(-1);
 				itJugadores++;
 			}
+			sem_post(this->semaphoro);
 			this->empezarPartida();
 			cout<<"Empieza la partida"<<endl;
 
@@ -127,12 +134,14 @@ void Procesador::jugar(){
 				break;
 			}
 
+			sem_wait(this->semaphoro);
 			itJugadores=this->jugadores->begin();
 			while(itJugadores!=jugadores->end()){
 				(*itJugadores)->setUltimaApuesta(-1);
 				itJugadores++;
 			}
 
+			sem_post(this->semaphoro);
 			if(this->abandonarMano()){
 				break;
 			}
@@ -184,11 +193,13 @@ void Procesador::jugar(){
 			if(this->abandonarMano()){
 				break;
 			}
+			sem_wait(this->semaphoro);
 			itJugadores=this->jugadores->begin();
 			while(itJugadores!=jugadores->end()){
 				(*itJugadores)->setUltimaApuesta(-1);
 				itJugadores++;
 			}
+			sem_post(this->semaphoro);
 
 			if(this->abandonarMano()){
 				break;
@@ -240,12 +251,13 @@ void Procesador::jugar(){
 				break;
 			}
 
+			sem_wait(this->semaphoro);
 			itJugadores=this->jugadores->begin();
 			while(itJugadores!=jugadores->end()){
 				(*itJugadores)->setUltimaApuesta(-1);
 				itJugadores++;
 			}
-
+			sem_post(this->semaphoro);
 			if(this->abandonarMano()){
 				break;
 			}
@@ -369,12 +381,13 @@ void Procesador::jugar(){
 				break;
 			}
 
+			sem_wait(this->semaphoro);
 			itJugadores=this->jugadores->begin();
 			while(itJugadores!=jugadores->end()){
 				(*itJugadores)->setCartas(NULL,NULL);
 				itJugadores++;
 			}
-
+			sem_post(this->semaphoro);
 			if(this->abandonarMano()){
 				break;
 			}
@@ -387,10 +400,17 @@ void Procesador::jugar(){
 			sleep(1);
 		}
 		//Paso los jugadores a agregar a la lista de jugadores
+		sem_wait(this->semaphoro);
 		itJugadores=jugadores->end();
 		jugadores->splice(itJugadores,*jugadores_agregar);
+		sem_post(this->semaphoro);
 		this->ganador=" ";
-		sleep(2);
+		sleep(3);
+		sem_wait(this->semaphoro);
+		if(!this->jugadores_agregar->empty()){
+			jugadores->splice(itJugadores,*jugadores_agregar);
+		}
+		sem_post(this->semaphoro);
 	}
 }
 
@@ -860,10 +880,11 @@ bool Procesador::agregarJugador(Jugador* jugadorNuevo){
 }
 
 bool Procesador::quitarJugador(Jugador* jugador){
-	sem_wait(this->semaphoro);
+
 	this->sizeJugadores--;
 	if(jugador->getNombre()==this->nombreJugadorJugando)
 		this->terminoMiTurno();
+	sem_wait(this->semaphoro);
 	list<Jugador*>* lista_aux=new list<Jugador*>();
 	while(this->jugadores_a_dibujar->size()>0){
 		Jugador* juga=this->jugadores_a_dibujar->back();
