@@ -349,22 +349,51 @@ informacionConexion* ParserServidor::getInformacionConexion(){
 
 
 list<char*>* ParserServidor::getOperandos(char xml[]){
-//	COmo sabe que esta bien busca los operandos directamente acordarse la estructura de la lista
 	list<char*>* aEnviar=new list<char*>();
 	list<char*>::iterator it=aEnviar->begin();
-	char* buff=strtok(xml," <>=");
-	while(strcmp(buff,"/parametros")){
-		if(strcmp(buff,"nombre")==0){
-			buff=strtok(NULL,"\n\t=\"");
-			it=aEnviar->insert(it,buff);
-			it++;
-			buff=strtok(NULL,"<> \t\n");
-			it=aEnviar->insert(it,buff);
-			it++;
-		}else{
-			buff=strtok(NULL," <>=");
+	ostringstream sstream;
+	sstream << xml;
+	string xmlAux;
+	xmlAux = sstream.str();
+	cout << "xml " << xmlAux << endl;
+	size_t found;
+	size_t found1;
+	size_t found2;
+	size_t found3;
+	string valor;
+	cout << "holaaaa" << endl;
+	found = xmlAux.find("nombre=");
+	while (found < xmlAux.size()) {
+		found1 = xmlAux.find_first_of(">", found);
+		valor = xmlAux.substr(found + 8, found1 - found - 9);
+		found2 = xmlAux.find_first_of("<", found1);
+		char * aux= new char[valor.size()+1];
+		memset((void*)aux,'\0',valor.size() + 1);
+		for (int i=0;i<valor.size();i++)
+			aux[i]=valor[i];
+		aux[valor.size()]='\0';
+		it = aEnviar->insert(it, aux);
+		cout << "valor " << valor << endl;
+		it++;
+		valor = xmlAux.substr(found1 + 1, found2 - found1 - 1);
+		found3 = valor.find_first_of("\n\t");
+		string toma;
+		while (found3 != valor.size()) {
+			if (valor[found3] != '\n' and valor[found3] != '\t')
+				toma += valor[found3];
+			found3++;
 		}
+		char * aux2= new char[toma.size()+1];
+		memset((void*)aux2,'\0',toma.size() + 1);
+		for (int i=0;i<toma.size();i++)
+			aux2[i]=toma[i];
+		aux2[toma.size()]='\0';
+		it = aEnviar->insert(it, aux2);
+		cout << "toma "<< toma << endl;
+		it++;
+		found = xmlAux.find("nombre=", found2);
 	}
+	cout << "holaaaa" << endl;
 	return aEnviar;
 }
 
