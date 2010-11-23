@@ -355,13 +355,13 @@ list<char*>* ParserServidor::getOperandos(char xml[]){
 	sstream << xml;
 	string xmlAux;
 	xmlAux = sstream.str();
-	cout << "xml " << xmlAux << endl;
+//	cout << "xml " << xmlAux << endl;
 	size_t found;
 	size_t found1;
 	size_t found2;
 	size_t found3;
 	string valor;
-	cout << "holaaaa" << endl;
+//	cout << "holaaaa" << endl;
 	found = xmlAux.find("nombre=");
 	while (found < xmlAux.size()) {
 		found1 = xmlAux.find_first_of(">", found);
@@ -373,7 +373,7 @@ list<char*>* ParserServidor::getOperandos(char xml[]){
 			aux[i]=valor[i];
 		aux[valor.size()]='\0';
 		it = aEnviar->insert(it, aux);
-		cout << "valor " << valor << endl;
+//		cout << "valor " << valor << endl;
 		it++;
 		valor = xmlAux.substr(found1 + 1, found2 - found1 - 1);
 		found3 = valor.find_first_of("\n\t");
@@ -389,11 +389,11 @@ list<char*>* ParserServidor::getOperandos(char xml[]){
 			aux2[i]=toma[i];
 		aux2[toma.size()]='\0';
 		it = aEnviar->insert(it, aux2);
-		cout << "toma "<< toma << endl;
+//		cout << "toma "<< toma << endl;
 		it++;
 		found = xmlAux.find("nombre=", found2);
 	}
-	cout << "holaaaa" << endl;
+//	cout << "holaaaa" << endl;
 	return aEnviar;
 }
 
@@ -460,20 +460,23 @@ char* ParserServidor::armarXmlDeResultado(list<string>* base, string idOperacion
 }
 
 string ParserServidor::getNombreJugador(char xml[]){
-	string jugador;
-	char* buffer=strtok(xml,"<>");
-	int iteracion = 0;
-	while(buffer != NULL and iteracion != 6){
-		buffer=strtok(NULL,"\n<>");
-		iteracion++;
-	}
-	if(buffer!=NULL)
-		buffer=strtok(NULL,"\n \t <");
-	else
-		return "";
-	ostringstream sstream;
-	sstream << buffer;
-	jugador = sstream.str();
+	ostringstream sstream; 	
+	sstream << xml; 	
+	string xmlAux; 	
+	xmlAux = sstream.str(); 	
+	size_t found; 	
+	found = xmlAux.find("jugador\">"); 	
+	size_t found2; 	
+	found2 = xmlAux.find_first_of("<",found); 	
+	string valor; 	
+	valor = xmlAux.substr(found+9,found2-found-9); 	
+	size_t found3; 	
+	found3 = valor.find_first_of("\n\t"); 
+	string jugador; 	
+	while (found3 != valor.size()) { 		
+		if (valor[found3] != '\n' and valor[found3] != '\t') 				jugador += valor[found3]; 		
+		found3++; 	
+	} 
 	return jugador;
 }
 

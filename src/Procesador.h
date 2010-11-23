@@ -36,12 +36,14 @@ using namespace std;
 #include "Carta.h"
 #include "Jugador.h"
 #include "Conexion.h"
+#include "semaphore.h"
 
 class Procesador {
 protected:
 	Procesador(int i);
 private:
 	int sizeJugadores;
+	sem_t * semaphoro;
 	static pthread_mutex_t mutex;
 	static Procesador* instanciaUnica;
 	informacionConfiguracion* infoconfig;

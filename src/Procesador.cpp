@@ -100,6 +100,7 @@ void Procesador::jugar(){
 				if(this->abandonarMano()){
 					break;
 				}
+				sem_wait(this->semaphoro);
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
 					if(this->abandonarMano()){
@@ -114,6 +115,7 @@ void Procesador::jugar(){
 					}
 					itJugadores++;
 				}
+				sem_post(this->semaphoro);
 				if(this->apuestaAnterior!=this->apuestaMayorEnRonda)
 					finDeApuestas=false;
 				sleep(0.5);
@@ -156,6 +158,7 @@ void Procesador::jugar(){
 				if(this->abandonarMano()){
 					break;
 				}
+				sem_wait(this->semaphoro);
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
 					if(this->abandonarMano()){
@@ -170,6 +173,7 @@ void Procesador::jugar(){
 					}
 					itJugadores++;
 				}
+				sem_post(this->semaphoro);
 				if(this->apuestaAnterior!=this->apuestaMayorEnRonda)
 					finDeApuestas=false;
 				sleep(0.5);
@@ -209,6 +213,7 @@ void Procesador::jugar(){
 				if(this->abandonarMano()){
 					break;
 				}
+				sem_wait(this->semaphoro);
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
 					if(this->abandonarMano()){
@@ -223,6 +228,7 @@ void Procesador::jugar(){
 					}
 					itJugadores++;
 				}
+				sem_post(this->semaphoro);
 				if(this->apuestaAnterior!=this->apuestaMayorEnRonda)
 					finDeApuestas=false;
 				sleep(0.5);
@@ -262,6 +268,7 @@ void Procesador::jugar(){
 				if(this->abandonarMano()){
 					break;
 				}
+				sem_wait(this->semaphoro);
 				itJugadores=jugadores->begin();
 				while (itJugadores!=jugadores->end()){
 					if(this->abandonarMano()){
@@ -276,6 +283,7 @@ void Procesador::jugar(){
 					}
 					itJugadores++;
 				}
+				sem_post(this->semaphoro);
 				if(this->apuestaAnterior!=this->apuestaMayorEnRonda)
 					finDeApuestas=false;
 				sleep(0.5);
@@ -317,6 +325,7 @@ void Procesador::jugar(){
 				lista_aux->push_front(*(cartasJugador->front()));
 				lista_aux->push_front(*(cartasJugador->back()));
 
+				sem_wait(this->semaphoro);
 				Poker * poker=new Poker(lista_aux);
 				float puntaje=poker->getPuntaje();
 
@@ -327,6 +336,7 @@ void Procesador::jugar(){
 
 				itJugadores++;
 				delete poker;
+				sem_post(this->semaphoro);
 				//Saco las cartas del jugador de la lista
 				lista_aux->pop_back();
 				lista_aux->pop_back();
@@ -405,6 +415,8 @@ Procesador::Procesador(int i) {
 	this->parser=new ParserServidor();
 	this->cartas = new list<Carta*>();
 	this->ganador=" ";
+	this->semaphoro=new sem_t;
+	sem_init(this->semaphoro,0,1);
 	this->jugadores = new list<Jugador*>();
 	this->jugadores_a_dibujar = new list<Jugador*>();
 	this->jugadores_agregar = new list<Jugador*>();
@@ -477,7 +489,9 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		J* operadorJ= new J();
 		ParserServidor *parser=new ParserServidor();
 		list<char*>* operandos=parser->getOperandos(xmlAux2);
+		sem_wait(this->semaphoro);
 		list<string>* respuestaDeOperacion = operadorJ->realizarOperacion(this->jugadores_a_dibujar);
+		sem_post(this->semaphoro);
 		respuesta=parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
@@ -489,7 +503,9 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		C* operadorC=new C();
 		ParserServidor *parser=new ParserServidor();
 		list<char*>* operandos=parser->getOperandos(xmlAux2);
+		sem_wait(this->semaphoro);
 		list<string>* respuestaDeOperacion = operadorC->realizarOperacion(this->cartas);
+		sem_post(this->semaphoro);
 		respuesta=parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
@@ -509,14 +525,16 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		delete parser;
 		return respuesta;
 
-	}else if(res=="N"){//Registrarse
+	}else if(res=="N"){//Cargar plata
 			N * operadorN = new N();
 			ParserServidor* parser=new ParserServidor();
 			list<char*>* operandos=parser->getOperandos(xmlAux2);
 			list<string>* respuestaDeOperacion=operadorN->realizarOpearacion(operandos);
 			if(respuestaDeOperacion->front()=="Correcto"){
 				long int monto=atoi(respuestaDeOperacion->back().c_str());
+				sem_wait(this->semaphoro);
 				jugador->modificarPlataEn(monto);
+				sem_post(this->semaphoro);
 			}
 			respuesta=parser->getXml(respuestaDeOperacion,idOperacionString);
 			delete respuestaDeOperacion;
@@ -567,7 +585,9 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		B * operadorB=new B();
 		ParserServidor *parser=new ParserServidor();
 		list<char*>* operandos=parser->getOperandos(xmlAux2);
+		sem_wait(this->semaphoro);
 		list<string>* respuestaDeOperacion=operadorB->realizarOpearacion(operandos,this->jugadores_a_dibujar);
+		sem_post(this->semaphoro);
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
 		delete operandos;
@@ -590,7 +610,9 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		D* operadorD=new D();
 		ParserServidor *parser=new ParserServidor();
 		list<char*>* operandos=parser->getOperandos(xmlAux2);
+		sem_wait(this->semaphoro);
 		list<string> * respuestaDeOperacion=operadorD->realizarOperacion(operandos,jugador);
+		sem_post(this->semaphoro);
 		string aux=respuestaDeOperacion->front();
 		if(aux=="Correcto"){
 			string apuestaString=respuestaDeOperacion->back();
@@ -623,7 +645,9 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		it++;
 		respuesta=parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
+		sem_wait(this->semaphoro);
 		jugador->setUltimaApuesta(this->apuestaMayorEnRonda);
+		sem_post(this->semaphoro);
 		cout<<jugador->getNombre()<<endl;
 		this->terminoMiTurno();
 		delete parser;
@@ -646,6 +670,7 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		delete respuestaDeOperacion;
 		delete parser;
 		int diferencia;
+		sem_wait(this->semaphoro);
 		if(jugador->getUltimaApuesta()!=(-1)){
 			diferencia = (jugador->getUltimaApuesta() - this->apuestaMayorEnRonda);
 		}else{
@@ -653,6 +678,7 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		}
 		jugador->modificarPlataEn(diferencia);
 		jugador->setUltimaApuesta(this->apuestaMayorEnRonda);
+		sem_post(this->semaphoro);
 		this->bote-=diferencia;
 		cout<<jugador->getNombre()<<endl;
 		this->terminoMiTurno();
@@ -816,22 +842,23 @@ list<string>* Procesador::seConectoJugador(char* xml){
 
 bool Procesador::agregarJugador(Jugador* jugadorNuevo){
 	//IMPORTANTE CUANDO SE AGREGUE EL JUGADOR HAY QUE BUSCA EN MYSQL LA TABLA Y SACAR EL DINERO QUE TIENE
-	pthread_mutex_lock(&this->mutex);
+	sem_wait(this->semaphoro);
 	if(this->jugadores_a_dibujar->size() < MAXIMODEJUGADORES){
 		cout<<"Se agrego Jugador: "<<jugadorNuevo->getNombre()<<endl;
 		this->jugadores_a_dibujar->push_back(jugadorNuevo);
 		this->jugadores_agregar->push_back(jugadorNuevo);
-		pthread_mutex_unlock(&this->mutex);
+		sem_post(this->semaphoro);
 		return true;
 	}
 	else{
 		cout << "Maximo numero de jugadores en la mesa" << endl;
-		pthread_mutex_unlock(&this->mutex);
+		sem_post(this->semaphoro);
 		return false;
 	}
 }
 
 bool Procesador::quitarJugador(Jugador* jugador){
+	sem_wait(this->semaphoro);
 	this->sizeJugadores--;
 	if(jugador->getNombre()==this->nombreJugadorJugando)
 		this->terminoMiTurno();
@@ -877,25 +904,27 @@ bool Procesador::quitarJugador(Jugador* jugador){
 	MYSQL_RES *res;
 	res = conexion->ejecutarQuery(query.c_str());
 	conexion->liberarConexion(res);
+	sem_post(this->semaphoro);
 	return true;
 }
 
 bool Procesador::agregarCarta(Carta* cartaNueva){
-	pthread_mutex_lock(&this->mutex);
+	sem_wait(this->semaphoro);
 	if(this->cartas->size() < MAXIMODECARTAS){
 		this->cartas->push_back(cartaNueva);
-		pthread_mutex_unlock(&this->mutex);
+		sem_post(this->semaphoro);
 		return true;
 	}
 	else{
 		delete cartaNueva;
 		cout << "Maximo numero de cartas en la mesa" << endl;
-		pthread_mutex_unlock(&this->mutex);
+		sem_post(this->semaphoro);
 		return false;
 	}
 }
 
 void Procesador::terminoMiTurno(){
+	sem_wait(this->semaphoro);
 	Jugador * jugadorEnTurno=this->jugadores->front();
 	this->jugadores->pop_front();
 	if(jugadorEnTurno->participando()){
@@ -918,19 +947,20 @@ void Procesador::terminoMiTurno(){
 	if(seguir)
 		this->nombreJugadorJugando=" ";
 	cout<<"Es el turno de: "<<this->nombreJugadorJugando<<endl;
+	sem_post(this->semaphoro);
 }
 
 bool Procesador::estaJugandoJugador(string nombre_jugador){
-	pthread_mutex_lock(&this->mutex);
+	sem_wait(this->semaphoro);
 	list<Jugador*>::iterator iterador=this->jugadores_a_dibujar->begin();
 	while(iterador!=this->jugadores_a_dibujar->end()){
 		if((*iterador)->getNombre()==nombre_jugador){
-			pthread_mutex_unlock(&this->mutex);
+			sem_post(this->semaphoro);
 			return true;
 		}
 		iterador++;
 	}
-	pthread_mutex_unlock(&this->mutex);
+	sem_post(this->semaphoro);
 	return false;
 }
 Procesador::~Procesador() {
