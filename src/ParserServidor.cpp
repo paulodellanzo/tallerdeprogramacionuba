@@ -398,20 +398,15 @@ list<char*>* ParserServidor::getOperandos(char xml[]){
 }
 
 string ParserServidor::getOperacionId(char xml[]){
-//como sabe que esta bien busca la operacion id directamente
-	bool encontrado=false;
-	char* buff=strtok(xml," <>=");
-	while((!encontrado)and(buff!=NULL)){
-		if(strcmp(buff,"id")==0){
-			buff=strtok(NULL,"\n\t=\"");
-			encontrado=true;
-			string aDevolver=buff;
-			return(aDevolver);
-		}else{
-			buff=strtok(NULL," <>=");
-		}
-	}
-	return "no encontro id";
+	ostringstream sstream;
+	sstream << xml;
+	string xmlAux;
+	xmlAux = sstream.str();
+	size_t found;
+	found = xmlAux.find("id=");
+	string valor;
+	valor = xmlAux.substr(found+4,1);
+	return valor;
 }
 
 char* ParserServidor::getXml(list<string>* base, string idOperacion){
