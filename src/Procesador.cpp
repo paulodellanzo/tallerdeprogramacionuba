@@ -305,6 +305,12 @@ void Procesador::jugar(){
 
 			Jugador* jugadorGanador;
 			float puntajeGanador=0;
+
+			if(this->abandonarMano()){
+				break;
+			}
+
+			sem_wait(this->semaphoro);
 			itJugadores=this->jugadores->begin();
 			list<Carta> * lista_aux=new list<Carta>;
 			list<Carta*>::iterator itCartas=this->cartas->begin();
@@ -315,11 +321,6 @@ void Procesador::jugar(){
 				itCartas++;
 			}
 
-			if(this->abandonarMano()){
-				break;
-			}
-
-			sem_wait(this->semaphoro);
 			while(itJugadores!=jugadores->end()){
 				list<Carta*> * cartasJugador=(*itJugadores)->getCartas();
 				//Agrego las cartas del jugador a la lista
