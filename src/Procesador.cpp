@@ -319,13 +319,14 @@ void Procesador::jugar(){
 				break;
 			}
 
+			sem_wait(this->semaphoro);
 			while(itJugadores!=jugadores->end()){
 				list<Carta*> * cartasJugador=(*itJugadores)->getCartas();
 				//Agrego las cartas del jugador a la lista
 				lista_aux->push_front(*(cartasJugador->front()));
 				lista_aux->push_front(*(cartasJugador->back()));
 
-				sem_wait(this->semaphoro);
+
 				Poker * poker=new Poker(lista_aux);
 				float puntaje=poker->getPuntaje();
 
@@ -336,7 +337,7 @@ void Procesador::jugar(){
 
 				itJugadores++;
 				delete poker;
-				sem_post(this->semaphoro);
+
 				//Saco las cartas del jugador de la lista
 				lista_aux->pop_back();
 				lista_aux->pop_back();
@@ -344,6 +345,7 @@ void Procesador::jugar(){
 					break;
 				}
 			}
+			sem_post(this->semaphoro);
 
 			if(this->abandonarMano()){
 				break;
@@ -392,11 +394,9 @@ void Procesador::jugar(){
 }
 
 void Procesador::vaciarCartas(){
-	pthread_mutex_lock(&this->mutex);
-	while(this->cartas->size()>0){
-		this->cartas->pop_front();
-	}
-	pthread_mutex_unlock(&this->mutex);
+	sem_wait(this->semaphoro);
+	this->cartas->clear();
+	sem_post(this->semaphoro);
 }
 
 Procesador::Procesador(int i) {
@@ -505,9 +505,9 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		list<char*>* operandos=parser->getOperandos(xmlAux2);
 		sem_wait(this->semaphoro);
 		list<string>* respuestaDeOperacion = operadorC->realizarOperacion(this->cartas);
-		sem_post(this->semaphoro);
 		respuesta=parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
+		sem_post(this->semaphoro);
 		delete operandos;
 		delete operadorC;
 		delete parser;
@@ -587,9 +587,9 @@ char* Procesador::getRespuesta(char* xml, Jugador * jugador){
 		list<char*>* operandos=parser->getOperandos(xmlAux2);
 		sem_wait(this->semaphoro);
 		list<string>* respuestaDeOperacion=operadorB->realizarOpearacion(operandos,this->jugadores_a_dibujar);
-		sem_post(this->semaphoro);
 		respuesta=this->parser->getXml(respuestaDeOperacion,idOperacionString);
 		delete respuestaDeOperacion;
+		sem_post(this->semaphoro);
 		delete operandos;
 		delete operadorB;
 		delete parser;
@@ -823,6 +823,7 @@ list<string>* Procesador::seConectoJugador(char* xml){
 //	char xmlAux[paraVerCuantoPesa.size()];
 //	char xmlAux2[paraVerCuantoPesa.size()];
 //	for(unsigned int i=0;i<paraVerCuantoPesa.size();i++){xmlAux[i]=xml[i];xmlAux2[i]=xml[i];}
+//	cout<<xmlAux<<endl;
 	string idOperacionString= this->parser->getOperacionId(xmlAux);
 	idOperacionString=toupper(idOperacionString[0]);
 	char idOperacionChar=idOperacionString[0];

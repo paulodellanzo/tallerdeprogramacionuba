@@ -1,0 +1,28 @@
+Evolucion de los usuarios conectados
+fecha		conectados
+17/11/2010		2
+18/11/2010		2
+19/11/2010		1
+20/11/2010		1
+21/11/2010		2
+22/11/2010		3
+23/11/2010		3
+
+Evolucion de los usuarios
+fecha		registrados
+2010-11-17		2
+2010-11-19		5
+2010-11-20		2
+
+Ranking de usuarios
+usuario		fichas
+tatoqac		4271
+paulo		2361
+carlos		2000
+pepe		2000
+juan		2000
+kaka		2000
+damian		1886
+sebastian		1815
+javier		1020
+

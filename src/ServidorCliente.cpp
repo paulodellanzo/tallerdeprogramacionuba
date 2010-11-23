@@ -11,7 +11,12 @@ char* ServidorCliente::recibirDeCliente(){
 	char* data=new char[MAXBYTESRECIBIDOS];
 	memset((void*)data,'\0',MAXBYTESRECIBIDOS);
 	bool seguir=true;
-	ofstream* archivoResultado = new ofstream("recibidoDeCliente", ios::out);
+	string path="recibidoDeCliente";
+	ostringstream sstream;
+	sstream << this->cliente->valorAcept;
+	string aux = sstream.str();
+	path+=aux;
+	ofstream* archivoResultado = new ofstream(path.c_str(), ios::out);
 	socklen_t leng=sizeof(char[MAXBYTESRECIBIDOS]);
 	ssize_t valorRecive;
 	while(seguir){
@@ -55,7 +60,7 @@ char* ServidorCliente::recibirDeCliente(){
 	delete archivoResultado;
 	string recibido;
 	string *recibidoAux=new string;
-	ifstream* archivo=new ifstream("recibidoDeCliente");
+	ifstream* archivo=new ifstream(path.c_str());
 	while(!archivo->eof()){
 		std::getline(*archivo,*recibidoAux);
 		recibido+=*recibidoAux;
