@@ -792,8 +792,17 @@ bool Procesador::enviarArchivo(char * xml){
 	delete xmlAux;
 	switch(idOperacionChar){
 
-		case('E'):{this->path=this->infoconfig->pathEscenario;return true;}
-		case('I'):{this->path=this->parser->getNombreJugador(xml) + ".bmp"; return true;}
+		case('E'):{string aux;
+			aux=this->infoconfig->pathEscenario;
+			this->path=aux;
+			return true;
+		}
+		case('I'):{string aux;
+			aux=this->parser->getNombreJugador(xml);
+			aux+=".bmp";
+			this->path=aux;
+			return true;
+		}
 	}
 	return (false);
 }
