@@ -54,6 +54,8 @@ bool Jugador::participando(){
 
 bool Jugador::modificarPlataEn(long int plata){
 	this->plata += plata;
+	if(this->plata<=0)
+		this->plata=0;
 	return true;
 }
 
