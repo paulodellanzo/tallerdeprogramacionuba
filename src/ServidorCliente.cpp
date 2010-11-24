@@ -66,8 +66,8 @@ char* ServidorCliente::recibirDeCliente(){
 		recibido+=*recibidoAux;
 		recibido+="\n";
 	}
-	char* dataAux=new char[recibido.size()];
-	memset(dataAux,'\0',recibido.size());
+	char* dataAux=new char[recibido.size() + 1];
+	memset(dataAux,'\0',recibido.size() + 1);
 	for(unsigned int i=0;i<recibido.size();i++) dataAux[i]=recibido[i];
 	dataAux[recibido.size()]='\0';
 	archivo->close();

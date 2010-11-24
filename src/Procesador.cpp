@@ -34,8 +34,10 @@ bool Procesador::abandonarMano(){
 }
 
 void Procesador::empezarPartida(){
+	sem_wait(this->semaphoro);
 	this->nombreJugadorJugando=this->jugadores->front()->getNombre();
 	cout<<"Es el turno de: "<<this->nombreJugadorJugando<<endl;
+	sem_post(this->semaphoro);
 }
 
 bool Procesador::empezarPartida(char * xml){
@@ -798,9 +800,11 @@ bool Procesador::enviarArchivo(char * xml){
 			return true;
 		}
 		case('I'):{string aux;
+			sem_wait(this->semaphoro);
 			aux=this->parser->getNombreJugador(xml);
 			aux+=".bmp";
 			this->path=aux;
+			sem_post(this->semaphoro);
 			return true;
 		}
 	}
