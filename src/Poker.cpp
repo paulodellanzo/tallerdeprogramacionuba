@@ -28,8 +28,8 @@ list<Carta>* Poker::crearLista(list<Carta>* cartas,int primera,int segunda,int t
 
 }
 
-float Poker::esEscaleraReal(list<Carta>* cartas){
-	list<Carta>::iterator it=cartas->begin();
+float Poker::esEscaleraReal(list<Carta> cartas){
+	list<Carta>::iterator it=cartas.begin();
 
 	for(int i=0;i<4;i++){
 		char palo1[255];
@@ -41,7 +41,7 @@ float Poker::esEscaleraReal(list<Carta>* cartas){
 			return 0;
 	}
 
-	it=cartas->begin();
+	it=cartas.begin();
 	if(!strcmp(it->getNumero().c_str(),"1") && !strcmp((++it)->getNumero().c_str(),"10") &&
 	!strcmp((++it)->getNumero().c_str(),"11") && !strcmp((++it)->getNumero().c_str(),"12")
 	&& !strcmp((++it)->getNumero().c_str(),"13")){
@@ -51,8 +51,8 @@ float Poker::esEscaleraReal(list<Carta>* cartas){
 		return 0;
 }
 
-float Poker::esEscaleraDeColor(list<Carta>* cartas){
-	list<Carta>::iterator it=cartas->begin();
+float Poker::esEscaleraDeColor(list<Carta> cartas){
+	list<Carta>::iterator it=cartas.begin();
 
 	for(int i=0;i<4;i++){
 		char palo1[255];
@@ -64,7 +64,7 @@ float Poker::esEscaleraDeColor(list<Carta>* cartas){
 			return 0;
 	}
 
-	it=cartas->begin();
+	it=cartas.begin();
 	if(atoi(it->getNumero().c_str())==atoi((++it)->getNumero().c_str())-1 &&
 	atoi(it->getNumero().c_str())==atoi((++it)->getNumero().c_str())-1 &&
 	atoi(it->getNumero().c_str())==atoi((++it)->getNumero().c_str())-1 &&
@@ -75,8 +75,8 @@ float Poker::esEscaleraDeColor(list<Carta>* cartas){
 		return 0;
 }
 
-float Poker::esPoker(list<Carta>* cartas){
-	list<Carta>::iterator it=cartas->begin();
+float Poker::esPoker(list<Carta> cartas){
+	list<Carta>::iterator it=cartas.begin();
 	char numero[5];
 	char numero2[5];
 	char numero3[5];
@@ -113,7 +113,7 @@ float Poker::esPoker(list<Carta>* cartas){
 	it++;
 	strcpy(numero4,it->getNumero().c_str());
 	if(strcmp(numero2,numero)==0 and strcmp(numero2,numero3)==0 and strcmp(numero2,numero4)==0 ){
-		it=cartas->begin();
+		it=cartas.begin();
 		strcpy(numero,it->getNumero().c_str());
 		if(strcmp(numero,"1")==0){
 			resultadoParcial=resultadoParcial+atof(numero2)*pow(15,24);
@@ -128,8 +128,8 @@ float Poker::esPoker(list<Carta>* cartas){
 	return 0;
 }
 
-float Poker::esFull(list<Carta>* cartas){
-	list<Carta>::iterator it=cartas->begin();
+float Poker::esFull(list<Carta> cartas){
+	list<Carta>::iterator it=cartas.begin();
 	char numero[5];
 	char numero2[5];
 	char numero3[5];
@@ -181,8 +181,8 @@ float Poker::esFull(list<Carta>* cartas){
 	return 0;
 }
 
-float Poker::esColor(list<Carta>* cartas){
-	list<Carta>::iterator it=cartas->begin();
+float Poker::esColor(list<Carta> cartas){
+	list<Carta>::iterator it=cartas.begin();
 	float resultadoParcial=0;
 	char numero[5];
 	for(int i=0;i<4;i++){
@@ -194,7 +194,7 @@ float Poker::esColor(list<Carta>* cartas){
 		if (strcmp(palo1,palo2)!=0)
 			return 0;
 	}
-	it=cartas->begin();
+	it=cartas.begin();
 	strcpy(numero,it->getNumero().c_str());
 	if(strcmp(numero,"1")==0){
 		resultadoParcial=resultadoParcial+14*pow(15,20);
@@ -229,16 +229,16 @@ float Poker::esColor(list<Carta>* cartas){
 	return resultadoParcial;
 }
 
-float Poker::esEscalera(list<Carta>* cartas){
-	list<Carta>::iterator it=cartas->begin();
-	it=cartas->begin();
+float Poker::esEscalera(list<Carta> cartas){
+	list<Carta>::iterator it=cartas.begin();
+	it=cartas.begin();
 	if(!strcmp(it->getNumero().c_str(),"1") && !strcmp((++it)->getNumero().c_str(),"10") &&
 	!strcmp((++it)->getNumero().c_str(),"11") && !strcmp((++it)->getNumero().c_str(),"12")
 	&& !strcmp((++it)->getNumero().c_str(),"13")){
 		return (14*pow(15,15));
 	}
 
-	it=cartas->begin();
+	it=cartas.begin();
 	if(atoi(it->getNumero().c_str())==atoi((++it)->getNumero().c_str())-1 &&
 	atoi(it->getNumero().c_str())==atoi((++it)->getNumero().c_str())-1 &&
 	atoi(it->getNumero().c_str())==atoi((++it)->getNumero().c_str())-1 &&
@@ -249,14 +249,14 @@ float Poker::esEscalera(list<Carta>* cartas){
 		return 0;
 }
 
-float Poker::esTrio(list<Carta>* cartas){
+float Poker::esTrio(list<Carta> cartas){
 	char numero[5];
 	char numero2[5];
 	char numero3[5];
 	char numero4[5];
 	char numero5[5];
 	float resultadoParcial=0;
-	list<Carta>::iterator it=cartas->begin();
+	list<Carta>::iterator it=cartas.begin();
 	strcpy(numero,it->getNumero().c_str());
 	it++;
 	strcpy(numero2,it->getNumero().c_str());
@@ -323,8 +323,8 @@ float Poker::esTrio(list<Carta>* cartas){
 	return 0;
 }
 
-float Poker::esDoblePar(list<Carta>* cartas){
-	list<Carta>::iterator it=cartas->begin();
+float Poker::esDoblePar(list<Carta> cartas){
+	list<Carta>::iterator it=cartas.begin();
 	char numero[5];
 	char numero2[5];
 	char numero3[5];
@@ -395,8 +395,8 @@ float Poker::esDoblePar(list<Carta>* cartas){
 	return 0;
 }
 
-float Poker::esPar(list<Carta>* cartas){
-	list<Carta>::iterator it=cartas->begin();
+float Poker::esPar(list<Carta> cartas){
+	list<Carta>::iterator it=cartas.begin();
 	char numero[5];
 	char numero2[5];
 	float resultadoParcial=0;
@@ -419,7 +419,7 @@ float Poker::esPar(list<Carta>* cartas){
 	strcpy(numero,it->getNumero().c_str());
 	it ++;
 	if(strcmp(numero,numero2)==0){
-		it=cartas->begin();
+		it=cartas.begin();
 		strcpy(numero,it->getNumero().c_str());
 		it++;
 		if(strcmp(numero,"1")==0){
@@ -450,7 +450,7 @@ float Poker::esPar(list<Carta>* cartas){
 	strcpy(numero2,it->getNumero().c_str());
 	it ++;
 	if(strcmp(numero,numero2)==0){
-		it=cartas->begin();
+		it=cartas.begin();
 		strcpy(numero,it->getNumero().c_str());
 		it++;
 		if(strcmp(numero,"1")==0){
@@ -483,7 +483,7 @@ float Poker::esPar(list<Carta>* cartas){
 	}
 	strcpy(numero,it->getNumero().c_str());
 	if(strcmp(numero,numero2)==0){
-		it=cartas->begin();
+		it=cartas.begin();
 		strcpy(numero,it->getNumero().c_str());
 		it++;
 		if(strcmp(numero,"1")==0){
@@ -513,11 +513,11 @@ float Poker::esPar(list<Carta>* cartas){
 	return 0;
 }
 
-float Poker::mayorCarta(list<Carta>* cartas){
+float Poker::mayorCarta(list<Carta> cartas){
 	float resultadoParcial=0;
 	float auxiliar[4];
 	char numeroAux[5];
-	list<Carta>::iterator it=cartas->begin();
+	list<Carta>::iterator it=cartas.begin();
 	strcpy(numeroAux,it->getNumero().c_str());
 	if(strcmp(numeroAux,"1")==0){
 		auxiliar[4]=14;
@@ -544,34 +544,34 @@ float Poker::mayorCarta(list<Carta>* cartas){
 float Poker::getPuntajeMano(list<Carta>* cartas){
 
 	float puntajeParcial;
-	puntajeParcial=esEscaleraReal(cartas);
+	puntajeParcial=esEscaleraReal(*cartas);
 	if(puntajeParcial!=0)
 		return puntajeParcial;
-	puntajeParcial= esEscaleraDeColor(cartas);
+	puntajeParcial= esEscaleraDeColor(*cartas);
 	if(puntajeParcial!=0)
 		return puntajeParcial;
-	puntajeParcial= esPoker(cartas);
+	puntajeParcial= esPoker(*cartas);
 	if(puntajeParcial!=0)
 		return puntajeParcial;
-	puntajeParcial= esFull(cartas);
+	puntajeParcial= esFull(*cartas);
 	if(puntajeParcial!=0)
 		return puntajeParcial;
-	puntajeParcial= esColor(cartas);
+	puntajeParcial= esColor(*cartas);
 	if(puntajeParcial!=0)
 		return puntajeParcial;
-	puntajeParcial= esEscalera(cartas);
+	puntajeParcial= esEscalera(*cartas);
 	if(puntajeParcial!=0)
 		return puntajeParcial;
-	puntajeParcial= esTrio(cartas);
+	puntajeParcial= esTrio(*cartas);
 	if(puntajeParcial!=0)
 		return puntajeParcial;
-	puntajeParcial= esDoblePar(cartas);
+	puntajeParcial= esDoblePar(*cartas);
 	if(puntajeParcial!=0)
 		return puntajeParcial;
-	puntajeParcial= esPar(cartas);
+	puntajeParcial= esPar(*cartas);
 	if(puntajeParcial!=0)
 		return puntajeParcial;
-	return mayorCarta(cartas);
+	return mayorCarta(*cartas);
 }
 
 bool compararCartas(Carta carta1,Carta carta2){
