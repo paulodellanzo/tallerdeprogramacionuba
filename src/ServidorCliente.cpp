@@ -271,6 +271,11 @@ void ServidorCliente::interactuarConCliente(){
 		}
 	}
 	if(this->jugador!=NULL){
+//		this->procesador->disminuirSize();
+		while(this->procesador->seEstaJugando()){
+			this->jugador->dejarDeJugar();
+			sleep(0.1);
+		}
 		this->procesador->quitarJugador(this->jugador);
 		cout<<"Se quito el jugador: "<<this->jugador->getNombre()<<endl;
 //		delete this->jugador;

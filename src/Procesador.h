@@ -64,6 +64,7 @@ private:
 	bool tieneArchivoEstadistica;
 public:
 	void jugar();
+	void disminuirSize();
 	static Procesador* instancia();
 	bool empezarPartida(char* xml);//Devuelve true si la operacion en una F cosa que empieza a jugar
 	list<string>* seConectoJugador(char* xml);

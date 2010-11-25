@@ -64,6 +64,7 @@ void Procesador::jugar(){
 
 	while (true){
 		while(jugadores->size()>=2){
+			this->estaJugando=true;
 			this->ganador=" ";
 
 			sem_wait(this->semaphoro);
@@ -393,7 +394,8 @@ void Procesador::jugar(){
 			if(this->abandonarMano()){
 				break;
 			}
-
+			this->estaJugando=false;
+			sleep(2);
 			cout<<"Todo listo para comenzar una nueva partida"<<endl;
 			//Paso los jugadores a agregar a la lista de jugadores
 			itJugadores=jugadores->end();
@@ -892,8 +894,11 @@ bool Procesador::agregarJugador(Jugador* jugadorNuevo){
 	}
 }
 
-bool Procesador::quitarJugador(Jugador* jugador){
+void Procesador::disminuirSize(){
+	this->sizeJugadores--;
+}
 
+bool Procesador::quitarJugador(Jugador* jugador){
 	this->sizeJugadores--;
 	if(jugador->getNombre()==this->nombreJugadorJugando)
 		this->terminoMiTurno();
